@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/08/30 16:58:01 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:21:03 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,23 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+enum
+{
+	EMPTY,
+	CMD,
+	ARG,
+	TRUNC,
+	APPEND,
+	INPUT,
+	PIPE,
+	END = 7
+};
+
 typedef struct s_tokens
 {
 	char	*str;
-	int		
+	int		type;
+
 }				t_tokens;
 
 typedef struct s_minishell

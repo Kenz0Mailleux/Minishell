@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/08/30 16:27:09 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:21:46 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char *argv[])
 
 	(void)argc;
 	(void)argv;
-
 	minishell.end = 0;
 	while (!minishell.end)
 	{
