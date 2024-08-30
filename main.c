@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/08/30 16:03:56 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:27:09 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	main(int argc, char *argv[])
 	while (!minishell.end)
 	{
 		input = readline("minishell> ");
-        if (input == NULL)
+		if (input == NULL)
 		{
-            break;
-        }
+			break;
+		}
 	}
-	
-	
 }

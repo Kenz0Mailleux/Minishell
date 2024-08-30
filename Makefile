@@ -6,7 +6,7 @@ OBJS = ${SRCS:.c=.o}
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-LDFLAGS = -lreadline -lhistory
+LDFLAGS = -lreadline
 
 RM = rm -rf
 
