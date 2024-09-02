@@ -6,34 +6,34 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/08/30 17:21:46 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/02 20:33:44 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
 
-
-// int	parse()
-// {
-	
-// }
-
-
-int	main(int argc, char *argv[])
+int	main(void)
 {
-	t_minishell	minishell;
-	char *input;
+	t_data	data;
+	t_token		*current;
+	char		*input;
 
-	(void)argc;
-	(void)argv;
-	minishell.end = 0;
-	while (!minishell.end)
+	data.end = 0;
+	while (!data.end)
 	{
 		input = readline("minishell> ");
 		if (input == NULL)
-		{
 			break;
+
+		data.token = lexer(input);
+		current = data.token;
+
+		while (current != NULL) 
+		{
+			printf("Token Type: %d, Value: %s\n", current->type, current->str);
+			current = current->next;
 		}
 	}
+	return (0);
 }
