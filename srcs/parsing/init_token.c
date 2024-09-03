@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 15:58:32 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:07:00 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ void append_token(t_token **head, t_token *new_token)
 	if (*head == NULL)
 	{
 		*head = new_token;
-	} else
+	}
+	else
 	{
 		current = *head;
-		while (current->next != NULL) {
+		while (current->next != NULL)
+		{
 			current = current->next;
 		}
 		current->next = new_token;

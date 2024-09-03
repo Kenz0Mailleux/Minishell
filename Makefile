@@ -1,9 +1,5 @@
 NAME = minishell
 
-################################################################################
-#                                 SOURCES                                      #
-################################################################################
-
 SRCS = 	main.c \
 		srcs/parsing/init_token.c \
 		srcs/parsing/lexer.c \
@@ -16,7 +12,6 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 LDFLAGS = -Llibft -lreadline
 
-# Répertoire contenant libft
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libfinal.a
 
