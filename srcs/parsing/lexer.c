@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/02 20:37:03 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:59:13 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strndup(const char *s1, size_t n)
 
 	copy = (char *)malloc(sizeof(char) * (n + 1));
 	if (!copy)
-		return (NULL);
+		free_all(EXIT_FAILURE);
 	i = 0;
 	while (i < n && s1[i])
 	{

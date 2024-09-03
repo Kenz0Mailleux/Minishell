@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 15:45:03 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:58:32 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token *create_token(int type, char *str)
 
 	new_token = malloc(sizeof(t_token));
 	if (new_token == NULL)
-		(free_all(), exit(EXIT_FAILURE));
+		free_all(EXIT_FAILURE);
 	new_token->type = type;
 	new_token->str = strdup(str);
 	new_token->prev = NULL;
@@ -30,9 +30,11 @@ void append_token(t_token **head, t_token *new_token)
 {
 	t_token	*current;
 
-	if (*head == NULL) {
+	if (*head == NULL)
+	{
 		*head = new_token;
-	} else {
+	} else
+	{
 		current = *head;
 		while (current->next != NULL) {
 			current = current->next;

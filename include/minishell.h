@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 15:51:48 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:00:54 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+#define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
+
 
 typedef struct s_token		t_token;
 typedef struct s_redirect	t_redirect;
@@ -88,6 +90,6 @@ t_token	*lexer(char *input);
 
 
 /*free*/
-void free_all();
+void free_all(int succes);
 
 #endif
