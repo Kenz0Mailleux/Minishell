@@ -1,0 +1,24 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Executables
+*.out
+minishell
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+.vscode

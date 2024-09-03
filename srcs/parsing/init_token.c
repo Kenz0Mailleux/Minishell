@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 16:07:00 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:46:44 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+# include "minishell.h"
 
 t_token *create_token(int type, char *str)
 {

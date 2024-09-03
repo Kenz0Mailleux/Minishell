@@ -1,40 +1,92 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: marykman <marykman@student.s19.be>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
+#    Updated: 2024/09/03 17:49:51 by marykman         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# -----------------------------------Colors------------------------------------
+
+RED					:=	[38;5;9m
+GREEN				:=	[38;5;10m
+BLUE				:= 	[38;5;14m
+YELLOW				:=	[38;5;226m
+RESET				:=	[38;5;7m
+PREFIX				=	[${YELLOW}${NAME}${RESET}]	
+
+# ---------------------------------Compilation---------------------------------
+
+CC					:=	@gcc
+CFLAGS				:=	-Wall -Wextra -Werror
+RM					:=	@rm -f
+
+# ---------------------------------Librairies----------------------------------
+
+FT_FOLDER			:=	libs/libft
+
+FT					:=	${FT_FOLDER}/libft.a
+
+MAKE_FT				:=	@make -s -C ${FT_FOLDER}
+
+INCLUDES			:=	-I ${FT_FOLDER}/includes \
+						-I ./includes
+LIBRARIES			:=	-L./${FT_FOLDER} -lft \
+						-lreadline
+
+# --------------------------------Source files---------------------------------
+
 NAME = minishell
 
-SRCS = 	main.c \
-		srcs/parsing/init_token.c \
-		srcs/parsing/lexer.c \
-		srcs/parsing/parse.c \
-		srcs/utils/free.c \
+FILES				:=	main.c
+FILES_BUILTINS		:=
+FILES_ENV			:=
+FILES_EXEC			:=
+FILES_PARSING		:=	init_token.c \
+						lexer.c \
+						parse.c
+FILES_UTILS			:=	free.c
 
-OBJS = ${SRCS:.c=.o}
+SRCS				:=	$(addprefix srcs/,${FILES})
+SRCS				+=	$(addprefix srcs/builtins/,${FILES_BUILTINS})
+SRCS				+=	$(addprefix srcs/env/,${FILES_ENV})
+SRCS				+=	$(addprefix srcs/exec/,${FILES_EXEC})
+SRCS				+=	$(addprefix srcs/parsing/,${FILES_PARSING})
+SRCS				+=	$(addprefix srcs/utils/,${FILES_UTILS})
+OBJS				:=	$(patsubst srcs%.c, objs%.o, ${SRCS})
 
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
-LDFLAGS = -Llibft -lreadline
+# Header files
+FILES				:=	minishell.h
+HEADERS				:=	$(addprefix includes/, ${FILES})
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libfinal.a
+# -----------------------------------Rules-------------------------------------
 
-RM = rm -rf
+objs/%.o:	srcs/%.c ${HEADERS}
+	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@
+	@echo "${PREFIX}Compilation of $<..."
 
-all: $(LIBFT) ${NAME}
+$(NAME):	${FT} ${OBJS} ${HEADERS}
+	${CC} ${CFLAGS} ${OBJS} ${LIBRARIES} -o ${NAME}
+	@echo "${PREFIX}${GREEN}${NAME} compiled!"
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+$(FT):
+	${MAKE_FT}
 
-${NAME}: ${OBJS}
-	@${CC} ${OBJS} ${LDFLAGS} -o ${NAME}
-
-%.o: %.c
-	@${CC} ${CFLAGS} -c $< -o $@
+all:		${NAME}
 
 clean:
-	@${RM} ${OBJS}
-	@$(MAKE) clean -C $(LIBFT_DIR)
+	${MAKE_FT} clean
+	${RM} ${OBJS}
+	@echo "${PREFIX}${BLUE}Cleaning object files...${RESET}"
 
-fclean: clean
-	@${RM} ${NAME}
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+fclean:
+	${MAKE_FT} fclean
+	${RM} ${NAME} ${OBJS}
+	@echo "${PREFIX}${RED}Full clean.${RESET}"
 
 re: fclean all
 

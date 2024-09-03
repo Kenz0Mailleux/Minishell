@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 15:52:03 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:47:35 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+# include "minishell.h"
 
 void parser(t_data data)
 {
