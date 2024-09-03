@@ -6,11 +6,11 @@
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 17:47:35 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:23:14 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include "parsing.h"
 
 void parser(t_data data)
 {

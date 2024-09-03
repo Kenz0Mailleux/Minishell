@@ -6,11 +6,14 @@
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 17:46:44 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:27:48 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include <stdlib.h>
+#include "ft_string.h"
+#include "utils.h"
+#include "parsing.h"
 
 t_token *create_token(int type, char *str)
 {
@@ -20,7 +23,7 @@ t_token *create_token(int type, char *str)
 	if (new_token == NULL)
 		free_all(EXIT_FAILURE);
 	new_token->type = type;
-	new_token->str = strdup(str);
+	new_token->str = ft_strdup(str);
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);

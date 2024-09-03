@@ -6,30 +6,14 @@
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 17:47:25 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:23:07 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_ctype.h"
-#include "minishell.h"
-
-char	*ft_strndup(const char *s1, size_t n)
-{
-	char	*copy;
-	size_t	i;
-
-	copy = (char *)malloc(sizeof(char) * (n + 1));
-	if (!copy)
-		free_all(EXIT_FAILURE);
-	i = 0;
-	while (i < n && s1[i])
-	{
-		copy[i] = s1[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
-}
+#include "ft_string.h"
+#include "parsing.h"
 
 static void	special_token(t_token **head, const char *input, int *i)
 {
@@ -72,7 +56,7 @@ t_token	*lexer(char *input)
 	char	*word;
 
 	head = NULL;
-	len = strlen(input);
+	len = ft_strlen(input);
 	i = 0;
 	while (i < len)
 	{
@@ -90,7 +74,7 @@ t_token	*lexer(char *input)
 				input[i] != '>' && input[i] != '<')
 				i++;
 			word_len = i - start;
-			word = strndup(&input[start], word_len);
+			word = ft_strndup(&input[start], word_len);
 			if (word)
 			{
 				append_token(&head, create_token(CMD, word));

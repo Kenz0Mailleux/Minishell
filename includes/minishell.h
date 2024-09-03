@@ -6,23 +6,18 @@
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 17:46:29 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:26:51 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <string.h>
-
 # include <readline/readline.h>
 # include <readline/history.h>
 
-#define EXIT_SUCCESS 0
-#define EXIT_FAILURE 1
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
 
 
 typedef struct s_token		t_token;
@@ -78,16 +73,5 @@ typedef struct s_data
 	t_token	*token;
 	t_cmd	*cmd;
 }				t_data;
-
-
-
-/*parsing*/
-t_token *create_token(int type, char *str);
-void append_token(t_token **head, t_token *new_token);\
-t_token	*lexer(char *input);
-
-
-/*free*/
-void free_all(int succes);
 
 #endif

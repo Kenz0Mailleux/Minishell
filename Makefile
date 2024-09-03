@@ -6,7 +6,7 @@
 #    By: marykman <marykman@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/03 17:49:51 by marykman         ###   ########.fr        #
+#    Updated: 2024/09/03 19:04:52 by marykman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PREFIX				=	[${YELLOW}${NAME}${RESET}]
 # ---------------------------------Compilation---------------------------------
 
 CC					:=	@gcc
-CFLAGS				:=	-Wall -Wextra -Werror
+CFLAGS				:=	-Wall -Wextra -Werror -g -fsanitize=address
 RM					:=	@rm -f
 
 # ---------------------------------Librairies----------------------------------
@@ -60,7 +60,12 @@ SRCS				+=	$(addprefix srcs/utils/,${FILES_UTILS})
 OBJS				:=	$(patsubst srcs%.c, objs%.o, ${SRCS})
 
 # Header files
-FILES				:=	minishell.h
+FILES				:=	minishell.h \
+						builtins.h \
+						env.h \
+						exec.h \
+						parsing.h \
+						utils.h
 HEADERS				:=	$(addprefix includes/, ${FILES})
 
 # -----------------------------------Rules-------------------------------------

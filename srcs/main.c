@@ -6,12 +6,12 @@
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 17:43:29 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:27:37 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parsing.h"
 #include "minishell.h"
-
 
 int	main(void)
 {

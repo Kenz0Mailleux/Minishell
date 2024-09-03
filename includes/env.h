@@ -1,22 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/30 16:59:05 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 19:03:34 by marykman         ###   ########.fr       */
+/*   Created: 2024/09/03 19:26:05 by marykman          #+#    #+#             */
+/*   Updated: 2024/09/03 19:26:18 by marykman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "minishell.h"
+#ifndef ENV_H
+# define ENV_H
 
-void free_all(int succes)
-{
-	if	(succes)
-		exit(EXIT_SUCCESS);
-	else
-		exit(EXIT_FAILURE);
-}
+#endif
