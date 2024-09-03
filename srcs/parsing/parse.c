@@ -6,9 +6,13 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/02 20:34:55 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:52:03 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/minishell.h"
 
+void parser(t_data data)
+{
+	(void)data;
+}

@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/02 15:29:07 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:45:03 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_token *create_token(int type, char *str)
 		(free_all(), exit(EXIT_FAILURE));
 	new_token->type = type;
 	new_token->str = strdup(str);
-	new_token->previous = NULL;
+	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -38,6 +38,6 @@ void append_token(t_token **head, t_token *new_token)
 			current = current->next;
 		}
 		current->next = new_token;
-		new_token->previous = current;
+		new_token->prev = current;
 	}
 }
