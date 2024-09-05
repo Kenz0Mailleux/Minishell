@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/03 19:26:51 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/05 19:12:33 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ enum
 	APPEND, // >>
 	HEREDOC,// <<
 	REDIRECT_IN, // >
-	REDIRECT_OUT, // <      #analyser ce quil y q qpres et lui donner son type genre >> oui, oui a le type de >>
+	REDIRECT_OUT, // <      #analyser ce quil y a apres et lui donner son type genre >> oui, oui a le type de >>
 	PIPE, // |
 	END = 7 // fin 
 };
 
 typedef struct s_redirect
 {
-	int		type;
-
+	int			type;
 	char		*str;
+
 	t_redirect	*next;
 	t_redirect 	*prev;
 }				t_redirect;
@@ -48,11 +48,11 @@ typedef struct s_redirect
 
 typedef struct s_cmd
 {
-	char			**str;
+	char			**tab_cmd;
+	int				tab_len;
+	t_redirect		*redirect;
 //	int				is_builtin;
-//	int				num_redirections;
 //	char			*absolute_path;
-	int				redirections;
 	int				num_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
