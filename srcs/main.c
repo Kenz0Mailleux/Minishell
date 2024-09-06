@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/06 15:50:30 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/06 16:56:56 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 int	main(void)
 {
-	t_data	data;
+	t_data		data;
 	t_cmd		*current_cmd;
-	t_redirect *current_redirect;
+	t_redirect 	*current_redirect;
 	char		*input;
 	int			i;
 
