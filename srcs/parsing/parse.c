@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/05 19:33:11 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:52:15 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 # include "ft_string.h"
 # include "parsing.h"
 # include "utils.h"
-
-// void found_pipe(t_token *token)
-// {
-// 	int	i;
+# include "unistd.h"
 
 
-// }
+#include <string.h>
 
+
+//init les structs cmd
 t_cmd *create_cmd(int num_cmd)
 {
 	t_cmd *new_cmd;
@@ -38,6 +37,7 @@ t_cmd *create_cmd(int num_cmd)
 	return (new_cmd);
 }
 
+//permet de rajouter un cmd à la liste chainée
 void append_cmd(t_cmd **head, t_cmd *new_cmd)
 {
 	t_cmd *current;
@@ -54,6 +54,7 @@ void append_cmd(t_cmd **head, t_cmd *new_cmd)
 	}
 }
 
+//init les structs redirect
 t_redirect *create_redirect(int type, char *str)
 {
 	t_redirect *new_redirect;
@@ -63,12 +64,15 @@ t_redirect *create_redirect(int type, char *str)
 		free_all(EXIT_FAILURE);
 	new_redirect->type = type;
 	new_redirect->str = ft_strdup(str);
+	if (new_redirect->str == NULL)
+		free_all(EXIT_FAILURE);
 	new_redirect->prev = NULL;
 	new_redirect->next = NULL;
 	return (new_redirect);
 }
 
 
+//permet de rajouter un redirect à la liste chainée
 void append_redirect(t_redirect **head, t_redirect *new_redirect)
 {
 	t_redirect *current;
@@ -85,25 +89,26 @@ void append_redirect(t_redirect **head, t_redirect *new_redirect)
 	}
 }
 
-//sigsev lors du join du tab
+//fct qui va réallouer le tab de str de cmd
+char **ft_join_tab(char **tab, char *str, int tab_len)
+{
+	char **tab_cpy;
+	int	i;
 
-// char **ft_join_tab(char **tab, char *str, int tab_len)
-// {
-// 	char **tab_cpy;
-// 	int	i;
-
-// 	i = 0;
-// 	tab_cpy = malloc((sizeof(char *) * tab_len + 1) );
-// 	while (i < tab_len)
-// 	{
-// 		tab_cpy[i] = tab[i];
-// 		i++;
-// 	}
-// 	tab_cpy[i] = str;
-// 	free(tab);
-// 	return (tab_cpy);
+	i = 0;
+	tab_cpy = malloc(sizeof(char *) * (tab_len + 1 + 1));
+	if (tab_cpy == NULL)
+		free_all(EXIT_FAILURE);
+	while (i < tab_len)
+	{
+		tab_cpy[i] = tab[i];
+		i++;
+	}
+	tab_cpy[i] = str;
+	tab_cpy[++i] = NULL;
+	return (tab_cpy);
 	
-// }
+}
 
 t_cmd *parser(t_data *data)
 {
@@ -112,6 +117,7 @@ t_cmd *parser(t_data *data)
 	t_cmd *cmd_head;
 	t_cmd *current_cmd;
 	t_token *current_token;
+	
 	
 	cmd_head = NULL;
 	current_cmd = NULL;
@@ -130,12 +136,11 @@ t_cmd *parser(t_data *data)
 			current_cmd = cmd_head;
 			current_cmd = current_cmd->next;
 		}
-		// else if (current_token->type == CMD)
-		// {
-		// 	(current_cmd->tab_len)++;
-		// 	current_cmd->tab_cmd = ft_join_tab(current_cmd->tab_cmd, current_token->str, current_cmd->tab_len);
-			
-		// }
+		else if (current_token->type == CMD)
+		{
+			current_cmd->tab_cmd = ft_join_tab(current_cmd->tab_cmd, current_token->str, current_cmd->tab_len);
+			(current_cmd->tab_len)++;
+		}
 		else if (current_token->type > 1 && current_token->type < 6)
 		{
 			if (current_token->next && current_token->next->type == CMD)
@@ -146,11 +151,12 @@ t_cmd *parser(t_data *data)
 			}
 			else
 			{
-				printf("BAD input");
+				printf("BAD input\n");
+				return (cmd_head);
 			}
 		}
 		current_token = current_token->next;
 	}
-	data->cmd = cmd_head; 
+	data->cmd = cmd_head;
 	return (cmd_head);
 }

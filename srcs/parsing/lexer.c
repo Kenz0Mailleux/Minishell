@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 19:23:07 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:07:35 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,22 @@ static void	special_token(t_token **head, const char *input, int *i)
 	}
 }
 
-// static void quote_token(t_token **head, const char *input, int *i)
-// {
-	
-// }
+static char *quote_token(char *input, int *i, char quote_type)
+{
+	int		start;
+	char	*word;
+
+	start = ++(*i);
+	while (input[*i] && input[*i] != quote_type)
+		(*i)++;
+	if (input[*i] == quote_type)
+	{
+		word = ft_strndup(&input[start], *i - start);
+		(*i)++;
+		return (word);
+	}
+	return (NULL);
+}
 
 t_token	*lexer(char *input)
 {
@@ -54,6 +66,7 @@ t_token	*lexer(char *input)
 	int		start;
 	int		word_len;
 	char	*word;
+	char 	quote_type;
 
 	head = NULL;
 	len = ft_strlen(input);
@@ -62,6 +75,16 @@ t_token	*lexer(char *input)
 	{
 		if (ft_isspace(input[i]))
 			i++;
+		else if (input[i] == '\'' || input[i] == '\"')
+		{
+			quote_type = input[i];
+			word = quote_token(input, &i, quote_type);
+			if (word)
+			{
+				append_token(&head, create_token(CMD, word));
+				free(word);
+			}
+		}
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
 			special_token(&head, input, &i);

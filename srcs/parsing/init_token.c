@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marykman <marykman@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/03 19:27:48 by marykman         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:46:15 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "ft_string.h"
 #include "utils.h"
 #include "parsing.h"
+
+#include <string.h>
 
 t_token *create_token(int type, char *str)
 {
@@ -24,6 +26,8 @@ t_token *create_token(int type, char *str)
 		free_all(EXIT_FAILURE);
 	new_token->type = type;
 	new_token->str = ft_strdup(str);
+	if (new_token->str == NULL)
+		free_all(EXIT_FAILURE);
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);

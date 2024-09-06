@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/05 19:33:24 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:50:30 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
 #include "minishell.h"
+#include "unistd.h"
 
 int	main(void)
 {
 	t_data	data;
-	t_token		*current;
 	t_cmd		*current_cmd;
+	t_redirect *current_redirect;
 	char		*input;
 	int			i;
 
@@ -28,12 +29,10 @@ int	main(void)
 	{
 		input = readline("minishell> ");
 		if (input == NULL)
-		{
 			free_all(EXIT_FAILURE);
-			return (0);
-		}
 		data.token = lexer(input);
-		current = data.token;
+		// t_token		*current;
+		// current = data.token;
 		// while (current != NULL) 
 		// {
 		// 	printf("Token Type: %d, Value: %s\n", current->type, current->str);
@@ -42,29 +41,31 @@ int	main(void)
 		data.cmd = parser(&data);
 		current_cmd = data.cmd;
 
-		t_redirect *current_redirect;
-		if (!(current_cmd == NULL))
+		if (current_cmd != NULL)
 		{
-			while (current_cmd && current_cmd != NULL)
-			{	
-				// test pour print str
-				// printf("Command is");
-				// while (current_cmd->tab_cmd[i])
-				// {
-				// 	printf("%s", current_cmd->tab_cmd[i]);
-				// 	i++;
-				// }
+			while (current_cmd)
+			{
+				i = 0;
+				if (current_cmd->tab_cmd != NULL)
+				{
+					printf("Command %d is: ", current_cmd->num_cmd);
+					while (current_cmd->tab_cmd[i] != NULL)
+					{
+						printf("%s ", current_cmd->tab_cmd[i]);
+						i++;
+					}
+					printf("\n");
+				}
 				current_redirect = current_cmd->redirect;
-
 				while (current_redirect != NULL)
 				{
-					printf("Cmd type %d, string %s, num cmd %d\n", current_redirect->type, current_redirect->str, current_cmd->num_cmd);
+					printf("redirect type %d, string %s, num cmd %d\n", current_redirect->type, current_redirect->str, current_cmd->num_cmd);
 					current_redirect = current_redirect->next; 
 				}
+
 				current_cmd = current_cmd->next;
 			}
 		}
-	
 
 	}
 	return (0);
