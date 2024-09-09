@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/06 16:07:35 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/09 16:48:52 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_string.h"
 #include "parsing.h"
 
-static void	special_token(t_token **head, const char *input, int *i)
+void	special_token(t_token **head, const char *input, int *i)
 {
 	if (input[*i] == '|')
 		append_token(head, create_token(PIPE, "|"));
@@ -41,7 +41,7 @@ static void	special_token(t_token **head, const char *input, int *i)
 	}
 }
 
-static char *quote_token(char *input, int *i, char quote_type)
+char *quote_token(char *input, int *i, char quote_type)
 {
 	int		start;
 	char	*word;

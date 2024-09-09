@@ -6,7 +6,7 @@
 #    By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/06 16:08:37 by kenzo            ###   ########.fr        #
+#    Updated: 2024/09/09 17:22:40 by kenzo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PREFIX				=	[${YELLOW}${NAME}${RESET}]
 # ---------------------------------Compilation---------------------------------
 
 CC					:=	@gcc
-CFLAGS				:=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS				:=	-Wall -Wextra -Werror -g #-fsanitize=address
 RM					:=	@rm -f
 
 # ---------------------------------Librairies----------------------------------
@@ -43,7 +43,13 @@ LIBRARIES			:=	-L./${FT_FOLDER} -lft \
 NAME = minishell
 
 FILES				:=	main.c
-FILES_BUILTINS		:=
+FILES_BUILTINS		:=	ft_echo.c \
+						ft_cd.c \
+						ft_pwd.c \
+						ft_export.c \
+						ft_unset.c \
+						ft_env.c \
+						ft_exit.c
 FILES_ENV			:=
 FILES_EXEC			:=
 FILES_PARSING		:=	init_token.c \

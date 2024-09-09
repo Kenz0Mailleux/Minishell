@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/05 19:12:33 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:28:15 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-
+# define PRINT_CMD 0
+# define PRINT_TOKEN 0
+# define HISTORY_FILE ".minishell_history"
 
 typedef struct s_token		t_token;
 typedef struct s_redirect	t_redirect;
-
+typedef struct s_env		t_env;
 
 enum
 {
@@ -67,9 +69,19 @@ typedef struct s_token
 	t_token	*prev;
 }				t_token;
 
+typedef struct s_env
+{
+	char	*str;
+
+	t_env	*next;
+	t_env	*prev;
+}				t_env;
+
+
 typedef struct s_data
 {
 	int		end;
+	t_env	*env;
 	t_token	*token;
 	t_cmd	*cmd;
 }				t_data;

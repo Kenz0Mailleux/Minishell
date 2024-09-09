@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 19:23:25 by marykman          #+#    #+#             */
-/*   Updated: 2024/09/09 16:46:03 by kenzo            ###   ########.fr       */
+/*   Created: 2024/09/09 16:44:30 by kenzo             #+#    #+#             */
+/*   Updated: 2024/09/09 18:02:28 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "minishell.h"
+#include "ft_printf.h"
+#include "ft_string.h"
 
-# include "minishell.h"
+int ft_echo(char **args)
+{
+	int i;
+	int newline;
 
-t_token	*lexer(char *input);
-t_token	*create_token(int type, char *str);
-void	append_token(t_token **head, t_token *new_token);
-t_cmd	*parser(t_data *data);
-
-
-#endif
+	newline = 1;
+	i = 0;
+	if (args[++i] && !(ft_strncmp(args[i], "-n", 2)))
+		newline = 0;
+	while (args[i])
+	{
+		ft_printf("%s", args[i]);
+		if (args[i + 1])
+			ft_printf(" "); //espace car chaque command est separe par un espace
+		i++;
+	}
+	if (newline)
+		ft_printf("\n");
+	return (0);
+}

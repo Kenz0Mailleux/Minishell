@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 19:23:25 by marykman          #+#    #+#             */
-/*   Updated: 2024/09/09 16:46:03 by kenzo            ###   ########.fr       */
+/*   Created: 2024/09/09 17:21:43 by kenzo             #+#    #+#             */
+/*   Updated: 2024/09/09 18:03:51 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "builtins.h"
+#include "ft_string.h"
+#include "utils.h"
+#include <stdlib.h>
 
-# include "minishell.h"
+void ft_exit(char **args)
+{
+	int exit_code;
 
-t_token	*lexer(char *input);
-t_token	*create_token(int type, char *str);
-void	append_token(t_token **head, t_token *new_token);
-t_cmd	*parser(t_data *data);
-
-
-#endif
+	if (args[1])
+		exit_code = ft_atoi(args[1]);
+	else
+		exit_code = 0;
+	free_all(exit_code);
+}

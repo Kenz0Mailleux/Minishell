@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/03 19:23:25 by marykman          #+#    #+#             */
-/*   Updated: 2024/09/09 16:46:03 by kenzo            ###   ########.fr       */
+/*   Created: 2024/09/09 17:01:06 by kenzo             #+#    #+#             */
+/*   Updated: 2024/09/09 17:09:19 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include <stdlib.h>
+#include <unistd.h>
+#include "builtins.h"
 
-# include "minishell.h"
+int ft_pwd(void)
+{
+	char cwd[1024];
 
-t_token	*lexer(char *input);
-t_token	*create_token(int type, char *str);
-void	append_token(t_token **head, t_token *new_token);
-t_cmd	*parser(t_data *data);
-
-
-#endif
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		return (printf("%s\n", cwd), 0);
+	else
+		return (perror("pwd"), 1);
+}

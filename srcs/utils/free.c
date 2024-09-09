@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:05 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/06 16:54:08 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/09 18:05:08 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 void free_all(int succes)
 {
+	//free_token;
+	//free_cmd;
+	//free_redirect;
+	//free_env;
 	if	(succes)
 		exit(EXIT_SUCCESS);
 	else
