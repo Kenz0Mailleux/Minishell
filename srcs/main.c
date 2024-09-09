@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:47:28 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/09 18:49:25 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,18 @@ int	main(void)
 				builtin_parse(current_cmd);
 				if (PRINT_CMD == 1 && current_cmd->tab_cmd != NULL)
 				{
-					printf("Command %d is: ", current_cmd->num_cmd);
+					ft_printf("Command %d is: ", current_cmd->num_cmd);
 					while (current_cmd->tab_cmd[i] != NULL)
 					{
-						printf("%s ", current_cmd->tab_cmd[i]);
+						ft_printf("%s ", current_cmd->tab_cmd[i]);
 						i++;
 					}
-					printf("\n");
+					ft_printf("\n");
 				}
 				current_redirect = current_cmd->redirect;
 				while (PRINT_CMD == 1 && current_redirect != NULL)
 				{
-					printf("redirect type %d, string %s, num cmd %d\n", current_redirect->type, current_redirect->str, current_cmd->num_cmd);
+					ft_printf("redirect type %d, string %s, num cmd %d\n", current_redirect->type, current_redirect->str, current_cmd->num_cmd);
 					current_redirect = current_redirect->next; 
 				}
 				current_cmd = current_cmd->next;
