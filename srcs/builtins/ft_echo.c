@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:44:30 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:02:28 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/09 18:46:12 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int ft_echo(char **args)
 	int newline;
 
 	newline = 1;
-	i = 0;
-	if (args[++i] && !(ft_strncmp(args[i], "-n", 2)))
+	i = 1;
+	if (args[i] && !(ft_strncmp(args[i], "-n", 2)))
+	{
 		newline = 0;
+		i++;
+	}
 	while (args[i])
 	{
 		ft_printf("%s", args[i]);

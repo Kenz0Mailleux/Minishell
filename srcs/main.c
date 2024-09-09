@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:30:27 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/09 18:47:28 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 #include "minishell.h"
 #include "builtins.h"
 #include "ft_printf.h"
+#include "ft_string.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 void	builtin_parse(t_cmd	*current_cmd)
 {
-	if (strcmp(current_cmd->tab_cmd[0], "echo") == 0)
+	if (ft_strncmp(current_cmd->tab_cmd[0], "echo", 4) == 0)
 		ft_echo(current_cmd->tab_cmd);
-	if (strcmp(current_cmd->tab_cmd[0], "cd") == 0)
+	if (ft_strncmp(current_cmd->tab_cmd[0], "cd", 2) == 0)
 		ft_cd(current_cmd->tab_cmd);
-	if (strcmp(current_cmd->tab_cmd[0], "pwd") == 0)
+	if (ft_strncmp(current_cmd->tab_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
-	// if (strcmp(current_cmd->tab_cmd[0], "export") == 0)
+	// if (ft_strncmp(current_cmd->tab_cmd[0], "export", 0) == 0)
 	// 	ft_export();
-	// if (strcmp(current_cmd->tab_cmd[0], "unset") == 0)
+	// if (ft_strncmp(current_cmd->tab_cmd[0], "unset", 0) == 0)
 	// 	ft_unset();
-	// if (strcmp(current_cmd->tab_cmd[0], "env") == 0)
+	// if (ft_strncmp(current_cmd->tab_cmd[0], "env", 0) == 0)
 	// 	ft_env(data.env);
-	if (strcmp(current_cmd->tab_cmd[0], "exit") == 0)
+	if (ft_strncmp(current_cmd->tab_cmd[0], "exit", 4) == 0)
 		ft_exit(current_cmd->tab_cmd);
 }
 
