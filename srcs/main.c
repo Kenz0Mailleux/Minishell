@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:49:25 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 18:51:18 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,56 @@ void	builtin_parse(t_cmd	*current_cmd)
 		ft_exit(current_cmd->tab_cmd);
 }
 
+char	*get_input(char *msg)
+{
+	char	*input;
+	char	cwd[124];
 
+	if (msg != NULL)
+		ft_printf("%s", msg);
+	else
+		ft_printf("%s", getcwd(cwd, sizeof(cwd)));
+	input = readline("$ ");
+	if (input == NULL)
+		free_all(EXIT_FAILURE);
+	add_history(input);
+	return (input);
+}
+
+void print_tokens(t_token *token)
+{
+	t_token *current = token;
+	while (current != NULL)
+	{
+		printf("Token Type: %d, Value: %s\n", current->type, current->str);
+		current = current->next;
+	}
+}
+
+void print_cmd(t_cmd *cmd)
+{
+	int i = 0;
+	if (cmd->tab_cmd != NULL)
+	{
+		ft_printf("Command %d is: ", cmd->num_cmd);
+		while (cmd->tab_cmd[i] != NULL)
+		{
+			ft_printf("%s ", cmd->tab_cmd[i]);
+			i++;
+		}
+		ft_printf("\n");
+	}
+}
+
+void print_redirects(t_redirect *redirect, int num_cmd)
+{
+	t_redirect *current = redirect;
+	while (current != NULL)
+	{
+		ft_printf("redirect type %d, string %s, num cmd %d\n", current->type, current->str, num_cmd);
+		current = current->next;
+	}
+}
 int	main(void)
 {
 	t_data		data;
@@ -45,7 +94,6 @@ int	main(void)
 	t_redirect 	*current_redirect;
 	char		*input;
 	int			i;
-	char		cwd[124];
 
 	i = 0;
 	data.end = 0;
@@ -53,53 +101,34 @@ int	main(void)
 	{
 		perror("read_history");
 	}
+
 	while (!data.end)
 	{
-		ft_printf("%s", getcwd(cwd, sizeof(cwd)));
-		input = readline(" > ");
-		if (input == NULL)
-			free_all(EXIT_FAILURE);
-		add_history(input);
+		input = get_input(NULL);
 		data.token = lexer(input);
+
 		if (PRINT_TOKEN == 1)
-		{
-			t_token		*current;
-			current = data.token;
-			while (current != NULL) 
-			{
-				printf("Token Type: %d, Value: %s\n", current->type, current->str);
-				current = current->next;
-			}
-		}
+			print_tokens(data.token);
+
 		data.cmd = parser(&data);
 		current_cmd = data.cmd;
-	
-		if (current_cmd != NULL)
+
+		if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 		{
 			while (current_cmd)
 			{
 				i = 0;
-				builtin_parse(current_cmd);
-				if (PRINT_CMD == 1 && current_cmd->tab_cmd != NULL)
+				if (current_cmd->tab_cmd != NULL)
+					builtin_parse(current_cmd);
+				if (PRINT_CMD == 1)
 				{
-					ft_printf("Command %d is: ", current_cmd->num_cmd);
-					while (current_cmd->tab_cmd[i] != NULL)
-					{
-						ft_printf("%s ", current_cmd->tab_cmd[i]);
-						i++;
-					}
-					ft_printf("\n");
-				}
-				current_redirect = current_cmd->redirect;
-				while (PRINT_CMD == 1 && current_redirect != NULL)
-				{
-					ft_printf("redirect type %d, string %s, num cmd %d\n", current_redirect->type, current_redirect->str, current_cmd->num_cmd);
-					current_redirect = current_redirect->next; 
+					print_cmd(current_cmd);
+					print_redirects(current_cmd->redirect, current_cmd->num_cmd);
 				}
 				current_cmd = current_cmd->next;
 			}
 		}
-	if (write_history(HISTORY_FILE) != 0)
+		if (write_history(HISTORY_FILE) != 0)
 		{
 			perror("write_history");
 		}

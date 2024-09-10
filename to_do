@@ -1,0 +1,21 @@
+Lexer :
+traiter les quote
+
+
+Parsing :
+
+
+
+Builtin :
+ECHO -> FINI
+pwd -> FINI
+cd -> cd-- cd- et cd .. apres suppression
+exit -> faire en sorte que la valeur de exit soit bien prise en compte et parser pour un int apres exit
+
+env -> a faire
+unset -> a faire
+export -> a faire
+
+
+
+continuer le lexer, les quote etc, STRJOIN pour chain les trucs

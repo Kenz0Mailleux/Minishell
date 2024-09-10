@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/09 16:48:52 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 19:18:46 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_string.h"
 #include "parsing.h"
 
-void	special_token(t_token **head, const char *input, int *i)
+static void	special_token(t_token **head, const char *input, int *i)
 {
 	if (input[*i] == '|')
 		append_token(head, create_token(PIPE, "|"));
@@ -49,6 +49,8 @@ char *quote_token(char *input, int *i, char quote_type)
 	start = ++(*i);
 	while (input[*i] && input[*i] != quote_type)
 		(*i)++;
+	if (input[*i] != quote_type)
+		return (printf("quote not close \n"), NULL);
 	if (input[*i] == quote_type)
 	{
 		word = ft_strndup(&input[start], *i - start);
@@ -66,6 +68,7 @@ t_token	*lexer(char *input)
 	int		start;
 	int		word_len;
 	char	*word;
+	char	*temp_word;
 	char 	quote_type;
 
 	head = NULL;
@@ -78,7 +81,14 @@ t_token	*lexer(char *input)
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
 			quote_type = input[i];
-			word = quote_token(input, &i, quote_type);
+			// while (input[i] == '\'' || input[i] == '\"')
+			// {
+			// 	temp_word = quote_token(input, &i, quote_type);
+			// 	word = ft_strjoin(word, temp_word);
+
+			// }
+			word =quote_token(input, &i, quote_type);
+
 			if (word)
 			{
 				append_token(&head, create_token(CMD, word));

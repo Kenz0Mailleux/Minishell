@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/06 16:54:29 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 18:47:02 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ t_cmd *create_cmd(int num_cmd)
 	if (new_cmd == NULL)
 		free_all(EXIT_FAILURE);
 	new_cmd->tab_cmd = malloc(sizeof(char *) + 1);
+	if (new_cmd->tab_cmd == NULL)
+		free_all(EXIT_FAILURE);
+	new_cmd->tab_cmd = NULL;
 	new_cmd->tab_len = 0;
 	new_cmd->redirect = NULL;
 	new_cmd->num_cmd = num_cmd;
@@ -128,7 +131,7 @@ t_cmd *parser(t_data *data)
 	red_head = NULL;
 	while (current_token != NULL)
 	{
-		if (current_token->type == PIPE)
+		if (current_token->type == PIPE && current_token->next != NULL && current_token->next->type != PIPE)
 		{
 			num_cmd++;
 			append_cmd(&cmd_head, create_cmd(num_cmd));
@@ -141,7 +144,7 @@ t_cmd *parser(t_data *data)
 			current_cmd->tab_cmd = ft_join_tab(current_cmd->tab_cmd, current_token->str, current_cmd->tab_len);
 			(current_cmd->tab_len)++;
 		}
-		else if (current_token->type > 1 && current_token->type < 6)
+		else if (current_token->type > 1 && current_token->type < 7)
 		{
 			if (current_token->next && current_token->next->type == CMD)
 			{

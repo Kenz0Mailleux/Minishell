@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:21:43 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:03:51 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:10:51 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,4 @@ void ft_exit(char **args)
 		exit_code = 0;
 	free_all(exit_code);
 }
+//pqrser l exit et son arg

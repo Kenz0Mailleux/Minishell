@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/09 17:43:29 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:07:33 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,6 @@ int ft_cd(char **args)
 		return (perror("cd"), 1);
 	return (0);
 }
+
+
+//cd -- HOME de l'env ;;cd - cd old pwd de l'env verif ou on est quqnd on supp l endroit ou on est

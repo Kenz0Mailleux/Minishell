@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:44:30 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:46:12 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:05:26 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ft_printf.h"
-#include "ft_string.h"
+# include "minishell.h"
+# include "ft_printf.h"
+# include "ft_string.h"
+
+int	check_newline(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] && line[i] == '-')
+	{
+		i++;
+		while (line[i])
+		{
+			if (line[i] != 'n')
+				return (0);
+			i++;
+		}
+		return (1);
+	}
+	return (0);
+}
 
 int ft_echo(char **args)
 {
@@ -21,7 +40,7 @@ int ft_echo(char **args)
 
 	newline = 1;
 	i = 1;
-	if (args[i] && !(ft_strncmp(args[i], "-n", 2)))
+	while (args[i] && check_newline(args[i]))
 	{
 		newline = 0;
 		i++;

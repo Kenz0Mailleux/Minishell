@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/09 18:28:15 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/10 19:13:08 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define PRINT_CMD 0
+# define PRINT_CMD 1
 # define PRINT_TOKEN 0
 # define HISTORY_FILE ".minishell_history"
 
