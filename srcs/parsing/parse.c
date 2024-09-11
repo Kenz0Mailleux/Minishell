@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/10 18:47:02 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:16:15 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 # include "parsing.h"
 # include "utils.h"
 # include "unistd.h"
-
-
 #include <string.h>
-
 
 //init les structs cmd
 t_cmd *create_cmd(int num_cmd)
@@ -73,7 +70,6 @@ t_redirect *create_redirect(int type, char *str)
 	new_redirect->next = NULL;
 	return (new_redirect);
 }
-
 
 //permet de rajouter un redirect à la liste chainée
 void append_redirect(t_redirect **head, t_redirect *new_redirect)

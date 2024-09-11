@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/10 19:13:08 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:48:08 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define PRINT_CMD 1
-# define PRINT_TOKEN 0
+# define PRINT_CMD 0
+# define PRINT_TOKEN 1
+# define PRINT_ENV 0
 # define HISTORY_FILE ".minishell_history"
 
 typedef struct s_token		t_token;
@@ -53,6 +54,7 @@ typedef struct s_cmd
 	char			**tab_cmd;
 	int				tab_len;
 	t_redirect		*redirect;
+	t_env			*cmd_env;
 //	int				is_builtin;
 //	char			*absolute_path;
 	int				num_cmd;
@@ -71,7 +73,8 @@ typedef struct s_token
 
 typedef struct s_env
 {
-	char	*str;
+	char	*key;
+	char	*value;
 
 	t_env	*next;
 	t_env	*prev;

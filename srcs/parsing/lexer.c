@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/10 19:18:46 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:59:03 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,66 +54,126 @@ char *quote_token(char *input, int *i, char quote_type)
 	if (input[*i] == quote_type)
 	{
 		word = ft_strndup(&input[start], *i - start);
-		(*i)++;
+		++(*i);
 		return (word);
 	}
 	return (NULL);
 }
 
-t_token	*lexer(char *input)
+
+void modify_str_token(t_token **head, char *new_str)
+{
+	t_token	*current;
+
+	current = *head;
+	while (current->next != NULL)
+	{
+		current = current->next;
+	}
+	ft_strjoin(current->str, new_str);
+}
+
+
+char *check_env_var(char *str)
+{
+	int	j;
+
+	j = 0;
+	while (str[j] && str[j])
+	{
+
+	}
+}
+
+t_token *lexer(char *input)
 {
 	t_token	*head;
 	int		i;
 	int		len;
 	int		start;
-	int		word_len;
 	char	*word;
-	char	*temp_word;
-	char 	quote_type;
+	char	quote_type;
+	char	*quoted_word;
+	char	*non_quoted_word;
+	char	*env_value;
+	//char	*temp; pour free word?
 
 	head = NULL;
-	len = ft_strlen(input);
 	i = 0;
+	len = ft_strlen(input);
+	word = NULL;
 	while (i < len)
 	{
 		if (ft_isspace(input[i]))
-			i++;
-		else if (input[i] == '\'' || input[i] == '\"')
 		{
-			quote_type = input[i];
-			// while (input[i] == '\'' || input[i] == '\"')
-			// {
-			// 	temp_word = quote_token(input, &i, quote_type);
-			// 	word = ft_strjoin(word, temp_word);
-
-			// }
-			word =quote_token(input, &i, quote_type);
-
 			if (word)
 			{
 				append_token(&head, create_token(CMD, word));
 				free(word);
+				word = NULL;
+			}
+			i++;
+		}
+		else if (input[i] == '\'' || input[i] == '\"')
+		{
+			quote_type = input[i];
+			quoted_word = quote_token(input, &i, quote_type);
+			if (!quoted_word)
+				return (NULL);
+			if (!word)
+				word = quoted_word;
+			else
+			{
+				word = ft_strjoin(word, quoted_word);
+				//verif si null?
+				//utiliser une temp pour free word?
+				// free(quoted_word);
 			}
 		}
+		//
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
+			if (word)
+			{
+				append_token(&head, create_token(CMD, word));
+				// free(word);
+				word = NULL;
+			}
 			special_token(&head, input, &i);
 			i++;
 		}
 		else
 		{
 			start = i;
+			//va chercher le mot en entier tant quil rencontre pas un caractere sp2cial
 			while (i < len && !ft_isspace(input[i]) && input[i] != '|' &&
-				input[i] != '>' && input[i] != '<')
-				i++;
-			word_len = i - start;
-			word = ft_strndup(&input[start], word_len);
-			if (word)
+				input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
 			{
-				append_token(&head, create_token(CMD, word));
-				free(word);
+				if (input[i] == '$')
+				{
+					check_env_var(&input[i]);
+				}
+				i++;
+			}
+			//trouve le mot sans quote, mais cree pas de token au cas ou y a une quote juste apres
+			non_quoted_word = ft_strndup(&input[start], i - start);
+			//verif si null?
+			if (!word)
+				word = non_quoted_word; //car besoin d une base a join
+			else
+			{
+				word = ft_strjoin(word, non_quoted_word);
+				//free(non_quoted_word);
+				//utiliser une temp pour free word?
 			}
 		}
 	}
+	if (word)
+	{
+		append_token(&head, create_token(CMD, word));
+		//verif si null?
+		// free(word);
+	}
 	return (head);
 }
+

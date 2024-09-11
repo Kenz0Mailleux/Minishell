@@ -19,3 +19,7 @@ export -> a faire
 
 
 continuer le lexer, les quote etc, STRJOIN pour chain les trucs
+
+
+
+pour l env, il faut que je check si y a un dollar, et si c'est un env tant que cest un digit un alph ou un underscore

@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/10 18:51:18 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:28:31 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "ft_printf.h"
 #include "ft_string.h"
+#include "env.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -87,21 +88,31 @@ void print_redirects(t_redirect *redirect, int num_cmd)
 		current = current->next;
 	}
 }
-int	main(void)
+int	main(int argc, char *argv[], char *env[])
 {
 	t_data		data;
 	t_cmd		*current_cmd;
 	t_redirect 	*current_redirect;
+	t_env		*current_env;
 	char		*input;
 	int			i;
 
+	(void)argc;
+	(void)argv;
+	
+ 	data.env = parse_env(&data, env);
+	current_env = data.env;
+	while (PRINT_ENV == 1 && current_env != NULL)
+	{
+		printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
+		current_env = current_env->next;
+	}
 	i = 0;
 	data.end = 0;
 	if (read_history(HISTORY_FILE) != 0)
 	{
 		perror("read_history");
 	}
-
 	while (!data.end)
 	{
 		input = get_input(NULL);
@@ -112,7 +123,6 @@ int	main(void)
 
 		data.cmd = parser(&data);
 		current_cmd = data.cmd;
-
 		if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 		{
 			while (current_cmd)
