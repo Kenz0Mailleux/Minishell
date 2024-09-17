@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/11 17:49:12 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:01:41 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,23 @@ void append_token(t_token **head, t_token *new_token)
 		new_token->prev = current;
 	}
 }
+
+// void append_env_token(t_token **head, t_env *new_env)
+// {
+// 	t_token	*current_token;
+// 	t_env	*current_env;
+
+// 	if (*head == NULL)
+// 		*head = new_env;
+// 	else
+// 	{
+// 		current_token = *head;
+// 		while (current_token->next != NULL)
+// 			current_token = current_token->next;
+// 		current_env = current_token->env;
+// 		while (current_env->next != NULL)
+// 			current_env = current_env->next;
+// 		current_env->next = new_env;
+// 		new_env->prev = current_env;
+// 	}
+// }

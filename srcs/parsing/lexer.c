@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/11 18:59:03 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:13:54 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_ctype.h"
 #include "ft_string.h"
 #include "parsing.h"
+#include "env.h"
 
 static void	special_token(t_token **head, const char *input, int *i)
 {
@@ -85,6 +86,17 @@ char *check_env_var(char *str)
 	}
 }
 
+char *get_env(char *str)
+{
+	int i;
+	
+	i = 1;
+	while (str[i] && (isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (ft_substr(str, 0, i));
+}
+
+
 t_token *lexer(char *input)
 {
 	t_token	*head;
@@ -151,7 +163,8 @@ t_token *lexer(char *input)
 			{
 				if (input[i] == '$')
 				{
-					check_env_var(&input[i]);
+					//stocker qlq part
+					ft_printf("%s\n", get_env(&input[i]));
 				}
 				i++;
 			}

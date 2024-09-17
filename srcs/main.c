@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/11 18:28:31 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:46:44 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,13 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	
- 	data.env = parse_env(&data, env);
-	current_env = data.env;
+ 	// data.env = parse_env(&data, env);
+	// current_env = data.env;
 	while (PRINT_ENV == 1 && current_env != NULL)
 	{
+
+		data.env = parse_env(&data, env);
+		current_env = data.env;
 		printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
 		current_env = current_env->next;
 	}
