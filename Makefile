@@ -6,7 +6,7 @@
 #    By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/11 18:10:50 by kmailleu         ###   ########.fr        #
+#    Updated: 2024/09/17 16:27:35 by kmailleu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ FILES_BUILTINS		:=	ft_echo.c \
 						ft_unset.c \
 						ft_env.c \
 						ft_exit.c
-FILES_ENV			:=	init_env.c
+FILES_ENV			:=	init_env.c\
+						expander.c 
 FILES_EXEC			:=
 FILES_PARSING		:=	init_token.c \
 						lexer.c \

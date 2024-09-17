@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/12 17:13:54 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:41:25 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_ctype.h"
 #include "ft_string.h"
+#include "ft_printf.h"
 #include "parsing.h"
 #include "env.h"
+#include <unistd.h>
 
 static void	special_token(t_token **head, const char *input, int *i)
 {
@@ -74,53 +76,41 @@ void modify_str_token(t_token **head, char *new_str)
 	ft_strjoin(current->str, new_str);
 }
 
-
-char *check_env_var(char *str)
-{
-	int	j;
-
-	j = 0;
-	while (str[j] && str[j])
-	{
-
-	}
-}
-
 char *get_env(char *str)
 {
 	int i;
 	
 	i = 1;
-	while (str[i] && (isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	return (ft_substr(str, 0, i));
+	return (ft_substr(str, 1, i)); //si je veux le dollar ou pas faux changer le 1 a 0
 }
 
-
-t_token *lexer(char *input)
+t_token *lexer(t_data *data, char *input)
 {
-	t_token	*head;
-	int		i;
-	int		len;
-	int		start;
+	int 	i;
+	int 	len;
+	int 	start;
 	char	*word;
 	char	quote_type;
 	char	*quoted_word;
 	char	*non_quoted_word;
 	char	*env_value;
-	//char	*temp; pour free word?
+	//char    *temp; pour free word?
 
-	head = NULL;
+	data->token = NULL; // Réinitialisation de la liste des tokens et donc peut etre free les autres ici?
+	data->env_cmd = NULL;
 	i = 0;
 	len = ft_strlen(input);
 	word = NULL;
+
 	while (i < len)
 	{
 		if (ft_isspace(input[i]))
 		{
 			if (word)
 			{
-				append_token(&head, create_token(CMD, word));
+				append_token(&data->token, create_token(CMD, word));
 				free(word);
 				word = NULL;
 			}
@@ -142,37 +132,35 @@ t_token *lexer(char *input)
 				// free(quoted_word);
 			}
 		}
-		//
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
 			if (word)
 			{
-				append_token(&head, create_token(CMD, word));
+				append_token(&data->token, create_token(CMD, word));
 				// free(word);
 				word = NULL;
 			}
-			special_token(&head, input, &i);
+			special_token(&data->token, input, &i);
 			i++;
 		}
 		else
 		{
 			start = i;
-			//va chercher le mot en entier tant quil rencontre pas un caractere sp2cial
+			//va chercher le mot en entier tant qu'il ne rencontre pas un caractère spécial
 			while (i < len && !ft_isspace(input[i]) && input[i] != '|' &&
-				input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
+					input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
 			{
 				if (input[i] == '$')
 				{
-					//stocker qlq part
-					ft_printf("%s\n", get_env(&input[i]));
+					append_env(&data->env_cmd, create_env(get_env(&input[i]), NULL));
 				}
 				i++;
 			}
-			//trouve le mot sans quote, mais cree pas de token au cas ou y a une quote juste apres
+			//trouve le mot sans quote, mais ne crée pas de token au cas où il y a une quote juste après
 			non_quoted_word = ft_strndup(&input[start], i - start);
 			//verif si null?
 			if (!word)
-				word = non_quoted_word; //car besoin d une base a join
+				word = non_quoted_word; //besoin d'une base à join
 			else
 			{
 				word = ft_strjoin(word, non_quoted_word);
@@ -183,10 +171,10 @@ t_token *lexer(char *input)
 	}
 	if (word)
 	{
-		append_token(&head, create_token(CMD, word));
+		append_token(&data->token, create_token(CMD, word));
 		//verif si null?
 		// free(word);
 	}
-	return (head);
+	return (data->token);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/12 16:46:44 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:56:07 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include "utils.h"
 #include "minishell.h"
 #include "builtins.h"
+#include "env.h"
+
 #include "ft_printf.h"
 #include "ft_string.h"
-#include "env.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -59,7 +60,7 @@ void print_tokens(t_token *token)
 	t_token *current = token;
 	while (current != NULL)
 	{
-		printf("Token Type: %d, Value: %s\n", current->type, current->str);
+		ft_printf("Token Type: %d, Value: %s\n", current->type, current->str);
 		current = current->next;
 	}
 }
@@ -72,7 +73,7 @@ void print_cmd(t_cmd *cmd)
 		ft_printf("Command %d is: ", cmd->num_cmd);
 		while (cmd->tab_cmd[i] != NULL)
 		{
-			ft_printf("%s ", cmd->tab_cmd[i]);
+			ft_printf(">%s ", cmd->tab_cmd[i]);
 			i++;
 		}
 		ft_printf("\n");
@@ -84,10 +85,22 @@ void print_redirects(t_redirect *redirect, int num_cmd)
 	t_redirect *current = redirect;
 	while (current != NULL)
 	{
-		ft_printf("redirect type %d, string %s, num cmd %d\n", current->type, current->str, num_cmd);
+		// ft_printf("redirect type %d, string %s, num cmd %d\n", current->type, current->str, num_cmd);
 		current = current->next;
 	}
 }
+
+void print_env(t_env *env)
+{
+	t_env *current_env = env;
+	while (PRINT_ENV_CMD == 1 && current_env != NULL)
+	{
+		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
+
+		current_env = current_env->next;
+	}
+}
+
 int	main(int argc, char *argv[], char *env[])
 {
 	t_data		data;
@@ -99,15 +112,13 @@ int	main(int argc, char *argv[], char *env[])
 
 	(void)argc;
 	(void)argv;
-	
- 	// data.env = parse_env(&data, env);
-	// current_env = data.env;
+
+	data.env_all = parse_env(&data, env);
+	current_env = data.env_all;
 	while (PRINT_ENV == 1 && current_env != NULL)
 	{
 
-		data.env = parse_env(&data, env);
-		current_env = data.env;
-		printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
+		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
 		current_env = current_env->next;
 	}
 	i = 0;
@@ -119,13 +130,18 @@ int	main(int argc, char *argv[], char *env[])
 	while (!data.end)
 	{
 		input = get_input(NULL);
-		data.token = lexer(input);
-
+		lexer(&data, input);
 		if (PRINT_TOKEN == 1)
 			print_tokens(data.token);
-
+		set_value(data.env_all, data.env_cmd);
+		if (PRINT_ENV_CMD == 1)
+			print_env(data.env_cmd);
 		data.cmd = parser(&data);
 		current_cmd = data.cmd;
+		replace_env(&data);
+
+
+
 		if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 		{
 			while (current_cmd)

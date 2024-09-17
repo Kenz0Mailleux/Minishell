@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/11 18:22:47 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:21:26 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "utils.h"
 #include <stdlib.h>
 
+#include <unistd.h>
+
 t_env *create_env(char *key, char *value)
 {
 	t_env	*new_env;
@@ -24,9 +26,16 @@ t_env *create_env(char *key, char *value)
 	if (new_env == NULL)
 		free_all(EXIT_FAILURE);
 	new_env->key = ft_strdup(key);
-	new_env->value = ft_strdup(value);
-	if (new_env->key == NULL || new_env->value == NULL)
+	if (new_env->key == NULL)
 		free_all(EXIT_FAILURE);
+	if (value == NULL)
+		new_env->value = "";
+	else if (value != NULL)
+	{
+		new_env->value = ft_strdup(value);
+		if (new_env->value == NULL)
+			free_all(EXIT_FAILURE);
+	}
 	new_env->prev = NULL;
 	new_env->next = NULL;
 	return (new_env);
@@ -77,7 +86,8 @@ t_env *parse_env(t_data *data, char **tab_env)
 	int	i;
 	t_env *head;
 
-	head = data->env;
+	head = data->env_all;
+	i = 0;
 	while (tab_env[i])
 	{
 		append_env(&head, create_env(key_find(tab_env[i]), value_find(tab_env[i])));

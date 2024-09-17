@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/12 16:51:18 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:57:09 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define PRINT_CMD 0
-# define PRINT_TOKEN 1
+
+/*			TEST		*/
+# define PRINT_CMD 1
+# define PRINT_TOKEN 0
 # define PRINT_ENV 0
+# define PRINT_ENV_CMD 0
 # define HISTORY_FILE ".minishell_history"
 
 typedef struct s_token		t_token;
@@ -85,7 +88,8 @@ typedef struct s_env
 typedef struct s_data
 {
 	int		end;
-	t_env	*env;
+	t_env	*env_all;
+	t_env	*env_cmd;
 	t_token	*token;
 	t_cmd	*cmd;
 }				t_data;
