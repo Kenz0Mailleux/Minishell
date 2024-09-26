@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/17 17:56:07 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:58:40 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,26 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	builtin_parse(t_cmd	*current_cmd)
+#include <unistd.h>  // Pour 'environ'
+
+extern char **environ;
+
+void	builtin_parse(t_data *data)
 {
-	if (ft_strncmp(current_cmd->tab_cmd[0], "echo", 4) == 0)
-		ft_echo(current_cmd->tab_cmd);
-	if (ft_strncmp(current_cmd->tab_cmd[0], "cd", 2) == 0)
-		ft_cd(current_cmd->tab_cmd);
-	if (ft_strncmp(current_cmd->tab_cmd[0], "pwd", 3) == 0)
+	if (ft_strncmp(data->cmd->tab_cmd[0], "echo", 4) == 0)
+		ft_echo(data->cmd->tab_cmd);
+	if (ft_strncmp(data->cmd->tab_cmd[0], "cd", 2) == 0)
+		ft_cd(data->cmd->tab_cmd);
+	if (ft_strncmp(data->cmd->tab_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
 	// if (ft_strncmp(current_cmd->tab_cmd[0], "export", 0) == 0)
 	// 	ft_export();
 	// if (ft_strncmp(current_cmd->tab_cmd[0], "unset", 0) == 0)
 	// 	ft_unset();
-	// if (ft_strncmp(current_cmd->tab_cmd[0], "env", 0) == 0)
-	// 	ft_env(data.env);
-	if (ft_strncmp(current_cmd->tab_cmd[0], "exit", 4) == 0)
-		ft_exit(current_cmd->tab_cmd);
+	if (ft_strncmp(data->cmd->tab_cmd[0], "env", 3) == 0)
+		ft_env(data);
+	if (ft_strncmp(data->cmd->tab_cmd[0], "exit", 4) == 0)
+		ft_exit(data->cmd->tab_cmd);
 }
 
 char	*get_input(char *msg)
@@ -44,11 +48,11 @@ char	*get_input(char *msg)
 	char	*input;
 	char	cwd[124];
 
-	if (msg != NULL)
-		ft_printf("%s", msg);
-	else
-		ft_printf("%s", getcwd(cwd, sizeof(cwd)));
-	input = readline("$ ");
+	// if (msg != NULL)
+	// 	ft_printf("%s", msg);
+	// else
+	// 	ft_printf("%s", getcwd(cwd, sizeof(cwd)));
+	input = readline("Minishell$ ");
 	if (input == NULL)
 		free_all(EXIT_FAILURE);
 	add_history(input);
@@ -85,7 +89,7 @@ void print_redirects(t_redirect *redirect, int num_cmd)
 	t_redirect *current = redirect;
 	while (current != NULL)
 	{
-		// ft_printf("redirect type %d, string %s, num cmd %d\n", current->type, current->str, num_cmd);
+		ft_printf("redirect type %d, string %s, num cmd %d\n", current->type, current->str, num_cmd);
 		current = current->next;
 	}
 }
@@ -101,7 +105,7 @@ void print_env(t_env *env)
 	}
 }
 
-int	main(int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[])
 {
 	t_data		data;
 	t_cmd		*current_cmd;
@@ -109,6 +113,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_env		*current_env;
 	char		*input;
 	int			i;
+	char **env = environ;
 
 	(void)argc;
 	(void)argv;
@@ -130,31 +135,36 @@ int	main(int argc, char *argv[], char *env[])
 	while (!data.end)
 	{
 		input = get_input(NULL);
-		lexer(&data, input);
-		if (PRINT_TOKEN == 1)
-			print_tokens(data.token);
-		set_value(data.env_all, data.env_cmd);
-		if (PRINT_ENV_CMD == 1)
-			print_env(data.env_cmd);
-		data.cmd = parser(&data);
-		current_cmd = data.cmd;
-		replace_env(&data);
-
-
-
-		if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
+		if (input[0])
 		{
-			while (current_cmd)
+			if (lexer(&data, input) != NULL)
 			{
-				i = 0;
-				if (current_cmd->tab_cmd != NULL)
-					builtin_parse(current_cmd);
-				if (PRINT_CMD == 1)
+				if (PRINT_TOKEN == 1)
+				print_tokens(data.token);
+				set_value(data.env_all, data.env_cmd);
+				if (PRINT_ENV_CMD == 1)
+					print_env(data.env_cmd);
+				data.cmd = parser(&data);
+				current_cmd = data.cmd;
+				replace_env(&data);
+
+				if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 				{
-					print_cmd(current_cmd);
-					print_redirects(current_cmd->redirect, current_cmd->num_cmd);
+					while (current_cmd)
+					{
+						i = 0;
+						if (current_cmd->tab_cmd != NULL)
+						{
+							builtin_parse(&data);
+						}
+						if (PRINT_CMD == 1)
+						{
+							print_cmd(current_cmd);
+							print_redirects(current_cmd->redirect, current_cmd->num_cmd);
+						}
+						current_cmd = current_cmd->next;
+					}
 				}
-				current_cmd = current_cmd->next;
 			}
 		}
 		if (write_history(HISTORY_FILE) != 0)

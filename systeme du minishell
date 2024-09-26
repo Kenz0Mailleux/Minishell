@@ -77,9 +77,11 @@ Les variables d'environnement sont gérées sous forme de listes chaînées et s
 
 ### Récapitulatif pour un Collaborateur (Exécuteur)
 
-Le shell est organisé en plusieurs structures chaînées pour gérer efficacement les commandes, arguments, redirections, et variables d'environnement. L'exécuteur devra :
+Ton shell est organisé en plusieurs structures chaînées pour gérer efficacement les commandes, arguments, redirections, et variables d'environnement. L'exécuteur devra :
 
 - **Parcourir la liste des commandes (`t_cmd`)** pour chaque commande dans la ligne d'entrée.
 - **Gérer les redirections (`t_redirect`)** associées à chaque commande avant son exécution.
 - **Traiter les variables d'environnement** dans chaque commande en utilisant les expansions nécessaires.
 - **Lier les commandes par des pipes**, en utilisant les pointeurs `next` et `prev` dans la liste chaînée `t_cmd`.
+
+Ce système est flexible et modulaire, permettant de traiter des commandes complexes avec plusieurs arguments, redirections, et pipes, tout en respectant la gestion des variables d'environnement.

@@ -1,24 +1,28 @@
-Lexer :
-traiter les quote
+Lexer : manque la norme
+FINI
 
+Parsing : manque la norme
+FINI
 
-Parsing :
-
+EXPANDER : manque la norme
+FINI
+remarque -> probleme cas speciaux, :echo $USER $USERNAME = print: kenzo kenzoNAME
+									alors que ça doit print kenzo kenzo, dans l'ordre inverse ça fait le taff normalement
 
 
 Builtin :
 ECHO -> FINI
 pwd -> FINI
 cd -> cd-- cd- et cd .. apres suppression
-exit -> faire en sorte que la valeur de exit soit bien prise en compte et parser pour un int apres exit
+exit -> FINI
+env -> FINI
+unset -> à faire
+export -> à faire
 
-env -> a faire
-unset -> a faire
-export -> a faire
+EXEC :
+Toujours pas de mate à l'horizon
 
-
-
-continuer le lexer, les quote etc, STRJOIN pour chain les trucs
+update, un Jesus sauvage est apparu et va faire mon exec
 
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/17 16:41:25 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:54:00 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char *get_env(char *str)
 	i = 1;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	return (ft_substr(str, 1, i)); //si je veux le dollar ou pas faux changer le 1 a 0
+	return (ft_substr(str, 1, i - 1)); //si je veux le dollar ou pas faux changer le 1 a 0
 }
 
 t_token *lexer(t_data *data, char *input)
