@@ -83,3 +83,6 @@ Le shell est organisé en plusieurs structures chaînées pour gérer efficaceme
 - **Gérer les redirections (`t_redirect`)** associées à chaque commande avant son exécution.
 - **Traiter les variables d'environnement** dans chaque commande en utilisant les expansions nécessaires.
 - **Lier les commandes par des pipes**, en utilisant les pointeurs `next` et `prev` dans la liste chaînée `t_cmd`.
+
+
+### Pour voir mieux ce qui se passe dans le code, modifier la valeur des variables fixe PRINT_***
