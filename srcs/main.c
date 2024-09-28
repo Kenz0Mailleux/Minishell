@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/28 16:21:57 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 16:40:14 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 #include <unistd.h>  // Pour 'environ'
 
-extern char **environ;
+// extern char **environ;
 
 void	builtin_parse(t_cmd *cmd, t_data *data)
 {
@@ -106,7 +106,7 @@ void print_env(t_env *env)
 	}
 }
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **env)
 {
 	t_data		data;
 	t_cmd		*current_cmd;
@@ -114,7 +114,6 @@ int	main(int argc, char *argv[])
 	t_env		*current_env;
 	char		*input;
 	int			i;
-	char **env = environ;
 
 	(void)argc;
 	(void)argv;
