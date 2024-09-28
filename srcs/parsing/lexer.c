@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/26 14:54:00 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:24:24 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,12 @@ t_token *lexer(t_data *data, char *input)
 		{
 			if (word)
 			{
+
 				append_token(&data->token, create_token(CMD, word));
 				// free(word);
 				word = NULL;
+				special_token(&data->token, input, &i);
 			}
-			special_token(&data->token, input, &i);
 			i++;
 		}
 		else
@@ -150,11 +151,12 @@ t_token *lexer(t_data *data, char *input)
 			while (i < len && !ft_isspace(input[i]) && input[i] != '|' &&
 					input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
 			{
-				if (input[i] == '$')
+				if (input[i] == '$' && input[i + 1] != NULL)
 				{
 					append_env(&data->env_cmd, create_env(get_env(&input[i]), NULL));
+				
 				}
-				i++;
+				i++;	
 			}
 			//trouve le mot sans quote, mais ne crée pas de token au cas où il y a une quote juste après
 			non_quoted_word = ft_strndup(&input[start], i - start);

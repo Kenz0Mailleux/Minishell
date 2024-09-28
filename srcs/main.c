@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/26 14:58:40 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:06:42 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int	main(int argc, char *argv[])
 						i = 0;
 						if (current_cmd->tab_cmd != NULL)
 						{
+							//appeler les execs ici
 							builtin_parse(&data);
 						}
 						if (PRINT_CMD == 1)
@@ -163,10 +164,12 @@ int	main(int argc, char *argv[])
 							print_redirects(current_cmd->redirect, current_cmd->num_cmd);
 						}
 						current_cmd = current_cmd->next;
+
 					}
 				}
 			}
 		}
+		
 		if (write_history(HISTORY_FILE) != 0)
 		{
 			perror("write_history");
