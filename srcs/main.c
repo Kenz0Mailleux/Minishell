@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/28 15:06:42 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 16:21:57 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@
 
 extern char **environ;
 
-void	builtin_parse(t_data *data)
+void	builtin_parse(t_cmd *cmd, t_data *data)
 {
-	if (ft_strncmp(data->cmd->tab_cmd[0], "echo", 4) == 0)
-		ft_echo(data->cmd->tab_cmd);
-	if (ft_strncmp(data->cmd->tab_cmd[0], "cd", 2) == 0)
-		ft_cd(data->cmd->tab_cmd);
-	if (ft_strncmp(data->cmd->tab_cmd[0], "pwd", 3) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "echo", 4) == 0)
+		ft_echo(cmd->tab_cmd);
+	if (ft_strncmp(cmd->tab_cmd[0], "cd", 2) == 0)
+		ft_cd(cmd->tab_cmd);
+	if (ft_strncmp(cmd->tab_cmd[0], "pwd", 3) == 0)
 		ft_pwd();
 	// if (ft_strncmp(current_cmd->tab_cmd[0], "export", 0) == 0)
 	// 	ft_export();
 	// if (ft_strncmp(current_cmd->tab_cmd[0], "unset", 0) == 0)
 	// 	ft_unset();
-	if (ft_strncmp(data->cmd->tab_cmd[0], "env", 3) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "env", 3) == 0)
 		ft_env(data);
-	if (ft_strncmp(data->cmd->tab_cmd[0], "exit", 4) == 0)
-		ft_exit(data->cmd->tab_cmd);
+	if (ft_strncmp(cmd->tab_cmd[0], "exit", 4) == 0)
+		ft_exit(cmd->tab_cmd);
 }
 
 char	*get_input(char *msg)
@@ -72,16 +72,17 @@ void print_tokens(t_token *token)
 void print_cmd(t_cmd *cmd)
 {
 	int i = 0;
+
+	ft_printf("Command %d is: ", cmd->num_cmd);
 	if (cmd->tab_cmd != NULL)
 	{
-		ft_printf("Command %d is: ", cmd->num_cmd);
 		while (cmd->tab_cmd[i] != NULL)
 		{
-			ft_printf(">%s ", cmd->tab_cmd[i]);
+			ft_printf("%s ", cmd->tab_cmd[i]);
 			i++;
 		}
-		ft_printf("\n");
 	}
+	ft_printf("\n");
 }
 
 void print_redirects(t_redirect *redirect, int num_cmd)
@@ -140,14 +141,13 @@ int	main(int argc, char *argv[])
 			if (lexer(&data, input) != NULL)
 			{
 				if (PRINT_TOKEN == 1)
-				print_tokens(data.token);
+					print_tokens(data.token);
 				set_value(data.env_all, data.env_cmd);
 				if (PRINT_ENV_CMD == 1)
 					print_env(data.env_cmd);
 				data.cmd = parser(&data);
 				current_cmd = data.cmd;
-				replace_env(&data);
-
+				//replace_env(&data);
 				if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 				{
 					while (current_cmd)
@@ -156,7 +156,8 @@ int	main(int argc, char *argv[])
 						if (current_cmd->tab_cmd != NULL)
 						{
 							//appeler les execs ici
-							builtin_parse(&data);
+							
+							builtin_parse(current_cmd, &data);
 						}
 						if (PRINT_CMD == 1)
 						{
@@ -164,7 +165,6 @@ int	main(int argc, char *argv[])
 							print_redirects(current_cmd->redirect, current_cmd->num_cmd);
 						}
 						current_cmd = current_cmd->next;
-
 					}
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:34 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/26 14:37:09 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:28:34 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void ft_env(t_data *data)
 
 	while (current_env != NULL)
 	{
-		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
+		ft_printf("%s=%s\n", current_env->key, current_env->value);
 		current_env = current_env->next;
 	}
 }

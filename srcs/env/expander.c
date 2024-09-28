@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/26 15:06:31 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:52:10 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void replace_env(t_data *data)
 
 	current_env = data->env_cmd;
 	current_cmd = data->cmd;
+	
 	while (current_cmd)
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/26 15:21:57 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 16:20:18 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define EXIT_FAILURE 1
 
 /*			TEST		*/
-# define PRINT_CMD 0
+# define PRINT_CMD 1
 # define PRINT_TOKEN 0
 # define PRINT_ENV 0
 # define PRINT_ENV_CMD 0
@@ -36,8 +36,8 @@ enum
 	CMD, 
 	APPEND, // >>
 	HEREDOC,// <<
-	REDIRECT_IN, // >
-	REDIRECT_OUT, // <      #analyser ce quil y a apres et lui donner son type genre >> oui, oui a le type de >>
+	REDIRECT_IN, // <
+	REDIRECT_OUT, // >      #analyser ce quil y a apres et lui donner son type genre >> oui, oui a le type de >>
 	PIPE, // |
 	END = 7 // fin 
 };

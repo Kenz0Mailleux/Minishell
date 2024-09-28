@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/28 15:24:24 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/28 15:47:17 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,11 @@ t_token *lexer(t_data *data, char *input)
 		{
 			if (word)
 			{
-
 				append_token(&data->token, create_token(CMD, word));
 				// free(word);
 				word = NULL;
-				special_token(&data->token, input, &i);
 			}
+			special_token(&data->token, input, &i);
 			i++;
 		}
 		else
