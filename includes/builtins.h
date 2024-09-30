@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 19:26:23 by marykman          #+#    #+#             */
-/*   Updated: 2024/09/26 13:27:47 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/30 14:56:46 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int ft_cd(char **args);
 int	ft_pwd(void);
 void	ft_env(t_data *data); 
 // int	ft_unset();
-// int	ft_export();
+void ft_export(t_data *data, char **args);
 void ft_exit(char **args);
 
 #endif

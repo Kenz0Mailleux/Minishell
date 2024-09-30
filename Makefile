@@ -6,7 +6,7 @@
 #    By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/17 16:27:35 by kmailleu         ###   ########.fr        #
+#    Updated: 2024/09/30 14:51:02 by kmailleu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ FILES_EXEC			:=
 FILES_PARSING		:=	init_token.c \
 						lexer.c \
 						parse.c
-FILES_UTILS			:=	free.c
+FILES_UTILS			:=	free.c \
+						utils.c
 
 SRCS				:=	$(addprefix srcs/,${FILES})
 SRCS				+=	$(addprefix srcs/builtins/,${FILES_BUILTINS})

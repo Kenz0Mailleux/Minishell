@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/28 16:24:29 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:52:32 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define EXIT_FAILURE 1
 
 /*			TEST		*/
-# define PRINT_CMD 0
+# define PRINT_CMD 1
 # define PRINT_TOKEN 0
 # define PRINT_ENV 0
 # define PRINT_ENV_CMD 0

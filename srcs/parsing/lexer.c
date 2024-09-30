@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/28 15:47:17 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/09/30 16:46:34 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,15 @@ char *get_env(char *str)
 
 t_token *lexer(t_data *data, char *input)
 {
-	int 	i;
-	int 	len;
-	int 	start;
+	int		i;
+	int		len;
+	int		start;
 	char	*word;
 	char	quote_type;
 	char	*quoted_word;
 	char	*non_quoted_word;
-	char	*env_value;
-	//char    *temp; pour free word?
+	//char	*env_value;
+	//char	*temp; pour free word?
 
 	data->token = NULL; // Réinitialisation de la liste des tokens et donc peut etre free les autres ici?
 	data->env_cmd = NULL;
@@ -150,10 +150,9 @@ t_token *lexer(t_data *data, char *input)
 			while (i < len && !ft_isspace(input[i]) && input[i] != '|' &&
 					input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
 			{
-				if (input[i] == '$' && input[i + 1] != NULL)
+				if (input[i] == '$' && input[i + 1] != 0)
 				{
 					append_env(&data->env_cmd, create_env(get_env(&input[i]), NULL));
-				
 				}
 				i++;	
 			}
