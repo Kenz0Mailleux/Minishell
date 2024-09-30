@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:07:22 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:27:59 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@
 
 void	builtin_parse(t_cmd *cmd, t_data *data)
 {
-	if (ft_strncmp(cmd->tab_cmd[0], "echo", 4) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "echo", 5) == 0)
 		ft_echo(cmd->tab_cmd);
-	if (ft_strncmp(cmd->tab_cmd[0], "cd", 2) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->tab_cmd);
-	if (ft_strncmp(cmd->tab_cmd[0], "pwd", 3) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "pwd", 4) == 0)
 		ft_pwd();
-	if (ft_strncmp(cmd->tab_cmd[0], "export", 6) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "export", 7) == 0)
 		ft_export(data, cmd->tab_cmd);
 	// if (ft_strncmp(current_cmd->tab_cmd[0], "unset", 0) == 0)
 	// 	ft_unset();
-	if (ft_strncmp(cmd->tab_cmd[0], "env", 3) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0) 
 		ft_env(data);
-	if (ft_strncmp(cmd->tab_cmd[0], "exit", 4) == 0)
+	if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
 		ft_exit(cmd->tab_cmd);
 }
 
@@ -122,7 +122,6 @@ int	main(int argc, char *argv[], char **env)
 	current_env = data.env_all;
 	while (PRINT_ENV == 1 && current_env != NULL)
 	{
-
 		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
 		current_env = current_env->next;
 	}
