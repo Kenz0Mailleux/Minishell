@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+         #
+#    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/17 16:27:35 by kmailleu         ###   ########.fr        #
+#    Updated: 2024/09/30 17:40:51 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,10 @@ FILES_EXEC			:=
 FILES_PARSING		:=	init_token.c \
 						lexer.c \
 						parse.c
-FILES_UTILS			:=	free.c
+FILES_UTILS			:=	free.
+FILES_SIGNALS		:=	signals.c
+FILES_GNL			:=	get_next_lines_utils.c \
+						get_next_lines.c
 
 SRCS				:=	$(addprefix srcs/,${FILES})
 SRCS				+=	$(addprefix srcs/builtins/,${FILES_BUILTINS})
@@ -64,6 +67,10 @@ SRCS				+=	$(addprefix srcs/env/,${FILES_ENV})
 SRCS				+=	$(addprefix srcs/exec/,${FILES_EXEC})
 SRCS				+=	$(addprefix srcs/parsing/,${FILES_PARSING})
 SRCS				+=	$(addprefix srcs/utils/,${FILES_UTILS})
+SRCS				+=	$(addprefix srcs/signals/,${FILES_SIGNALS})
+SRCS				+=	$(addprefix srcs/gnl/,${FILES_GNL})
+
+
 OBJS				:=	$(patsubst srcs%.c, objs%.o, ${SRCS})
 
 # Header files
@@ -72,7 +79,10 @@ FILES				:=	minishell.h \
 						env.h \
 						exec.h \
 						parsing.h \
-						utils.h
+						utils.h \
+						signaling.h \
+						get_next_lines.h
+						
 HEADERS				:=	$(addprefix includes/, ${FILES})
 
 # -----------------------------------Rules-------------------------------------
