@@ -10,6 +10,9 @@ remarque -> probleme cas speciaux, :echo $USER $USERNAME = print: kenzo kenzoNAM
 									alors que ça doit print kenzo kenzo, dans l'ordre inverse ça fait le taff normalement
 
 
+modifier les fct en rajoutant data dans celle qui en ont besoin
+
+
 Builtin :
 ECHO -> FINI
 pwd -> FINI
@@ -17,13 +20,9 @@ cd -> cd-- cd- et cd .. apres suppression
 exit -> FINI
 env -> FINI
 unset -> à faire
-export -> à faire
+export -> trier l'export
 
 EXEC :
 Toujours pas de mate à l'horizon
 
 update, un Jesus sauvage est apparu et va faire mon exec
-
-
-
-pour l env, il faut que je check si y a un dollar, et si c'est un env tant que cest un digit un alph ou un underscore

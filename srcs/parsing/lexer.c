@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/30 18:33:31 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:01:32 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft_printf.h"
 #include "parsing.h"
 #include "env.h"
+#include "utils.h"
 #include <unistd.h>
 
 static void	special_token(t_token **head, const char *input, int *i)
@@ -86,12 +87,14 @@ char *get_env(char *str)
 	return (ft_substr(str, 1, i - 1)); //si je veux le dollar ou pas faux changer le 1 a 0
 }
 
-static char *handle_non_quoted_word(char **word, char *input, int *i, int len, t_data *data)
+static char *handle_non_quoted_word(char **word, char *input, int *i, t_data *data)
 {
 	int start;
 	char *non_quoted_word;
 	char *temp;
+	int	len;
 
+	len = ft_strlen(input);
 	start = *i;
 	while (*i < len && !ft_isspace(input[*i]) && input[*i] != '|'
 			&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\'' && input[*i] != '\"')
@@ -184,7 +187,7 @@ t_token *lexer(t_data *data, char *input)
 		}
 		else
 		{
-			if (!handle_non_quoted_word(&word, input, &i, len, data)) // Appel à la fonction pour gérer les mots non cités
+			if (!handle_non_quoted_word(&word, input, &i, data)) // Appel à la fonction pour gérer les mots non cités
 				free_all(EXIT_FAILURE);
 		}
 	}
