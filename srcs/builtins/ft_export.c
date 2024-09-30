@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:11:12 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:14:21 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void update_env(t_env **env_all, char *key, char *value)
 			current->value = ft_strdup(value);
 			if (!(current->value))
 				free_all(EXIT_FAILURE);
-			
 			return;
 		}
 		current = current->next;
@@ -50,7 +49,8 @@ void update_env(t_env **env_all, char *key, char *value)
 	*env_all = new_env;
 }
 
-void print_exported_vars(t_env *env_all) //mettre dans l ordre alph 
+ //mettre dans l ordre alph 
+void print_exported_vars(t_env *env_all)
 {
 	t_env *current = env_all;
 
@@ -61,11 +61,9 @@ void print_exported_vars(t_env *env_all) //mettre dans l ordre alph
 	}
 }
 
-// void export_tri(t_env *env_all)
-// {
-// }
+// ajouter +=
 
-void ft_export(t_data *data, char **args) // ajouter +=
+void ft_export(t_data *data, char **args) 
 {
 	char *key;
 	char *value;

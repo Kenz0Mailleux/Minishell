@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/30 16:46:34 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:33:31 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,74 @@ char *get_env(char *str)
 	return (ft_substr(str, 1, i - 1)); //si je veux le dollar ou pas faux changer le 1 a 0
 }
 
+static char *handle_non_quoted_word(char **word, char *input, int *i, int len, t_data *data)
+{
+	int start;
+	char *non_quoted_word;
+	char *temp;
+
+	start = *i;
+	while (*i < len && !ft_isspace(input[*i]) && input[*i] != '|'
+			&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\'' && input[*i] != '\"')
+	{
+		if (input[*i] == '$' && input[*i + 1] != 0)
+			append_env(&data->env_cmd, create_env(get_env(&input[*i]), NULL));
+		(*i)++;	
+	}
+	non_quoted_word = ft_strndup(&input[start], *i - start);
+	if (!non_quoted_word)
+		return (free(*word), NULL);
+	if (!*word)
+		*word = non_quoted_word;
+	else
+	{
+		temp = ft_strjoin(*word, non_quoted_word);
+		free(*word);
+		free(non_quoted_word);
+		*word = temp;
+		if (!*word)
+			return (NULL);
+	}
+	return (*word);
+}
+
+static char *handle_quoted_word(char **word, char *input, int *i)
+{
+	char quote_type;
+	char *quoted_word;
+
+	quote_type = input[*i];
+	quoted_word = quote_token(input, i, quote_type);
+	if (!quoted_word)
+	{
+		free(*word);
+		return (NULL);
+	}
+	if (!*word)
+		*word = quoted_word;
+	else
+	{
+		char *temp = ft_strjoin(*word, quoted_word);
+		free(*word);
+		free(quoted_word);
+		*word = temp;
+		if (!*word)
+			return (NULL);
+	}
+	return (*word);
+}
+
 t_token *lexer(t_data *data, char *input)
 {
 	int		i;
 	int		len;
-	int		start;
 	char	*word;
-	char	quote_type;
-	char	*quoted_word;
-	char	*non_quoted_word;
-	//char	*env_value;
-	//char	*temp; pour free word?
 
-	data->token = NULL; // Réinitialisation de la liste des tokens et donc peut etre free les autres ici?
+	data->token = NULL;
 	data->env_cmd = NULL;
 	i = 0;
 	len = ft_strlen(input);
 	word = NULL;
-
 	while (i < len)
 	{
 		if (ft_isspace(input[i]))
@@ -118,26 +168,15 @@ t_token *lexer(t_data *data, char *input)
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
-			quote_type = input[i];
-			quoted_word = quote_token(input, &i, quote_type);
-			if (!quoted_word)
-				return (NULL);
-			if (!word)
-				word = quoted_word;
-			else
-			{
-				word = ft_strjoin(word, quoted_word);
-				//verif si null?
-				//utiliser une temp pour free word?
-				// free(quoted_word);
-			}
+			if (!handle_quoted_word(&word, input, &i)) // Appel à la fonction pour gérer les mots entre guillemets
+				free_all(EXIT_FAILURE);
 		}
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
 			if (word)
 			{
 				append_token(&data->token, create_token(CMD, word));
-				// free(word);
+				free(word);
 				word = NULL;
 			}
 			special_token(&data->token, input, &i);
@@ -145,36 +184,14 @@ t_token *lexer(t_data *data, char *input)
 		}
 		else
 		{
-			start = i;
-			//va chercher le mot en entier tant qu'il ne rencontre pas un caractère spécial
-			while (i < len && !ft_isspace(input[i]) && input[i] != '|' &&
-					input[i] != '>' && input[i] != '<' && input[i] != '\'' && input[i] != '\"')
-			{
-				if (input[i] == '$' && input[i + 1] != 0)
-				{
-					append_env(&data->env_cmd, create_env(get_env(&input[i]), NULL));
-				}
-				i++;	
-			}
-			//trouve le mot sans quote, mais ne crée pas de token au cas où il y a une quote juste après
-			non_quoted_word = ft_strndup(&input[start], i - start);
-			//verif si null?
-			if (!word)
-				word = non_quoted_word; //besoin d'une base à join
-			else
-			{
-				word = ft_strjoin(word, non_quoted_word);
-				//free(non_quoted_word);
-				//utiliser une temp pour free word?
-			}
+			if (!handle_non_quoted_word(&word, input, &i, len, data)) // Appel à la fonction pour gérer les mots non cités
+				free_all(EXIT_FAILURE);
 		}
 	}
 	if (word)
 	{
 		append_token(&data->token, create_token(CMD, word));
-		//verif si null?
-		// free(word);
+		free(word);
 	}
 	return (data->token);
 }
-

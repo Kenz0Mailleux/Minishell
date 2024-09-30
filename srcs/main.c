@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:27:59 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:06:20 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	builtin_parse(t_cmd *cmd, t_data *data)
 char	*get_input(char *msg)
 {
 	char	*input;
-	char	cwd[124];
+	//char	cwd[124];
 
 	// if (msg != NULL)
 	// 	ft_printf("%s", msg);
@@ -59,7 +59,7 @@ char	*get_input(char *msg)
 	return (input);
 }
 
-void print_tokens(t_token *token)
+static void print_tokens(t_token *token)
 {
 	t_token *current = token;
 	while (current != NULL)
@@ -69,7 +69,7 @@ void print_tokens(t_token *token)
 	}
 }
 
-void print_cmd(t_cmd *cmd)
+static void print_cmd(t_cmd *cmd)
 {
 	int i = 0;
 
@@ -85,7 +85,7 @@ void print_cmd(t_cmd *cmd)
 	ft_printf("\n");
 }
 
-void print_redirects(t_redirect *redirect, int num_cmd)
+static void print_redirects(t_redirect *redirect, int num_cmd)
 {
 	t_redirect *current = redirect;
 	while (current != NULL)
@@ -95,7 +95,7 @@ void print_redirects(t_redirect *redirect, int num_cmd)
 	}
 }
 
-void print_env(t_env *env)
+static void print_env(t_env *env)
 {
 	t_env *current_env = env;
 	while (PRINT_ENV_CMD == 1 && current_env != NULL)
@@ -106,71 +106,139 @@ void print_env(t_env *env)
 	}
 }
 
+
+static void	process_cmds(t_data *data)
+{
+	t_cmd	*current_cmd;
+	int		i;
+
+	current_cmd = data->cmd;
+	while (current_cmd)
+	{
+		i = 0;
+		if (current_cmd->tab_cmd != NULL)
+			builtin_parse(current_cmd, data);
+		if (PRINT_CMD == 1)
+		{
+			print_cmd(current_cmd);
+			print_redirects(current_cmd->redirect, current_cmd->num_cmd);
+		}
+		current_cmd = current_cmd->next;
+	}
+}
+
+static void	process_input(t_data *data, char *input)
+{
+	if (lexer(data, input) != NULL)
+	{
+		if (PRINT_TOKEN == 1)
+			print_tokens(data->token);
+		set_value(data->env_all, data->env_cmd);
+		if (PRINT_ENV_CMD == 1)
+			print_env(data->env_cmd);
+		replace_env(data);
+		data->cmd = parser(data);
+		if (data->cmd->tab_cmd != NULL || data->cmd->redirect != NULL)
+			process_cmds(data);
+	}
+}
+
 int	main(int argc, char *argv[], char **env)
 {
-	t_data		data;
-	t_cmd		*current_cmd;
-	t_redirect 	*current_redirect;
-	t_env		*current_env;
-	char		*input;
-	int			i;
+	t_data	data;
+	char	*input;
 
 	(void)argc;
 	(void)argv;
-
 	data.env_all = parse_env(&data, env);
-	current_env = data.env_all;
-	while (PRINT_ENV == 1 && current_env != NULL)
+	if (PRINT_ENV == 1)
 	{
-		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
-		current_env = current_env->next;
+		t_env *current_env = data.env_all;
+		while (current_env != NULL)
+		{
+			ft_printf("KEY : %s || VALUE : %s\n", current_env->key,
+				current_env->value);
+			current_env = current_env->next;
+		}
 	}
-	i = 0;
 	data.end = 0;
 	if (read_history(HISTORY_FILE) != 0)
-	{
 		perror("read_history");
-	}
 	while (!data.end)
 	{
 		input = get_input(NULL);
 		if (input[0])
-		{
-			if (lexer(&data, input) != NULL)
-			{
-				if (PRINT_TOKEN == 1)
-					print_tokens(data.token);
-				set_value(data.env_all, data.env_cmd);
-				if (PRINT_ENV_CMD == 1)
-					print_env(data.env_cmd);
-				replace_env(&data);
-				data.cmd = parser(&data);
-				current_cmd = data.cmd;
-				if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
-				{
-					while (current_cmd)
-					{
-						i = 0;
-						if (current_cmd->tab_cmd != NULL)
-						{
-							//appeler les execs ici
-							builtin_parse(current_cmd, &data);
-						}
-						if (PRINT_CMD == 1)
-						{
-							print_cmd(current_cmd);
-							print_redirects(current_cmd->redirect, current_cmd->num_cmd);
-						}
-						current_cmd = current_cmd->next;
-					}
-				}
-			}
-		}
-		
+			process_input(&data, input);
 		if (write_history(HISTORY_FILE) != 0)
-		{
 			perror("write_history");
-		}
 	}
 	return (0);
 }
+
+// int	main(int argc, char *argv[], char **env)
+// {
+// 	t_data		data;
+// 	t_cmd		*current_cmd;
+// 	t_env		*current_env;
+// 	char		*input;
+// 	int			i;
+
+// 	(void)argc;
+// 	(void)argv;
+
+// 	data.env_all = parse_env(&data, env);
+// 	current_env = data.env_all;
+// 	while (PRINT_ENV == 1 && current_env != NULL)
+// 	{
+// 		ft_printf("KEY : %s || VALUE : %s\n", current_env->key, current_env->value);
+// 		current_env = current_env->next;
+// 	}
+// 	i = 0;
+// 	data.end = 0;
+// 	if (read_history(HISTORY_FILE) != 0)
+// 	{
+// 		perror("read_history");
+// 	}
+// 	while (!data.end)
+// 	{
+// 		input = get_input(NULL);
+// 		if (input[0])
+// 		{
+// 			if (lexer(&data, input) != NULL)
+// 			{
+// 				if (PRINT_TOKEN == 1)
+// 					print_tokens(data.token);
+// 				set_value(data.env_all, data.env_cmd);
+// 				if (PRINT_ENV_CMD == 1)
+// 					print_env(data.env_cmd);
+// 				replace_env(&data);
+// 				data.cmd = parser(&data);
+// 				current_cmd = data.cmd;
+// 				if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
+// 				{
+// 					while (current_cmd)
+// 					{
+// 						i = 0;
+// 						if (current_cmd->tab_cmd != NULL)
+// 						{
+// 							//appeler les execs ici
+// 							builtin_parse(current_cmd, &data);
+// 						}
+// 						if (PRINT_CMD == 1)
+// 						{
+// 							print_cmd(current_cmd);
+// 							print_redirects(current_cmd->redirect, current_cmd->num_cmd);
+// 						}
+// 						current_cmd = current_cmd->next;
+// 					}
+// 				}
+// 			}
+// 		}
+		
+// 		if (write_history(HISTORY_FILE) != 0)
+// 		{
+// 			perror("write_history");
+// 		}
+// 	}
+// 	return (0);
+// }
