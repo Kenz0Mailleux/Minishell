@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 18:14:21 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:25:16 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void update_env(t_env **env_all, char *key, char *value)
 	current = *env_all;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key))
+		if (ft_strcmp(current->key, key) == 0)
 		{
 			current->value = ft_strdup(value);
 			if (!(current->value))
@@ -49,21 +49,60 @@ void update_env(t_env **env_all, char *key, char *value)
 	*env_all = new_env;
 }
 
- //mettre dans l ordre alph 
-void print_exported_vars(t_env *env_all)
+ //met dans l ordre alph 
+void print_export(t_env *env_all)
 {
-	t_env *current = env_all;
+	t_env *current;
+	t_env **array;
+	t_env *temp;
+	int count;
+	int i;
+	int	j;
 
+	current = env_all;
+	count = 0;
 	while (current)
 	{
-		ft_printf("declare -x %s=\"%s\"\n", current->key, current->value);
+		count++;
 		current = current->next;
 	}
+	array = (t_env **)malloc(sizeof(t_env *) * count);
+	if (!array)
+		return;
+	current = env_all;
+	i = 0;
+	while (current)
+	{
+		array[i++] = current;
+		current = current->next;
+	}
+	i = 0;
+	while (i < count - 1)
+	{
+		j = i + 1;
+		while (j < count)
+		{
+			if (ft_strcmp(array[i]->key, array[j]->key) > 0)
+			{
+				temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < count)
+	{
+		ft_printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
+		i++;
+	}
+	free(array);
 }
 
 // ajouter +=
-
-void ft_export(t_data *data, char **args) 
+void ft_export(t_data *data, char **tab_cmd) 
 {
 	char *key;
 	char *value;
@@ -71,17 +110,17 @@ void ft_export(t_data *data, char **args)
 	char *equal_sign;
 
 	i = 1;
-	if (!args[1])
+	if (!tab_cmd[1])
 	{
-		print_exported_vars(data->env_all);
+		print_export(data->env_all);
 		return;
 	}
-	while (args[i])
+	while (tab_cmd[i])
 	{
-		equal_sign = ft_strchr(args[i], '=');
+		equal_sign = ft_strchr(tab_cmd[i], '=');
 		if (equal_sign)
 		{
-			key = ft_strndup(args[i], equal_sign - args[i]);
+			key = ft_strndup(tab_cmd[i], equal_sign - tab_cmd[i]);
 			value = ft_strdup(equal_sign + 1);
 			if (!key || !value)
 				free_all(EXIT_FAILURE);
@@ -90,8 +129,7 @@ void ft_export(t_data *data, char **args)
 			free(value);
 		}
 		else
-			update_env(&data->env_all, args[i], "");
+			update_env(&data->env_all, tab_cmd[i], "");
 		i++;
 	}
 }
-

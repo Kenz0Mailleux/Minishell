@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/30 19:01:32 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:18:52 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ t_token *lexer(t_data *data, char *input)
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
 			if (!handle_quoted_word(&word, input, &i)) // Appel à la fonction pour gérer les mots entre guillemets
-				free_all(EXIT_FAILURE);
+				return (NULL);
 		}
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
@@ -188,7 +188,7 @@ t_token *lexer(t_data *data, char *input)
 		else
 		{
 			if (!handle_non_quoted_word(&word, input, &i, data)) // Appel à la fonction pour gérer les mots non cités
-				free_all(EXIT_FAILURE);
+				return (NULL);
 		}
 	}
 	if (word)

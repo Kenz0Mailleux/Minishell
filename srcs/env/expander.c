@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/30 17:09:19 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:42:54 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void set_value(t_env *env_all, t_env *env_cmd)
 		while (current_env_all)
 		{
 			len = ft_strlen(current_env_cmd->key);
-			if (ft_strcmp(current_env_cmd->key, current_env_all->key))
+			if (ft_strcmp(current_env_cmd->key, current_env_all->key) == 0)
 			{
 				current_env_cmd->value = ft_strndup(current_env_all->value, ft_strlen(current_env_all->value));
 			}
@@ -99,9 +99,3 @@ void set_value(t_env *env_all, t_env *env_cmd)
 		current_env_cmd = current_env_cmd->next;
 	}
 }
-
-
-// void expand(t_data *data)
-// {
-	
-// }

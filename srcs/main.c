@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 18:06:20 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/10/05 18:22:12 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,20 @@ void	builtin_parse(t_cmd *cmd, t_data *data)
 {
 	if (ft_strncmp(cmd->tab_cmd[0], "echo", 5) == 0)
 		ft_echo(cmd->tab_cmd);
-	if (ft_strncmp(cmd->tab_cmd[0], "cd", 3) == 0)
-		ft_cd(cmd->tab_cmd);
-	if (ft_strncmp(cmd->tab_cmd[0], "pwd", 4) == 0)
+	else if (ft_strncmp(cmd->tab_cmd[0], "cd", 3) == 0)
+		ft_cd(data, cmd->tab_cmd);
+	else if (ft_strncmp(cmd->tab_cmd[0], "pwd", 4) == 0)
 		ft_pwd();
-	if (ft_strncmp(cmd->tab_cmd[0], "export", 7) == 0)
+	else if (ft_strncmp(cmd->tab_cmd[0], "export", 7) == 0)
 		ft_export(data, cmd->tab_cmd);
-	// if (ft_strncmp(current_cmd->tab_cmd[0], "unset", 0) == 0)
-	// 	ft_unset();
-	if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0) 
+	else if (ft_strncmp(cmd->tab_cmd[0], "unset", 6) == 0)
+		ft_unset(data, cmd->tab_cmd);
+	else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0) 
 		ft_env(data);
-	if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
+	else if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
 		ft_exit(cmd->tab_cmd);
 }
+
 
 char	*get_input(char *msg)
 {
@@ -164,6 +165,9 @@ int	main(int argc, char *argv[], char **env)
 	data.end = 0;
 	if (read_history(HISTORY_FILE) != 0)
 		perror("read_history");
+	ft_unset_single(&data, "_");
+	if (find_key(&(&data)->env_all, "OLDPWD", 1))
+		ft_unset_single(&data, "OLDPWD");
 	while (!data.end)
 	{
 		input = get_input(NULL);
