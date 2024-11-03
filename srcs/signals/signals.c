@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:45:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/09/28 16:33:30 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/03 22:08:26 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 void	prompt(int sig)
 {
-	write(1, "\n", 1);                 // Writes a newline to stdout
-	rl_replace_line("", 0);            // Replaces the current line in readline buffer with an empty string
-	rl_on_new_line();                  // Moves to a new line
-	rl_redisplay();                    // Refreshes the prompt display
-	(void)sig;                         // Casts sig to void to avoid unused parameter warnings
+	//1
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void)sig;
 }
 
 void	reset_ctrl_c(int sig)
 {
-	(void)sig;
+	(void)sig; // 130
 }
 
 void	reset_ctrl_slash(int sig)
 {
-	write(2, "Quit: 3\n", 8);
+	write(2, "Quit: 3\n", 8); // 131
 	(void)sig;
 }
 

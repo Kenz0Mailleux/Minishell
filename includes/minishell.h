@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 20:49:43 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:04:21 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
+
+//too add 
+# include "stdbool.h"
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
@@ -51,13 +54,19 @@ typedef struct s_redirect
 	t_redirect 	*prev;
 }				t_redirect;
 
+typedef struct s_red_head_tail
+{
+	t_redirect	*head;
+	t_redirect	*tail;
+}				t_red_head_tail;
+
 typedef struct s_cmd
 {
 	char			**tab_cmd;
 	int				tab_len;
-	t_redirect		*redirect;
+	t_redirect		*redirect; // a modif en t_red_head_tail ainsi on est sur d'avoir la premiere redirect + plus lisible
 	t_env			*cmd_env;
-//	int				is_builtin;
+	bool			is_builtin;
 //	char			*absolute_path;
 	int				num_cmd;
 	struct s_cmd	*next;
@@ -83,6 +92,11 @@ typedef struct s_env
 	t_env	*prev;
 }				t_env;
 
+typedef struct s_cmd_head_tail
+{
+	struct s_cmd	*head;
+	struct s_cmd	*tail;
+}				t_cmd_head_tail;
 
 typedef struct s_data
 {
@@ -90,7 +104,7 @@ typedef struct s_data
 	t_env	*env_all;
 	t_env	*env_cmd;
 	t_token	*token;
-	t_cmd	*cmd;
+	t_cmd	*cmd;		// meme idée qu'avec redirect replace avec t_cmd_head_tail sur de commencer à la premiere command;		
 }				t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:18:07 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/03 18:51:38 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "minishell.h"
 #include "builtins.h"
 #include "env.h"
+#include "exec.h"
 
 #include "ft_printf.h"
 #include "ft_string.h"
 #include <stdlib.h>
 #include <unistd.h>
 
-
-void	builtin_parse(t_cmd *cmd, t_data *data)
+void builtin_parse(t_cmd *cmd, t_data *data)
 {
 	if (ft_strncmp(cmd->tab_cmd[0], "echo", 4) == 0)
 		ft_echo(cmd->tab_cmd);
@@ -40,10 +40,10 @@ void	builtin_parse(t_cmd *cmd, t_data *data)
 		ft_exit(cmd->tab_cmd);
 }
 
-char	*get_input(char *msg)
+char *get_input(char *msg)
 {
-	char	*input;
-	char	cwd[124];
+	char *input;
+	char cwd[124];
 
 	// if (msg != NULL)
 	// 	ft_printf("%s", msg);
@@ -103,14 +103,14 @@ void print_env(t_env *env)
 	}
 }
 
-int	main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[], char **env)
 {
-	t_data		data;
-	t_cmd		*current_cmd;
-	t_redirect 	*current_redirect;
-	t_env		*current_env;
-	char		*input;
-	int			i;
+	t_data data;
+	t_cmd *current_cmd;
+	t_redirect *current_redirect;
+	t_env *current_env;
+	char *input;
+	int i;
 
 	(void)argc;
 	(void)argv;
@@ -143,7 +143,7 @@ int	main(int argc, char *argv[], char **env)
 					print_env(data.env_cmd);
 				data.cmd = parser(&data);
 				current_cmd = data.cmd;
-				//replace_env(&data);
+				// replace_env(&data);
 				if (data.cmd->tab_cmd != NULL || data.cmd->redirect != NULL)
 				{
 					while (current_cmd)
@@ -151,8 +151,7 @@ int	main(int argc, char *argv[], char **env)
 						i = 0;
 						if (current_cmd->tab_cmd != NULL)
 						{
-							//appeler les execs ici
-							
+							exec_pipe(&data, current_cmd);
 							builtin_parse(current_cmd, &data);
 						}
 						if (PRINT_CMD == 1)
@@ -164,9 +163,10 @@ int	main(int argc, char *argv[], char **env)
 					}
 				}
 			}
+
+			exec(&data, data.cmd);
 		}
-	
-		
+
 		if (write_history(HISTORY_FILE) != 0)
 		{
 			perror("write_history");

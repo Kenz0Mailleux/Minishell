@@ -1,0 +1,95 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/03 22:06:59 by nicolive          #+#    #+#             */
+/*   Updated: 2024/11/03 22:44:18 by nicolive         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "./includes/exec.h"
+
+void	redirection(t_cmd *cmd)
+{
+	char		*file;
+	char		*itoa;
+	t_redirect	*node;
+	int			i;
+
+	i = 0;
+	node = cmd->redirect;
+	itoa = ft_itoa(cmd->num_cmd);
+	file = ft_strjoin("/tmp/.heredoc_tmp_file", itoa);
+	free_str(itoa);
+	while (node != NULL)
+	{
+		if (node->type == APPEND)
+			open_append(node);
+		else if (node->type == HEREDOC)
+			i = 1;
+		else if (node->type == REDIRECT_IN)
+			open_input(node);
+		else if (node->type == REDIRECT_OUT)
+			open_trunc(node);
+		node = node->next;
+	}
+	if (i == 1)
+		open_heredoc_file(file);
+}
+
+void	open_append(t_redirect *node)
+{
+	int	fd;
+
+	fd = open(node->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (fd == -1)
+	{
+		ft_printf("bash: %s: ", node->str);
+		perror("");
+		exit (1);
+	}
+	dup2(fd, STDOUT_FILENO);
+	close (fd);
+}
+
+void	open_trunc(t_redirect *node)
+{
+	int	fd;
+
+	fd = open(node->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
+	{
+		ft_printf("bash: %s: ", node->str);
+		perror("");
+		exit (1);
+	}
+	dup2(fd, STDOUT_FILENO);
+	close (fd);
+}
+
+void	open_input(t_redirect *node)
+{
+	int	fd;
+
+	fd = open(node->str, O_RDONLY, 0777);
+	if (fd == -1)
+	{
+		ft_printf("bash: %s: ", node->str);
+		perror("");
+		exit (1);
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void	open_heredoc_file(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
