@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:21:43 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:19:35 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:44:19 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,33 @@
 
 #include <stdlib.h>
 
-void ft_exit(char **args)
+void ft_exit(t_data *data, char **args)
 {
 	int	exit_code;
 	int	i;
 
+	i = 0;
 	if (args[1])// Vérifie s'il y a un second argument
-	{
-		i = 0;
+	{	
+		if (args[2]) // args >= 2
+		{
+			ft_printf("minishell: exit: too many arguments\n");
+			return;
+		}
+
 		while (args[1][i])
 		{
-			if (!ft_isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '+' || args[1][i] == '-')))
+			if (!ft_isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '+')))
 			{
-				ft_printf("minishell: exit: %s: numeric argument required\n", args[1]);
+				ft_printf("minishell: exit: %s: positive numeric argument required\n", args[1]);
 				return ;
 			}
 			i++;
 		}
-		exit_code = ft_atoi(args[1]);
+		exit_code = ft_atoi(args[1])%256;
+	
 	}
 	else
 		exit_code = 0;
-	if (args[2]) // args >= 2
-	{
-		ft_printf("minishell: exit: too many arguments\n");
-		return;
-	}
-	free_all(exit_code);
+	free_all(data, exit_code);
 }
-//pqrser l exit et son arg

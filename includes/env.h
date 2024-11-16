@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 19:26:05 by marykman          #+#    #+#             */
-/*   Updated: 2024/09/17 17:55:51 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:09:18 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void set_value(t_env *env_all, t_env *env_cmd);
 void replace_env(t_data *data);
 
 /*				env					*/
-t_env *create_env(char *key, char *value);
+t_env *create_env(t_data *data, char *key, char *value, int export);
 void append_env(t_env **head, t_env *new_env);
 t_env *parse_env(t_data *data, char **tab_env);
 

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/10/04 17:43:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/10/07 14:54:42 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_cmd
 	int				tab_len;
 	t_redirect		*redirect;
 	t_env			*cmd_env;
-//	int				is_builtin;
+
 //	char			*absolute_path;
 	int				num_cmd;
 	struct s_cmd	*next;

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/09/26 13:30:28 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/16 17:11:11 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,25 @@
 
 #include <unistd.h>
 
-t_env *create_env(char *key, char *value, int export)
+t_env *create_env(t_data *data, char *key, char *value, int export)
 {
 	t_env	*new_env;
 
 	new_env = malloc(sizeof(t_env));
 	if (new_env == NULL)
-		free_all(EXIT_FAILURE);
+		free_all(data, EXIT_FAILURE);
 	new_env->key = ft_strdup(key);
 	if (new_env->key == NULL)
-		free_all(EXIT_FAILURE);
+	{
+		free_all(data, EXIT_FAILURE);
+	}
 	if (value == NULL)
 		new_env->value = "";
 	else if (value != NULL)
 	{
 		new_env->value = ft_strdup(value);
 		if (new_env->value == NULL)
-			free_all(EXIT_FAILURE);
+			free_all(data, EXIT_FAILURE);
 	}
 	new_env->prev = NULL;
 	new_env->next = NULL;
@@ -91,7 +93,7 @@ t_env *parse_env(t_data *data, char **tab_env)
 	i = 0;
 	while (tab_env[i])
 	{
-		new_env = create_env(key_find(tab_env[i]), value_find(tab_env[i]), 0);
+		new_env = create_env(data, key_find(tab_env[i]), value_find(tab_env[i]), 0);
 		if (new_env == NULL)
 		{
 			break;

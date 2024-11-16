@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/10/05 18:22:12 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/16 17:12:00 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	builtin_parse(t_cmd *cmd, t_data *data)
 	else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0) 
 		ft_env(data);
 	else if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
-		ft_exit(cmd->tab_cmd);
+		ft_exit(data, cmd->tab_cmd);
 }
 
 
-char	*get_input(char *msg)
+char	*get_input(t_data *data, char *msg)
 {
 	char	*input;
 	//char	cwd[124];
@@ -55,7 +55,7 @@ char	*get_input(char *msg)
 	// 	ft_printf("%s", getcwd(cwd, sizeof(cwd)));
 	input = readline("Minishell$ ");
 	if (input == NULL)
-		free_all(EXIT_FAILURE);
+		free_all(data, EXIT_FAILURE);
 	add_history(input);
 	return (input);
 }
@@ -153,24 +153,16 @@ int	main(int argc, char *argv[], char **env)
 	(void)argv;
 	data.env_all = parse_env(&data, env);
 	if (PRINT_ENV == 1)
-	{
-		t_env *current_env = data.env_all;
-		while (current_env != NULL)
-		{
-			ft_printf("KEY : %s || VALUE : %s\n", current_env->key,
-				current_env->value);
-			current_env = current_env->next;
-		}
-	}
+		print_env(data.env_all);
 	data.end = 0;
+
 	if (read_history(HISTORY_FILE) != 0)
 		perror("read_history");
-	ft_unset_single(&data, "_");
 	if (find_key(&(&data)->env_all, "OLDPWD", 1))
 		ft_unset_single(&data, "OLDPWD");
 	while (!data.end)
 	{
-		input = get_input(NULL);
+		input = get_input(&data, NULL);
 		if (input[0])
 			process_input(&data, input);
 		if (write_history(HISTORY_FILE) != 0)

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 19:26:23 by marykman          #+#    #+#             */
-/*   Updated: 2024/10/05 18:16:34 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/10/07 14:35:45 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void ft_env(t_data *data);
 void ft_unset_single(t_data *data, const char *str);
 void ft_unset(t_data *data, char **tab_cmd);
 void ft_export(t_data *data, char **args);
-void ft_exit(char **args);
+void ft_exit(t_data *data, char **args);
 
 #endif

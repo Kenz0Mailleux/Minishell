@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/10/05 18:25:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/16 17:42:07 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "utils.h"
 #include <stdlib.h>
 
-void update_env(t_env **env_all, char *key, char *value)
+void update_env(t_data *data, t_env **env_all, char *key, char *value)
 {
 	t_env *current;
 	t_env *new_env;
@@ -29,18 +29,18 @@ void update_env(t_env **env_all, char *key, char *value)
 		{
 			current->value = ft_strdup(value);
 			if (!(current->value))
-				free_all(EXIT_FAILURE);
+				free_all(data, EXIT_FAILURE);
 			return;
 		}
 		current = current->next;
 	}
 	new_env = (t_env *)malloc(sizeof(t_env));
 	if (!new_env)
-		free_all(EXIT_FAILURE);
+		free_all(data, EXIT_FAILURE);
 	new_env->key = ft_strdup(key);
 	new_env->value = ft_strdup(value);
 	if (!new_env->key || !new_env->value)
-		free_all(EXIT_FAILURE);
+		free_all(data, EXIT_FAILURE);
 	new_env->export = 1;
 	new_env->next = *env_all;
 	new_env->prev = NULL;
@@ -95,13 +95,17 @@ void print_export(t_env *env_all)
 	i = 0;
 	while (i < count)
 	{
-		ft_printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
+		if (!(array[i]->value[0]))
+			ft_printf("declare -x %s\n", array[i]->key);
+		else
+			ft_printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);
 		i++;
 	}
 	free(array);
 }
 
 // ajouter +=
+
 void ft_export(t_data *data, char **tab_cmd) 
 {
 	char *key;
@@ -123,13 +127,14 @@ void ft_export(t_data *data, char **tab_cmd)
 			key = ft_strndup(tab_cmd[i], equal_sign - tab_cmd[i]);
 			value = ft_strdup(equal_sign + 1);
 			if (!key || !value)
-				free_all(EXIT_FAILURE);
-			update_env(&data->env_all, key, value);
+				free_all(data, EXIT_FAILURE);
+			update_env(data, &data->env_all, key, value);
 			free(key);
 			free(value);
 		}
 		else
-			update_env(&data->env_all, tab_cmd[i], "");
+			update_env(data, &data->env_all, tab_cmd[i], "");
 		i++;
 	}
 }
+
