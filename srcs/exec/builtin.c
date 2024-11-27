@@ -6,11 +6,12 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 21:44:19 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/03 22:27:12 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/05 19:19:00 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/exec.h"
+#include "./includes/builtins.h"
 
 void	check_is_builtin(t_cmd	*cmd)
 {
@@ -35,24 +36,24 @@ void	check_is_builtin(t_cmd	*cmd)
 	}
 }
 // set g_exit_status to a value to know if error occure here
-// add param fo export pwd and unset and reverif the other param
 
-void	exec_builtin(t_data *data, t_cmd *cmd)
+int	exec_builtin(t_data *data, t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->tab_cmd[0], "echo", INT_MAX) == 0)
-		ft_echo(cmd->tab_cmd);
+		return (ft_echo(cmd->tab_cmd), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "cd", INT_MAX) == 0)
-		ft_cd(cmd->tab_cmd);
+		return (ft_cd(cmd->tab_cmd), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "pwd", INT_MAX) == 0)
-		ft_pwd();
+		return (ft_pwd(), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "export", INT_MAX) == 0)
-		ft_export();
+		return (ft_export(), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "unset", INT_MAX) == 0)
-		ft_unset();
+		return (ft_unset(), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "env", INT_MAX) == 0)
-		ft_env(data);
+		return (ft_env(data), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "exit", INT_MAX) == 0)
-		ft_exit(cmd->tab_cmd);
+		return (ft_exit(cmd->tab_cmd), 0);
+	return (-1);
 }
 //set g_exit_status to wexitstatus()
 

@@ -6,11 +6,57 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/03 21:51:03 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/05 19:23:19 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/exec.h"
+
+int	get_size(t_env *env)
+{
+	int		size;
+	t_env	*current_env;
+
+	size = 0;
+	if (!env)
+		return (size);
+	current_env = env;
+	while (current_env != NULL)
+	{
+		size++;
+		current_env = current_env->next;
+	}
+	return (size);
+}
+
+char	**env_to_str_env(t_data *data)
+{
+	t_env	*node_env;
+	char	**env_str;
+	int		size;
+	int		i;
+	char	temp;
+
+	i = -1;
+	node_env = data->env_all;
+	env_str = malloc(sizeof(char *) * (get_size(data->env_all) + 1));
+	while (node_env)
+	{
+		env_str[++i] = ft_strdup(node_env->key);
+		temp = env_str[i];
+		env_str[i] = ft_strjoin(env_str[i], "=");
+		free_str(temp);
+		temp = env_str[i];
+		if (!node_env->value)
+			env_str[i] = ft_strjoin(env_str[i], "");
+		else
+			env_str[i] = ft_strjoin(env_str[i], node_env->value);
+		free_str(temp);
+		node_env = node_env->next;
+	}
+	env_str[i] = NULL;
+	return (env_str);
+}
 
 char	*find_key(t_env **env_all, char *key, int get_value)
 {

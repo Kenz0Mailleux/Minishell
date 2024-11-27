@@ -6,7 +6,7 @@
 #    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/30 17:40:51 by nicolive         ###   ########.fr        #
+#    Updated: 2024/10/23 14:32:00 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,10 @@ FILES_EXEC			:=
 FILES_PARSING		:=	init_token.c \
 						lexer.c \
 						parse.c
-FILES_UTILS			:=	free.
+FILES_UTILS			:=	free.c
 FILES_SIGNALS		:=	signals.c
-FILES_GNL			:=	get_next_lines_utils.c \
-						get_next_lines.c
+FILES_GNL			:=	get_next_line_utils.c \
+						get_next_line.c
 
 SRCS				:=	$(addprefix srcs/,${FILES})
 SRCS				+=	$(addprefix srcs/builtins/,${FILES_BUILTINS})
@@ -81,7 +81,7 @@ FILES				:=	minishell.h \
 						parsing.h \
 						utils.h \
 						signaling.h \
-						get_next_lines.h
+						get_next_line.h 
 						
 HEADERS				:=	$(addprefix includes/, ${FILES})
 

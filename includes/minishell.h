@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/03 19:04:21 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:23:22 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 	t_redirect		*redirect; // a modif en t_red_head_tail ainsi on est sur d'avoir la premiere redirect + plus lisible
 	t_env			*cmd_env;
 	bool			is_builtin;
-//	char			*absolute_path;
+	char			*absolute_path;
 	int				num_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
