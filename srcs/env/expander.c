@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 19:05:34 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:32:47 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "utils.h"
-#include "ft_string.h"
-#include "ft_printf.h"
-#include "ft_memory.h"
-#include <stdlib.h>
-#include <string.h>
+#include "../../inc/minishell.h"
+
 void replace_str_env(char **str, const char *key, const char *value)
 {
 	char *pos;

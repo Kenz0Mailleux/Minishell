@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:21:54 by kenzo             #+#    #+#             */
-/*   Updated: 2024/10/05 18:19:41 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:43:11 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ft_printf.h"
-#include "utils.h"
-#include <stdlib.h>
+#include "../../inc/minishell.h"
 
 void ft_unset(t_data *data, char **tab_cmd)
 {
@@ -29,7 +26,6 @@ void ft_unset(t_data *data, char **tab_cmd)
 		{
 			if (ft_strcmp(current->key, tab_cmd[i]) == 0)
 			{
-				ft_printf("%s\n", current->key);
 				if (current == data->env_all)
 					data->env_all = current->next;
 				if (current->prev)

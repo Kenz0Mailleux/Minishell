@@ -6,11 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:45:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/06 01:51:24 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:34:04 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signaling.h"
+#include "../../inc/minishell.h"
 
 void	prompt(int sig)
 {

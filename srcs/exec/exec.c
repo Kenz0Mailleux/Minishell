@@ -6,12 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/06 01:51:55 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:57:19 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/exec.h"
-#include "./includes/signaling.h"
+#include "../../inc/minishell.h"
 
 // move to utils dir
 void	free_str(char *str)
@@ -94,7 +93,7 @@ void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
 	redirection(cmd);
 	if (exec_builtin(data, cmd) == -1)
 	{
-		env_str == env_to_str_env(data);
+		env_str = env_to_str_env(data);
 		execve(cmd->absolute_path, cmd->tab_cmd, env_str);
 		error_exec_management(cmd->tab_cmd[0]);
 	}
@@ -143,7 +142,7 @@ void	loop_exec(t_data *data, t_cmd *curr_cmd, t_exec *exec)
 void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	t_cmd	*current_cmd;
-
+	
 	current_cmd = cmd;
 	if (!current_cmd || !current_cmd->tab_cmd[0]
 		|| current_cmd->tab_cmd[0][0] == '\0')
@@ -154,7 +153,7 @@ void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec)
 	exec->nbr_of_childs = 0;
 	while (current_cmd)
 	{
-		exec_loop(data, current_cmd, exec);
+		loop_exec(data, current_cmd, exec);
 		current_cmd = current_cmd->next;
 	}
 	wait_childs(exec);

@@ -6,22 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/27 12:50:08 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:15:59 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "utils.h"
-#include "minishell.h"
-#include "builtins.h"
-#include "env.h"
-#include "exec.h"
-
-#include "ft_printf.h"
-#include "ft_string.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <unistd.h>
+#include "../inc/minishell.h"
 
 static void print_tokens(t_token *token)
 {
@@ -99,7 +88,10 @@ char *get_input(t_data *data)
 
 	input = readline("Minishell$ ");
 	if (input == NULL)
+	{
+		ft_printf("exit\n");
 		free_all(data, EXIT_FAILURE);
+	}
 	add_history(input);
 	return (input);
 }
@@ -132,19 +124,18 @@ static void process_cmds(t_data *data)
 	t_cmd *next_cmd;
 
 	current_cmd = data->cmd;
+
 	while (current_cmd)
 	{
-		if (current_cmd->tab_cmd != NULL)
-			exec(data, current_cmd);
 		if (PRINT_CMD == 1)
 		{
 			print_cmd(current_cmd);
 			print_redirects(current_cmd->redirect, current_cmd->num_cmd);
 		}
 		next_cmd = current_cmd->next;
-		free_cmd(data);
 		current_cmd = next_cmd;
 	}
+	exec(data, data->cmd);
 }
 
 static void process_input(t_data *data, char *input)
@@ -181,6 +172,7 @@ int main(int argc, char *argv[], char **env)
 		ft_unset_single(&data, "OLDPWD");
 	while (!data.end)
 	{
+		check_for_signals(0);
 		input = get_input(&data);
 		if (input[0])
 			process_input(&data, input);

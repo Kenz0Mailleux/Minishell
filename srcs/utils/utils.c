@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:54 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 19:19:20 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 14:51:03 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
-#include "utils.h"
-#include "minishell.h"
-#include <stdlib.h>
-#include "ft_memory.h"
-
-
-int	ft_strcmp(char *str1, char *str2)
-{
-	int i;
-
-	i = 0;
-	while (str1[i] && str1[i] == str2[i])
-		i++;
-	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
-}
+#include "../../inc/minishell.h"
 
 char	*find_key(t_env **env_all, char *key, int get_value)
 {

@@ -6,31 +6,44 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 14:37:40 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/03 22:00:29 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:20:17 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/exec.h"
+#include "../../inc/minishell.h"
 
-void	check_heredoc(t_data *data, t_cmd *cmd)
+
+
+void	loop_heredoc(t_data *data, t_redirect *node, int fd, char *line)
 {
-	t_cmd		*current_cmd;
-	t_redirect	*node;
-	int			i;
+	char	*new_line;
 
-	current_cmd = cmd;
-	i = 1;
-	while (current_cmd)
+	while (1)
 	{
-		node = current_cmd->redirect;
-		while (node)
+		ft_putstr_fd("> ", 1);
+		line = get_next_line(0);
+		if (line == NULL)
 		{
-			if (node->type == HEREDOC)
-				heredoc(data, node, i);
-			node = node->next;
+			ft_putstr_fd(line, fd);
+			break ;
 		}
-		i++;
-		current_cmd = current_cmd->next;
+		ft_printf("test :  %s", line);
+		if (ft_strncmp(line, node->str, ft_strlen(line) - 1) == 0
+			&& line != "\n")
+		{
+			
+			ft_printf("stuck?\n");
+			free_str(line);
+			ft_printf("stuck2?");
+			break ;
+		}
+		ft_printf("test1 :  ");
+		new_line = check_expands(data, line);
+		free_str(line);
+		if (new_line == NULL)
+			new_line = ft_strdup("\n");
+		ft_putstr_fd(new_line, fd);
+		free_str(new_line);
 	}
 }
 
@@ -56,31 +69,25 @@ void	heredoc(t_data *data, t_redirect *node, int i)
 	close(fd);
 }
 
-void	loop_heredoc(t_data *data, t_redirect *node, int fd, char *line)
+void	check_heredoc(t_data *data, t_cmd *cmd)
 {
-	char	*new_line;
+	t_cmd		*current_cmd;
+	t_redirect	*node;
+	int			i;
 
-	while (1)
+	current_cmd = cmd;
+	i = 1;
+	while (current_cmd)
 	{
-		ft_putstr_fd("> ", 1);
-		line = get_next_line(0);
-		if (line == NULL)
+		node = current_cmd->redirect;
+		while (node)
 		{
-			ft_putstr_fd(line, fd);
-			break ;
+			if (node->type == HEREDOC)
+				heredoc(data, node, i);
+			node = node->next;
 		}
-		if (ft_strncmp(line, node->str, ft_strlen(line) - 1) == 0
-			&& *line != "\n")
-		{
-			free_str(line);
-			break ;
-		}
-		new_line = check_expands(data, line);
-		free_str(line);
-		if (new_line == NULL)
-			new_line = ft_strdup("\n");
-		ft_putstr_fd(new_line, fd);
-		free_str(new_line);
+		i++;
+		current_cmd = current_cmd->next;
 	}
 }
 

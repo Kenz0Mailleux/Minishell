@@ -6,110 +6,102 @@
 #    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/11/27 12:50:39 by nicolive         ###   ########.fr        #
+#    Updated: 2024/11/27 15:40:57 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# -----------------------------------Colors------------------------------------
+RED=\033[0;31m
+GREEN=\033[0;32m
+YELLOW=\033[1;33m
+BLUE=\033[0;34m
+ORANGE=\033[38;2;255;165;0m
+NC=\033[0m
 
-RED					:=	[38;5;9m
-GREEN				:=	[38;5;10m
-BLUE				:= 	[38;5;14m
-YELLOW				:=	[38;5;226m
-RESET				:=	[38;5;7m
-PREFIX				=	[${YELLOW}${NAME}${RESET}]	
 
-# ---------------------------------Compilation---------------------------------
-
-CC					:=	@gcc
-CFLAGS				:=	-Wall -Wextra -Werror -g -fsanitize=address
-RM					:=	@rm -f
-
-# ---------------------------------Librairies----------------------------------
-
-FT_FOLDER			:=	libs/libft
-
-FT					:=	${FT_FOLDER}/libft.a
-
-MAKE_FT				:=	@make -s -C ${FT_FOLDER}
-
-INCLUDES			:=	-I ${FT_FOLDER}/includes \
-						-I ./includes
-LIBRARIES			:=	-L./${FT_FOLDER} -lft \
-						-lreadline
-
-# --------------------------------Source files---------------------------------
+LINK = -L$(READLIB) -I$(READINC) -lreadline
 
 NAME = minishell
 
-FILES				:=	main.c
-FILES_BUILTINS		:=	ft_echo.c \
-						ft_cd.c \
-						ft_pwd.c \
-						ft_export.c \
-						ft_unset.c \
-						ft_env.c \
-						ft_exit.c
-FILES_ENV			:=	init_env.c\
-						expander.c 
-FILES_EXEC			:=
-FILES_PARSING		:=	init_token.c \
-						lexer.c \
-						parse.c
-FILES_UTILS			:=	free.c
-FILES_SIGNALS		:=	signals.c
-FILES_GNL			:=	get_next_line_utils.c \
-						get_next_line.c
+LIBFT = lib/libft.a
 
-SRCS				:=	$(addprefix srcs/,${FILES})
-SRCS				+=	$(addprefix srcs/builtins/,${FILES_BUILTINS})
-SRCS				+=	$(addprefix srcs/env/,${FILES_ENV})
-SRCS				+=	$(addprefix srcs/exec/,${FILES_EXEC})
-SRCS				+=	$(addprefix srcs/parsing/,${FILES_PARSING})
-SRCS				+=	$(addprefix srcs/utils/,${FILES_UTILS})
-SRCS				+=	$(addprefix srcs/signals/,${FILES_SIGNALS})
-SRCS				+=	$(addprefix srcs/gnl/,${FILES_GNL})
+CC = cc
+
+CFLAGS = -Werror -Wall -Wextra
+
+RM = rm -rf
+
+SRCS_DIR = srcs/
+OBJS_DIR = obj/
+
+SRCS =	srcs/main.c \
+	srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c \
+	srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c \
+	srcs/env/expander.c srcs/env/init_env.c \
+	srcs/exec/builtin.c srcs/exec/error_exec.c srcs/exec/exec.c srcs/exec/expand.c srcs/exec/heredoc.c srcs/exec/path.c srcs/exec/redirection.c \
+	srcs/gnl/get_next_line_utils.c srcs/gnl/get_next_line.c \
+	srcs/parsing/init_token.c srcs/parsing/lexer.c srcs/parsing/parse.c  \
+	srcs/signals/signals.c \
+	srcs/utils/free.c srcs/utils/utils.c \
+	srcs/utils/ft_printf/char_cvrt.c srcs/utils/ft_printf/ft_printf.c srcs/utils/ft_printf/hex_cvrt.c srcs/utils/ft_printf/nbr_cvrt.c srcs/utils/ft_printf/ptr_cvrt.c srcs/utils/ft_printf/utils.c 
 
 
-OBJS				:=	$(patsubst srcs%.c, objs%.o, ${SRCS})
+OBJ = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
-# Header files
-FILES				:=	minishell.h \
-						builtins.h \
-						env.h \
-						exec.h \
-						parsing.h \
-						utils.h \
-						signaling.h \
-						get_next_line.h 
-						
-HEADERS				:=	$(addprefix includes/, ${FILES})
+OBJD = $(SRCS:$(SRCS_DIR)%.c=$(DEBUG_DIR)%.o)
 
-# -----------------------------------Rules-------------------------------------
+all : $(LIBFT) $(NAME)
 
-objs/%.o:	srcs/%.c ${HEADERS}
-	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@
-	@echo "${PREFIX}Compilation of $<..."
+$(NAME) : $(OBJ)
+	@make -C libft
+	@printf "                                               							   \r"
+	@echo "\033[0;34m                 																 "
+	@echo "\033[0;34m    	 ███╗   ███╗ ██╗ ███╗   ██╗ ██╗ ███████╗ ██╗  ██╗ ███████╗ ██╗      ██╗      "
+	@echo "\033[0;34m  	 ████╗ ████║ ██║ ████╗  ██║ ██║ ██╔════╝ ██║  ██║ ██╔════╝ ██║      ██║      "
+	@echo "\033[0;34m 	 ██╔████╔██║ ██║ ██╔██╗ ██║ ██║ ███████╗ ███████║ █████╗   ██║      ██║      "
+	@echo "\033[0;34m 	 ██║╚██╔╝██║ ██║ ██║╚██╗██║ ██║ ╚════██║ ██╔══██║ ██╔══╝   ██║      ██║      "
+	@echo "\033[0;34m 	 ██║ ╚═╝ ██║ ██║ ██║ ╚████║ ██║ ███████║ ██║  ██║ ███████╗ ███████╗ ███████╗ "
+	@echo "\033[0;34m 	 ╚═╝     ╚═╝ ╚═╝ ╚═╝  ╚═══╝ ╚═╝ ╚══════╝ ╚═╝  ╚═╝ ╚══════╝ ╚══════╝ ╚══════╝ "
+	@echo "\033[0;34m                 																 "
+	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(LINK) -o $(NAME)
 
-$(NAME):	${FT} ${OBJS} ${HEADERS}
-	${CC} ${CFLAGS} ${OBJS} ${LIBRARIES} -o ${NAME}
-	@echo "${PREFIX}${GREEN}${NAME} compiled!"
+$(OBJS_DIR)%.o : $(SRCS_DIR)%.c
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/builtins
+	@mkdir -p $(OBJS_DIR)/env
+	@mkdir -p $(OBJS_DIR)/exec
+	@mkdir -p $(OBJS_DIR)/gnl
+	@mkdir -p $(OBJS_DIR)/parsing
+	@mkdir -p $(OBJS_DIR)/signals
+	@mkdir -p $(OBJS_DIR)/utils
+	@mkdir -p $(OBJS_DIR)/utils/ft_printf
+	@$(CC) -o $@ -c $<
 
-$(FT):
-	${MAKE_FT}
+$(DEBUG_DIR)%.o : $(SRCS_DIR)%.c
+	@mkdir -p $(DEBUG_DIR)
+	@mkdir -p $(DEBUG_DIR)/builtins
+	@mkdir -p $(DEBUG_DIR)/env
+	@mkdir -p $(DEBUG_DIR)/exec
+	@mkdir -p $(DEBUG_DIR)/gnl
+	@mkdir -p $(DEBUG_DIR)/parsing
+	@mkdir -p $(DEBUG_DIR)/signals
+	@mkdir -p $(DEBUG_DIR)/utils
+	@$(CC) -o $@ -c $<
 
-all:		${NAME}
+$(LIBFT):
+	@echo "$(YELLOW)Compiling Libft...$(NC)"
+	@make -C libft/
 
-clean:
-	${MAKE_FT} clean
-	${RM} ${OBJS}
-	@echo "${PREFIX}${BLUE}Cleaning object files...${RESET}"
+clean :
+	@make clean -C libft
+	@$(RM) obj/**/*.o
+	@$(RM) obj_debug/**/*.o
+	@$(RM) obj/minishell.o
+	@$(RM) -r obj
 
-fclean:
-	${MAKE_FT} fclean
-	${RM} ${NAME} ${OBJS}
-	@echo "${PREFIX}${RED}Full clean.${RESET}"
+fclean : clean
+	@make fclean -C libft
+	@$(RM) lib/
+	@$(RM) $(NAME)
 
-re: fclean all
-
-.PHONY: all clean fclean re
+re : fclean all
+	@$(RM) $(DEBUG)

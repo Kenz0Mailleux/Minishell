@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/26 18:18:51 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:32:29 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ft_string.h"
-#include "ft_memory.h"
-#include "ft_printf.h"
-#include "utils.h"
-#include "ft_ctype.h"
-#include <stdlib.h>
+#include "../../inc/minishell.h"
 
 int is_valid_key(const char *key)
 {

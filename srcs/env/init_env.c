@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 19:11:05 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 15:34:50 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "ft_string.h"
-#include "ft_memory.h"
-#include "utils.h"
-#include <stdlib.h>
-
-#include <unistd.h>
+#include "../../inc/minishell.h"
 
 t_env *create_env(t_data *data, char *key, char *value, int export)
 {

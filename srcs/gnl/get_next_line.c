@@ -6,11 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:46:20 by nicolive          #+#    #+#             */
-/*   Updated: 2024/10/23 14:37:08 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:41:21 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../inc/get_next_line.h"
 
 char	*get_next_line(int fd)
 {
@@ -50,7 +50,7 @@ char	*ft_set_line(char *line_buffer)
 		i++;
 	if (line_buffer[i] == 0 || line_buffer[1] == 0)
 		return (NULL);
-	line = ft_substr(line_buffer, i + 1, ft_strlen(line_buffer) - i);
+	line = ft_substr_gnl(line_buffer, i + 1, ft_strlen_gnl(line_buffer) - i);
 	if (!line)
 		return (NULL);
 	if (*line == 0)
@@ -80,9 +80,9 @@ char	*ft_fill_line_buffer(int fd, char *stash, char *buffer)
 			break ;
 		buffer[buffer_read] = 0;
 		if (!stash)
-			stash = ft_strdup("");
+			stash = ft_strdup_gnl("");
 		temp = stash;
-		stash = ft_strjoin(temp, buffer);
+		stash = ft_strjoin_gnl(temp, buffer);
 		free(temp);
 		temp = NULL;
 		if (ft_strchr_index(buffer))

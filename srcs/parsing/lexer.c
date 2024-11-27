@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 19:18:27 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:33:56 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "ft_ctype.h"
-#include "ft_string.h"
-#include "ft_printf.h"
-#include "parsing.h"
-#include "env.h"
-#include "utils.h"
-#include <unistd.h>
+#include "../../inc/minishell.h"
 
 static void	special_token(t_data *data, t_token **head, const char *input, int *i)
 {

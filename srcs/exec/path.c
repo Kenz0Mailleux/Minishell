@@ -6,19 +6,20 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:28:52 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/05 19:34:03 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:40:55 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/exec.h"
+#include "../../inc/minishell.h"
+
 
 char	*get_path(t_data *data)
 {
 	t_env	*env;
 
 	env = data->env_all;
-	while (env != NULL && ft_strncmp(env->key, "PATH", INT_MAX) != 0)
-		env->next;
+	while (env->next != NULL && ft_strncmp(env->key, "PATH", INT_MAX) != 0)
+		env = env->next;
 	if (!env)
 		return (NULL);
 	return (env->value);
@@ -77,8 +78,9 @@ void	get_absolute_path(t_data *data, t_cmd *cmd)
 			if (path_str != NULL)
 				current_cmd->absolute_path = path_str;
 		}
-		else
+		else{
 			current_cmd->absolute_path = ft_strdup(current_cmd->tab_cmd[0]);
+		}
 		current_cmd = current_cmd->next;
 	}
 }

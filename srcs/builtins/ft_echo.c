@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:44:30 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/16 16:22:19 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:31:36 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "ft_printf.h"
-# include "ft_string.h"
+#include "../../inc/minishell.h"
 
 int	check_newline(char *line)
 {

@@ -6,11 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/05 19:23:19 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:33:16 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/exec.h"
+#include "../../inc/minishell.h"
 
 int	get_size(t_env *env)
 {
@@ -35,7 +35,7 @@ char	**env_to_str_env(t_data *data)
 	char	**env_str;
 	int		size;
 	int		i;
-	char	temp;
+	char	*temp;
 
 	i = -1;
 	node_env = data->env_all;
@@ -58,24 +58,6 @@ char	**env_to_str_env(t_data *data)
 	return (env_str);
 }
 
-char	*find_key(t_env **env_all, char *key, int get_value)
-{
-	t_env	*current;
-
-	current = *env_all;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (get_value)
-				return (current->value);
-			else
-				return (current->key);
-		}
-		current = current->next;
-	}
-	return (NULL);
-}
 
 char	*check_env_var_key(t_data *data, int *i, char *str)
 {
@@ -85,12 +67,12 @@ char	*check_env_var_key(t_data *data, int *i, char *str)
 	char	*value;
 
 	*i++;
-	start = i;
+	start = *i;
 	while ((ft_isalnum(str[*i]) || str[*i] == 95) && str[*i])
 		*i++;
-	end = i;
+	end = *i;
 	key = ft_substr(str, start, end - start);
-	value = find_key(data->env_all, key, 1);
+	value = find_key(&data->env_all, key, 1);
 	free_str(key);
 	return (value);
 }

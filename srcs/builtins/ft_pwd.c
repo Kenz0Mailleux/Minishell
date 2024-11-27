@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:01:06 by kenzo             #+#    #+#             */
-/*   Updated: 2024/09/30 17:17:08 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:32:34 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "builtins.h"
-#include "ft_printf.h"
+#include "../../inc/minishell.h"
 
 int ft_pwd(void)
 {

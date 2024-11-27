@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:34 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/16 17:36:09 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:31:36 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "ft_printf.h"
+#include "../../inc/minishell.h"
 
 
 void ft_env(t_data *data)

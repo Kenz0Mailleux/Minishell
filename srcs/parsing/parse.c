@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/20 18:43:36 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:56:29 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdlib.h>
-# include "ft_string.h"
-# include "parsing.h"
-# include "utils.h"
-# include "unistd.h"
-#include <string.h>
+#include "../../inc/minishell.h"
 
 t_cmd *create_cmd(t_data *data, int num_cmd)
 {
@@ -115,7 +110,6 @@ static void	handle_pipe(t_data *data, t_cmd **current_cmd, t_cmd **cmd_head, int
 {
 	(*num_cmd)++;
 	append_cmd(cmd_head, create_cmd(data, *num_cmd));
-	*current_cmd = *cmd_head;
 	*current_cmd = (*current_cmd)->next;
 }
 

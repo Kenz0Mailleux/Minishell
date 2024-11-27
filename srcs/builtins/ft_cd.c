@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 18:13:04 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 14:07:18 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "builtins.h"
-#include "ft_printf.h"
-#include "utils.h"
-#include "ft_string.h"
-#include <unistd.h> 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "../../inc/minishell.h"
 
 int ft_cd(t_data *data, char **args)
 {
@@ -45,8 +35,8 @@ int ft_cd(t_data *data, char **args)
 	else if (chdir(args[1]) != 0)
 		return (perror("cd"), 1);
 	if (pwd)
-		update_env(&data->env_all, "OLDPWD", pwd);
+		update_env(data, "OLDPWD", pwd, 0);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		update_env(&data->env_all, "PWD", cwd);
+		update_env(data, "PWD", cwd, 0);
 	return (EXIT_SUCCESS);
 }

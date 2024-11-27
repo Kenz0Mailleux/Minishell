@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/26 19:11:23 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:33:53 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "ft_string.h"
-#include "utils.h"
-#include "parsing.h"
-
-#include <string.h>
+#include "../../inc/minishell.h"
 
 t_token *create_token(t_data *data, int type, char *str)
 {

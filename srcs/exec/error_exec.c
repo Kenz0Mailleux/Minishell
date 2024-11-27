@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   erroc_exec.c                                       :+:      :+:    :+:   */
+/*   error_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:09:41 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/05 19:20:08 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:01:58 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/exec.h"
+#include "../../inc/minishell.h"
 
 void	print_error(char *command, char *message, int exit_code)
 {
@@ -26,7 +26,7 @@ void	no_access(char *cmd)
 
 	if (stat(cmd, &data) == -1)
 	{
-		perror(stat);
+		perror("stat");
 		exit(1);
 	}
 	if (S_ISDIR(data.st_mode))
