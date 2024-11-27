@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/26 19:14:35 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:50:08 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "minishell.h"
 #include "builtins.h"
 #include "env.h"
+#include "exec.h"
+
 #include "ft_printf.h"
 #include "ft_string.h"
 #include <stdlib.h>
@@ -70,7 +72,7 @@ static void print_env(t_env *env)
 	}
 }
 
-void	builtin_parse(t_cmd *cmd, t_data *data)
+void builtin_parse(t_cmd *cmd, t_data *data)
 {
 	if (cmd->tab_cmd[0])
 	{
@@ -84,16 +86,16 @@ void	builtin_parse(t_cmd *cmd, t_data *data)
 			ft_export(data, cmd->tab_cmd);
 		else if (ft_strncmp(cmd->tab_cmd[0], "unset", 6) == 0)
 			ft_unset(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0) 
+		else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0)
 			ft_env(data);
 		else if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
 			ft_exit(data, cmd->tab_cmd);
 	}
 }
 
-char	*get_input(t_data *data)
+char *get_input(t_data *data)
 {
-	char	*input;
+	char *input;
 
 	input = readline("Minishell$ ");
 	if (input == NULL)
@@ -114,13 +116,13 @@ void free_cmd(t_data *data)
 			int i = 0;
 			while (data->cmd->tab_cmd[i] != NULL)
 			{
-				//free(data->cmd->tab_cmd[i]);  // Libérer chaque chaîne de tab_cmd
+				// free(data->cmd->tab_cmd[i]);  // Libérer chaque chaîne de tab_cmd
 				i++;
 			}
-			free(data->cmd->tab_cmd);  // Libérer le tableau de pointeurs
+			free(data->cmd->tab_cmd); // Libérer le tableau de pointeurs
 		}
 		free(data->cmd);  // Libérer la structure cmd elle-même
-		data->cmd = NULL;  // Mettre à NULL pour éviter toute utilisation après la libération
+		data->cmd = NULL; // Mettre à NULL pour éviter toute utilisation après la libération
 	}
 }
 
@@ -133,7 +135,7 @@ static void process_cmds(t_data *data)
 	while (current_cmd)
 	{
 		if (current_cmd->tab_cmd != NULL)
-			builtin_parse(current_cmd, data);
+			exec(data, current_cmd);
 		if (PRINT_CMD == 1)
 		{
 			print_cmd(current_cmd);
@@ -162,10 +164,10 @@ static void process_input(t_data *data, char *input)
 	data->cmd = NULL;
 }
 
-int	main(int argc, char *argv[], char **env)
+int main(int argc, char *argv[], char **env)
 {
-	t_data	data;
-	char	*input;
+	t_data data;
+	char *input;
 
 	(void)argc;
 	(void)argv;
@@ -182,7 +184,7 @@ int	main(int argc, char *argv[], char **env)
 		input = get_input(&data);
 		if (input[0])
 			process_input(&data, input);
-		//free(input);
+		// free(input);
 		free(data.env_cmd);
 		if (write_history(HISTORY_FILE) != 0)
 			perror("write_history");
