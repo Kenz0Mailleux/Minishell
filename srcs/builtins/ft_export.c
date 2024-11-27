@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/16 17:42:07 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/26 18:18:51 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,52 @@
 #include "ft_memory.h"
 #include "ft_printf.h"
 #include "utils.h"
+#include "ft_ctype.h"
 #include <stdlib.h>
 
-void update_env(t_data *data, t_env **env_all, char *key, char *value)
+int is_valid_key(const char *key)
+{
+	int i;
+
+	if (!key || !key[0])
+		return (0);
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (0);
+	i = 1;
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void update_env(t_data *data, char *key, char *value, int append)
 {
 	t_env *current;
 	t_env *new_env;
 
-	current = *env_all;
+	current = (data->env_all);
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			current->value = ft_strdup(value);
-			if (!(current->value))
-				free_all(data, EXIT_FAILURE);
+			if (append)
+			{
+				char *new_value = ft_strjoin(current->value, value);
+				if (!new_value)
+					free_all(data, EXIT_FAILURE);
+				free(current->value);
+				current->value = new_value;
+			}
+			else
+			{
+				free(current->value);
+				current->value = ft_strdup(value);
+				if (!(current->value))
+					free_all(data, EXIT_FAILURE);
+			}
 			return;
 		}
 		current = current->next;
@@ -42,22 +73,21 @@ void update_env(t_data *data, t_env **env_all, char *key, char *value)
 	if (!new_env->key || !new_env->value)
 		free_all(data, EXIT_FAILURE);
 	new_env->export = 1;
-	new_env->next = *env_all;
+	new_env->next = data->env_all;
 	new_env->prev = NULL;
-	if (*env_all)
-		(*env_all)->prev = new_env;
-	*env_all = new_env;
+	if (data->env_all)
+		(data->env_all)->prev = new_env;
+	data->env_all = new_env;
 }
 
- //met dans l ordre alph 
 void print_export(t_env *env_all)
 {
-	t_env *current;
-	t_env **array;
-	t_env *temp;
-	int count;
-	int i;
-	int	j;
+	t_env	*current;
+	t_env	**array;
+	t_env	*temp;
+	int		count;
+	int		i;
+	int		j;
 
 	current = env_all;
 	count = 0;
@@ -66,7 +96,7 @@ void print_export(t_env *env_all)
 		count++;
 		current = current->next;
 	}
-	array = (t_env **)malloc(sizeof(t_env *) * count);
+	array = (t_env **)malloc(sizeof(t_env *) * count + 1);
 	if (!array)
 		return;
 	current = env_all;
@@ -104,14 +134,13 @@ void print_export(t_env *env_all)
 	free(array);
 }
 
-// ajouter +=
-
-void ft_export(t_data *data, char **tab_cmd) 
+void ft_export(t_data *data, char **tab_cmd)
 {
-	char *key;
-	char *value;
-	int	 i;
-	char *equal_sign;
+	char	*key;
+	char	*value;
+	int		i;
+	char	*equal_sign;
+	int		append;
 
 	i = 1;
 	if (!tab_cmd[1])
@@ -122,19 +151,36 @@ void ft_export(t_data *data, char **tab_cmd)
 	while (tab_cmd[i])
 	{
 		equal_sign = ft_strchr(tab_cmd[i], '=');
-		if (equal_sign)
+		append = 0;
+		if (equal_sign && equal_sign > tab_cmd[i] + 1 && *(equal_sign - 1) == '+')
+		{
+			append = 1;
+			key = ft_strndup(tab_cmd[i], equal_sign - tab_cmd[i] - 1);
+			value = ft_strdup(equal_sign + 1);
+		}
+		else if (equal_sign)
 		{
 			key = ft_strndup(tab_cmd[i], equal_sign - tab_cmd[i]);
 			value = ft_strdup(equal_sign + 1);
-			if (!key || !value)
-				free_all(data, EXIT_FAILURE);
-			update_env(data, &data->env_all, key, value);
-			free(key);
-			free(value);
 		}
 		else
-			update_env(data, &data->env_all, tab_cmd[i], "");
+		{
+			key = ft_strdup(tab_cmd[i]);
+			value = ft_strdup("");
+		}
+		if (!is_valid_key(key))
+		{
+			ft_printf("minishell: export: `%s': not a valid identifier\n", tab_cmd[i]);
+			free(key);
+			free(value);
+			i++;
+			continue;
+		}
+		if (!key || !value)
+			free_all(data, EXIT_FAILURE);
+		update_env(data, key, value, append);
+		free(key);
+		free(value);
 		i++;
 	}
 }
-

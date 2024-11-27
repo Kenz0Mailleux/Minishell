@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/16 17:11:11 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/26 19:11:05 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_env *create_env(t_data *data, char *key, char *value, int export)
 		if (new_env->value == NULL)
 			free_all(data, EXIT_FAILURE);
 	}
+	
 	new_env->prev = NULL;
 	new_env->next = NULL;
 	new_env->export = export;
@@ -83,24 +84,31 @@ char *value_find(char *str)
 	return (ft_substr(str, i, ft_strlen(str)));
 }
 
-t_env *parse_env(t_data *data, char **tab_env)
+t_env	*parse_env(t_data *data, char **tab_env)
 {
-	int		i;
-	t_env	*head;
-	t_env	*new_env;
+	int i = 0;
+	t_env *head;
+	t_env *new_env;
+	char *key;
+	char *value;
 
-	head = NULL;
 	i = 0;
+	head = NULL;
 	while (tab_env[i])
 	{
-		new_env = create_env(data, key_find(tab_env[i]), value_find(tab_env[i]), 0);
-		if (new_env == NULL)
+		key = key_find(tab_env[i]);
+		value = value_find(tab_env[i]);
+		if (!key || !value || !(new_env = create_env(data, key, value, 0)))
 		{
-			break;
+			free(key);
+			free(value);
+			free_env_list(head);
+			free_all(data, EXIT_FAILURE);
 		}
+		// free(key);
+		// free(value);
 		append_env(&head, new_env);
 		i++;
 	}
 	return head;
 }
-

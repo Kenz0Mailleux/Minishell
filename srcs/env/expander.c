@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/10/04 17:42:54 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/26 19:05:34 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,18 @@
 #include "ft_memory.h"
 #include <stdlib.h>
 #include <string.h>
-
 void replace_str_env(char **str, const char *key, const char *value)
 {
 	char *pos;
-	size_t key_len;
-	size_t value_len;
-	size_t new_len;
+	size_t key_len, value_len, new_len;
 	char *new_str;
 
 	key_len = ft_strlen(key);
 	value_len = ft_strlen(value);
-	while ((pos = strstr(*str, key)) != NULL) //fct interdite
+	while ((pos = ft_strnstr(*str, key, ft_strlen(*str))) != NULL)
 	{
 		new_len = ft_strlen(*str) - key_len + value_len;
-		new_str = (char *)malloc(new_len + 1);
+		new_str = malloc(new_len + 1);
 		if (!new_str)
 		{
 			perror("malloc");
@@ -39,7 +36,7 @@ void replace_str_env(char **str, const char *key, const char *value)
 		}
 		ft_memcpy(new_str, *str, pos - *str);
 		ft_memcpy(new_str + (pos - *str), value, value_len);
-		strcpy(new_str + (pos - *str) + value_len, pos + key_len); //fcti nterdite
+		ft_memcpy(new_str + (pos - *str) + value_len, pos + key_len, ft_strlen(pos + key_len) + 1);
 		free(*str);
 		*str = new_str;
 	}
@@ -53,6 +50,7 @@ void expand_vars(char **str, t_env *env)
 	while (current_env)
 	{
 		replace_str_env(str, current_env->key, current_env->value);
+		free(current_env->key);
 		current_env = current_env->next;
 	}
 }
@@ -81,7 +79,6 @@ void set_value(t_env *env_all, t_env *env_cmd)
 {
 	t_env *current_env_cmd;
 	t_env *current_env_all;
-	int		len;
 
 	current_env_cmd = env_cmd;
 	while (current_env_cmd)
@@ -89,7 +86,6 @@ void set_value(t_env *env_all, t_env *env_cmd)
 		current_env_all = env_all;
 		while (current_env_all)
 		{
-			len = ft_strlen(current_env_cmd->key);
 			if (ft_strcmp(current_env_cmd->key, current_env_all->key) == 0)
 			{
 				current_env_cmd->value = ft_strndup(current_env_all->value, ft_strlen(current_env_all->value));

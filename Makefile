@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+         #
+#    By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/09/30 14:51:02 by kmailleu         ###   ########.fr        #
+#    Updated: 2024/11/26 18:35:45 by kenzo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PREFIX				=	[${YELLOW}${NAME}${RESET}]
 # ---------------------------------Compilation---------------------------------
 
 CC					:=	@gcc
-CFLAGS				:=	-Wall# -Wextra -Werror -g# -fsanitize=address
+CFLAGS				:=	-Wall -Wextra -Werror -g -fsanitize=address
 RM					:=	@rm -f
 
 # ---------------------------------Librairies----------------------------------

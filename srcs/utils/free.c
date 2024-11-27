@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:05 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/16 17:44:51 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/26 19:14:17 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,60 +15,66 @@
 
 void free_redirect(t_data *data)
 {
-	t_redirect	*redirect;
-	t_redirect	*next_redirect;
+	t_redirect *redirect;
+	t_redirect *next_redirect;
+
+	if (data == NULL || data->cmd == NULL)
+		return;
 
 	redirect = data->cmd->redirect;
 	while (redirect != NULL)
 	{
 		next_redirect = redirect->next;
-		free(redirect->str);
+		if (redirect->str)
+			free(redirect->str);
 		free(redirect);
 		redirect = next_redirect;
+	}
+	data->cmd->redirect = NULL;
+}
+
+void free_env_list(t_env *head)
+{
+	t_env *tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->key)
+			free(head->key);
+		if (head->value)
+			free(head->value);
+		free(head);
+		head = tmp;
 	}
 }
 
 void free_token(t_data *data)
 {
-	t_token	*token;
-	t_token	*next_token;
+	t_token *token;
+	t_token *next_token;
+
+	if (data == NULL || data->token == NULL)
+		return;
 
 	token = data->token;
-	while (token != NULL)
+	while (token)
 	{
 		next_token = token->next;
-		free(token->str);
 		free(token);
 		token = next_token;
 	}
+	data->token = NULL;
 }
 
-void free_cmd(t_data *data)
-{
-	t_cmd	*cmd;
-	t_cmd 	*next_cmd;
-	int		i;
 
-	cmd = data->cmd;
-	i = 0;
-	while (cmd != NULL)
-	{
-		next_cmd = cmd->next;
-		while (cmd->tab_cmd[i])
-		{
-			i++;
-			free(cmd->tab_cmd[i]);
-		}
-		free(cmd);
-		cmd = next_cmd;
-	}
-}
-
-void free_all(t_data *data, int exit_code)
+void	free_all(t_data *data, int exit_code)
 {
-	// free_token(data);
-	// free_cmd(data);
-	// free_redirect(data);
-	//free_env(data);
+	free_env_list(data->env_cmd);
+	free_env_list(data->env_all);
+	free_token(data);
+    free_redirect(data);
+
+	(void)data;
 	exit(exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/16 17:10:11 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/26 19:18:27 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char *quote_token(t_data *data, char *input, int *i, char quote_type)
 		return (printf("quote not close \n"), NULL);
 	if (input[*i] == quote_type)
 	{
-		word = ft_strndup(&input[start], *i - start);
+		word = ft_strndupquote(&input[start], *i - start);
 		if (!word)
 			free_all(data, EXIT_FAILURE);
 		++(*i);
@@ -73,9 +73,7 @@ void modify_str_token(t_data *data, t_token **head, char *new_str)
 
 	current = *head;
 	while (current->next != NULL)
-	{
 		current = current->next;
-	}
 	if (!ft_strjoin(current->str, new_str))
 		free_all(data, EXIT_FAILURE);
 }
@@ -83,11 +81,13 @@ void modify_str_token(t_data *data, t_token **head, char *new_str)
 char *get_env(char *str)
 {
 	int i;
+	char	*s;
 
 	i = 1;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	return (ft_substr(str, 1, i - 1)); //si je veux le dollar ou pas faux changer le 1 a 0
+	s = ft_substr(str, 1, i - 1);
+	return (s); //si je veux le dollar ou pas faux changer le 1 a 0
 }
 
 static char *handle_non_quoted_word(t_data *data, char **word, char *input, int *i)
@@ -103,9 +103,7 @@ static char *handle_non_quoted_word(t_data *data, char **word, char *input, int 
 			&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\'' && input[*i] != '\"')
 	{
 		if (input[*i] == '$' && input[*i + 1] != 0)
-		{
 			append_env(&data->env_cmd, create_env(data, get_env(&input[*i]), NULL, 1));
-		}
 		(*i)++;
 	}
 	non_quoted_word = ft_strndup(&input[start], *i - start);
@@ -137,8 +135,7 @@ static char *handle_quoted_word( t_data *data, char **word, char *input, int *i)
 	quoted_word = quote_token(data, input, i, quote_type);
 	if (!quoted_word)
 	{
-		free(*word);
-		return (NULL);
+		return (free(*word), NULL);
 	}
 	if (!*word)
 		*word = quoted_word;
@@ -181,7 +178,7 @@ t_token *lexer(t_data *data, char *input)
 		}
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
-			if (!handle_quoted_word(data, &word, input, &i)) // Appel à la fonction pour gérer les mots entre guillemets
+			if (!handle_quoted_word(data, &word, input, &i))
 				return (NULL);
 		}
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
@@ -197,14 +194,14 @@ t_token *lexer(t_data *data, char *input)
 		}
 		else
 		{
-			if (!handle_non_quoted_word(data, &word, input, &i)) // Appel à la fonction pour gérer les mots non cités
+			if (!handle_non_quoted_word(data, &word, input, &i))
 				return (NULL);
 		}
 	}
 	if (word)
 	{
 		append_token(&data->token, create_token(data, CMD, word));
-		free(word);
+		//free(word);
 	}
 	return (data->token);
 }

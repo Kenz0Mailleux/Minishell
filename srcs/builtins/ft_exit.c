@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:21:43 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/16 17:44:19 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/16 17:49:33 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void ft_exit(t_data *data, char **args)
 			ft_printf("minishell: exit: too many arguments\n");
 			return;
 		}
-
 		while (args[1][i])
 		{
 			if (!ft_isdigit(args[1][i]) && !(i == 0 && (args[1][i] == '+')))
@@ -42,7 +41,6 @@ void ft_exit(t_data *data, char **args)
 			i++;
 		}
 		exit_code = ft_atoi(args[1])%256;
-	
 	}
 	else
 		exit_code = 0;

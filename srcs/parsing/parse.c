@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/16 16:23:34 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:43:36 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "unistd.h"
 #include <string.h>
 
-//init les structs cmd
 t_cmd *create_cmd(t_data *data, int num_cmd)
 {
 	t_cmd *new_cmd;
@@ -25,16 +24,16 @@ t_cmd *create_cmd(t_data *data, int num_cmd)
 	new_cmd = malloc(sizeof(t_cmd));
 	if (new_cmd == NULL)
 		free_all(data, EXIT_FAILURE);
-	new_cmd->tab_cmd = malloc(sizeof(char *) + 1);
+	new_cmd->tab_cmd = malloc(sizeof(char *));
 	if (new_cmd->tab_cmd == NULL)
 		free_all(data, EXIT_FAILURE);
-	new_cmd->tab_cmd = NULL;
+	new_cmd->tab_cmd[0] = NULL;
 	new_cmd->tab_len = 0;
 	new_cmd->redirect = NULL;
 	new_cmd->num_cmd = num_cmd;
 	new_cmd->prev = NULL;
 	new_cmd->next = NULL;
-	return (new_cmd);
+	return new_cmd;
 }
 
 //permet de rajouter un cmd à la liste chainée
@@ -68,6 +67,7 @@ t_redirect *create_redirect(t_data *data, int type, char *str)
 		free_all(data, EXIT_FAILURE);
 	new_redirect->prev = NULL;
 	new_redirect->next = NULL;
+	free(str);
 	return (new_redirect);
 }
 
@@ -92,12 +92,13 @@ void append_redirect(t_redirect **head, t_redirect *new_redirect)
 char **ft_join_tab(t_data *data, char **tab, char *str, int tab_len)
 {
 	char **tab_cpy;
-	int	i;
+	int i;
 
 	i = 0;
 	tab_cpy = malloc(sizeof(char *) * (tab_len + 1 + 1));
 	if (tab_cpy == NULL)
 		free_all(data, EXIT_FAILURE);
+
 	while (i < tab_len)
 	{
 		tab_cpy[i] = tab[i];
@@ -105,8 +106,8 @@ char **ft_join_tab(t_data *data, char **tab, char *str, int tab_len)
 	}
 	tab_cpy[i] = str;
 	tab_cpy[++i] = NULL;
+	free(tab); // Libération de l'ancien tableau.
 	return (tab_cpy);
-	
 }
 
 
