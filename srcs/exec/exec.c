@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/28 14:20:33 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:40:13 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,27 @@ void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec)
 	wait_childs(exec);
 }
 
+void	free_cmds(t_data *data, t_cmd *cmd)
+{
+	t_cmd	*current_cmd;
+	t_cmd	*temp;
+
+	current_cmd = cmd;
+	if (!data && !cmd)
+		return ;
+	free_redirect(data);
+	free_token(data);
+	while (current_cmd)
+	{
+		temp = current_cmd;
+		current_cmd = current_cmd->next;
+		free_arr(temp->tab_cmd);
+		free_str(temp->absolute_path);
+		free(temp);
+		temp = NULL;
+	}
+}
+
 void	exec(t_data *data, t_cmd *cmd)
 {
 	t_exec	exec;
@@ -104,6 +125,6 @@ void	exec(t_data *data, t_cmd *cmd)
 	exec.fd_in = STDIN_FILENO;
 	check_heredoc(data, cmd);
 	exec_pipe(data, cmd, &exec);
-	// clear all cmd
+	free_cmds(data, cmd);
 	clear_temp_heredoc();
 }

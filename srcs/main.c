@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 13:24:09 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:37:39 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ char *get_input(t_data *data)
 	if (input == NULL)
 	{
 		ft_printf("exit\n");
-		free_all(data, EXIT_FAILURE);
+		free_env_list(data->env_all); //GOOD
+		exit(0); 
 	}
 	add_history(input);
 	return (input);
@@ -136,7 +137,7 @@ static void process_cmds(t_data *data)
 		current_cmd = next_cmd;
 	}
 	exec(data, data->cmd);
-	free_cmd(data);
+	//free_cmd(data);
 }
 
 static void process_input(t_data *data, char *input)
@@ -153,7 +154,6 @@ static void process_input(t_data *data, char *input)
 		if (data->cmd->tab_cmd != NULL || data->cmd->redirect != NULL)
 			process_cmds(data);
 	}
-	data->cmd = NULL;
 }
 
 int main(int argc, char *argv[], char **env)
