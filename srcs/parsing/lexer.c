@@ -38,7 +38,7 @@ static void	special_token(t_data *data, t_token **head, const char *input, int *
 	}
 }
 
-char *quote_token(t_data *data, char *input, int *i, char quote_type)
+char	*quote_token(t_data *data, char *input, int *i, char quote_type)
 {
 	int		start;
 	char	*word;
@@ -59,8 +59,7 @@ char *quote_token(t_data *data, char *input, int *i, char quote_type)
 	return (NULL);
 }
 
-
-void modify_str_token(t_data *data, t_token **head, char *new_str)
+void	modify_str_token(t_data *data, t_token **head, char *new_str)
 {
 	t_token	*current;
 

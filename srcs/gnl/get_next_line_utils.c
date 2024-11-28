@@ -46,11 +46,13 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	int		i;
 	int		j;
+	int		len;
 	char	*newstr;
 
 	if (!s1 || !s2)
 		return (NULL);
-	newstr = (char *)malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	len = ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1;
+	newstr = (char *)malloc(sizeof(char) * (len));
 	if (!newstr)
 		return (NULL);
 	i = 0;

@@ -14,7 +14,7 @@
 
 char	*find_key(t_env **env_all, char *key, int get_value)
 {
-	t_env *current;
+	t_env	*current;
 
 	current = *env_all;
 	while (current)
@@ -30,7 +30,6 @@ char	*find_key(t_env **env_all, char *key, int get_value)
 	}
 	return (NULL);
 }
-
 
 void	*ft_memdupquote(void *src, size_t size)
 {

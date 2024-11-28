@@ -6,12 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:28:52 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/27 17:40:55 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:20:39 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 char	*get_path(t_data *data)
 {
@@ -78,7 +77,8 @@ void	get_absolute_path(t_data *data, t_cmd *cmd)
 			if (path_str != NULL)
 				current_cmd->absolute_path = path_str;
 		}
-		else{
+		else
+		{
 			current_cmd->absolute_path = ft_strdup(current_cmd->tab_cmd[0]);
 		}
 		current_cmd = current_cmd->next;

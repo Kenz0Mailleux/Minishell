@@ -6,7 +6,7 @@
 #    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/11/27 15:40:57 by nicolive         ###   ########.fr        #
+#    Updated: 2024/11/28 13:16:51 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRCS =	srcs/main.c \
 	srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c \
 	srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c \
 	srcs/env/expander.c srcs/env/init_env.c \
-	srcs/exec/builtin.c srcs/exec/error_exec.c srcs/exec/exec.c srcs/exec/expand.c srcs/exec/heredoc.c srcs/exec/path.c srcs/exec/redirection.c \
+	srcs/exec/builtin.c srcs/exec/error_exec.c srcs/exec/exec.c srcs/exec/expand.c srcs/exec/heredoc.c srcs/exec/path.c \
+	srcs/exec/redirection.c srcs/exec/utils_exec.c \
 	srcs/gnl/get_next_line_utils.c srcs/gnl/get_next_line.c \
 	srcs/parsing/init_token.c srcs/parsing/lexer.c srcs/parsing/parse.c  \
 	srcs/signals/signals.c \

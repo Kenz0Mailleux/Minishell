@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/27 16:33:16 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:50:04 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char	**env_to_str_env(t_data *data)
 	env_str[i] = NULL;
 	return (env_str);
 }
-
 
 char	*check_env_var_key(t_data *data, int *i, char *str)
 {

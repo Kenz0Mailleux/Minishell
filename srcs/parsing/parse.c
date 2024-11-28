@@ -6,15 +6,15 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/27 17:56:29 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:25:05 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd *create_cmd(t_data *data, int num_cmd)
+t_cmd	*create_cmd(t_data *data, int num_cmd)
 {
-	t_cmd *new_cmd;
+	t_cmd	*new_cmd;
 
 	new_cmd = malloc(sizeof(t_cmd));
 	if (new_cmd == NULL)
@@ -28,13 +28,13 @@ t_cmd *create_cmd(t_data *data, int num_cmd)
 	new_cmd->num_cmd = num_cmd;
 	new_cmd->prev = NULL;
 	new_cmd->next = NULL;
-	return new_cmd;
+	return (new_cmd);
 }
 
 //permet de rajouter un cmd à la liste chainée
-void append_cmd(t_cmd **head, t_cmd *new_cmd)
+void	append_cmd(t_cmd **head, t_cmd *new_cmd)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	if (*head == NULL)
 		*head = new_cmd;
@@ -49,9 +49,9 @@ void append_cmd(t_cmd **head, t_cmd *new_cmd)
 }
 
 //init les structs redirect
-t_redirect *create_redirect(t_data *data, int type, char *str)
+t_redirect	*create_redirect(t_data *data, int type, char *str)
 {
-	t_redirect *new_redirect;
+	t_redirect	*new_redirect;
 
 	new_redirect = malloc(sizeof(t_redirect));
 	if (new_redirect == NULL)
@@ -67,9 +67,9 @@ t_redirect *create_redirect(t_data *data, int type, char *str)
 }
 
 //permet de rajouter un redirect à la liste chainée
-void append_redirect(t_redirect **head, t_redirect *new_redirect)
+void	append_redirect(t_redirect **head, t_redirect *new_redirect)
 {
-	t_redirect *current;
+	t_redirect	*current;
 
 	if (*head == NULL)
 		*head = new_redirect;
@@ -84,16 +84,15 @@ void append_redirect(t_redirect **head, t_redirect *new_redirect)
 }
 
 //fct qui va réallouer le tab de str de cmd
-char **ft_join_tab(t_data *data, char **tab, char *str, int tab_len)
+char	**ft_join_tab(t_data *data, char **tab, char *str, int tab_len)
 {
-	char **tab_cpy;
-	int i;
+	char	**tab_cpy;
+	int		i;
 
 	i = 0;
 	tab_cpy = malloc(sizeof(char *) * (tab_len + 1 + 1));
 	if (tab_cpy == NULL)
 		free_all(data, EXIT_FAILURE);
-
 	while (i < tab_len)
 	{
 		tab_cpy[i] = tab[i];
@@ -105,7 +104,6 @@ char **ft_join_tab(t_data *data, char **tab, char *str, int tab_len)
 	return (tab_cpy);
 }
 
-
 static void	handle_pipe(t_data *data, t_cmd **current_cmd, t_cmd **cmd_head, int *num_cmd)
 {
 	(*num_cmd)++;
@@ -115,8 +113,8 @@ static void	handle_pipe(t_data *data, t_cmd **current_cmd, t_cmd **cmd_head, int
 
 static void	handle_cmd_token(t_data *data, t_cmd *current_cmd, t_token *current_token)
 {
-	current_cmd->tab_cmd = ft_join_tab(data, 
-		current_cmd->tab_cmd, current_token->str, current_cmd->tab_len);
+	current_cmd->tab_cmd = ft_join_tab(data,
+			current_cmd->tab_cmd, current_token->str, current_cmd->tab_len);
 	(current_cmd->tab_len)++;
 }
 
@@ -154,7 +152,7 @@ static void	process_tokens(t_data *data, t_cmd **current_cmd, t_cmd **cmd_head, 
 		else if ((*current_token)->type > 1 && (*current_token)->type < 7)
 		{
 			if (!handle_redirect_token(data, *current_cmd, current_token, &red_head))
-				return;
+				return ;
 		}
 		*current_token = (*current_token)->next;
 	}

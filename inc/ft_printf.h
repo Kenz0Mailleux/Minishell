@@ -16,7 +16,6 @@
 # include "libft.h"
 # include <stdarg.h>
 
-
 int		ft_printf(const char *format, ...);
 int		from_char(int c);
 int		from_str(char *str);

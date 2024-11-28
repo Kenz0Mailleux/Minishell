@@ -6,13 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 14:37:40 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/27 18:20:17 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:36:09 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 void	loop_heredoc(t_data *data, t_redirect *node, int fd, char *line)
 {
@@ -27,17 +25,12 @@ void	loop_heredoc(t_data *data, t_redirect *node, int fd, char *line)
 			ft_putstr_fd(line, fd);
 			break ;
 		}
-		ft_printf("test :  %s", line);
-		if (ft_strncmp(line, node->str, ft_strlen(line) - 1) == 0
-			&& line != "\n")
+		if (ft_strncmp(line, node->str, ft_strlen(node->str) - 1) == 0
+			&& *line != '\n')
 		{
-			
-			ft_printf("stuck?\n");
 			free_str(line);
-			ft_printf("stuck2?");
 			break ;
 		}
-		ft_printf("test1 :  ");
 		new_line = check_expands(data, line);
 		free_str(line);
 		if (new_line == NULL)

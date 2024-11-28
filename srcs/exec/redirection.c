@@ -6,12 +6,11 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 22:06:59 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/27 14:43:06 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:36:00 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 void	open_append(t_redirect *node)
 {
@@ -61,12 +60,10 @@ void	open_input(t_redirect *node)
 void	open_heredoc_file(char *file)
 {
 	int	fd;
-
 	fd = open(file, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
-
 
 void	redirection(t_cmd *cmd)
 {
@@ -77,7 +74,7 @@ void	redirection(t_cmd *cmd)
 
 	i = 0;
 	node = cmd->redirect;
-	itoa = ft_itoa(cmd->num_cmd);
+	itoa = ft_itoa(cmd->num_cmd + 1);
 	file = ft_strjoin("/tmp/.heredoc_tmp_file", itoa);
 	free_str(itoa);
 	while (node != NULL)

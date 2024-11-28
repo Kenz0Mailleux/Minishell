@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/27 18:15:59 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:24:09 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ static void process_cmds(t_data *data)
 		current_cmd = next_cmd;
 	}
 	exec(data, data->cmd);
+	free_cmd(data);
 }
 
 static void process_input(t_data *data, char *input)

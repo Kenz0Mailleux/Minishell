@@ -12,14 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-void free_redirect(t_data *data)
+void	free_redirect(t_data *data)
 {
-	t_redirect *redirect;
-	t_redirect *next_redirect;
+	t_redirect	*redirect;
+	t_redirect	*next_redirect;
 
 	if (data == NULL || data->cmd == NULL)
-		return;
-
+		return ;
 	redirect = data->cmd->redirect;
 	while (redirect != NULL)
 	{
@@ -32,9 +31,9 @@ void free_redirect(t_data *data)
 	data->cmd->redirect = NULL;
 }
 
-void free_env_list(t_env *head)
+void	free_env_list(t_env *head)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (head)
 	{
@@ -48,14 +47,13 @@ void free_env_list(t_env *head)
 	}
 }
 
-void free_token(t_data *data)
+void	free_token(t_data *data)
 {
-	t_token *token;
-	t_token *next_token;
+	t_token	*token;
+	t_token	*next_token;
 
 	if (data == NULL || data->token == NULL)
-		return;
-
+		return ;
 	token = data->token;
 	while (token)
 	{
@@ -66,14 +64,12 @@ void free_token(t_data *data)
 	data->token = NULL;
 }
 
-
 void	free_all(t_data *data, int exit_code)
 {
 	free_env_list(data->env_cmd);
 	free_env_list(data->env_all);
 	free_token(data);
-    free_redirect(data);
-
+	free_redirect(data);
 	(void)data;
 	exit(exit_code);
 }

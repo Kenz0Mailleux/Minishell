@@ -12,9 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-void check_is_builtin(t_cmd *cmd)
+void	check_is_builtin(t_cmd *cmd)
 {
-	t_cmd *current_cmd;
+	t_cmd	*current_cmd;
 
 	current_cmd = cmd;
 	while (current_cmd)
@@ -22,12 +22,12 @@ void check_is_builtin(t_cmd *cmd)
 		if (!current_cmd->tab_cmd[0])
 			current_cmd->is_builtin = false;
 		else if (ft_strncmp(current_cmd->tab_cmd[0], "echo", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "cd", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "pwd", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "env", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) == 0)
+			|| ft_strncmp(current_cmd->tab_cmd[0], "cd", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "pwd", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "env", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) == 0)
 			current_cmd->is_builtin = true;
 		else
 			current_cmd->is_builtin = false;
@@ -36,7 +36,7 @@ void check_is_builtin(t_cmd *cmd)
 }
 // set g_exit_status to a value to know if error occure here
 
-int exec_builtin(t_data *data, t_cmd *cmd)
+int	exec_builtin(t_data *data, t_cmd *cmd)
 {
 	if (ft_strncmp(cmd->tab_cmd[0], "echo", INT_MAX) == 0)
 		return (ft_echo(cmd->tab_cmd), 0);
@@ -56,10 +56,10 @@ int exec_builtin(t_data *data, t_cmd *cmd)
 }
 // set g_exit_status to wexitstatus()
 
-void no_pipe_builtin(t_data *data, t_cmd *cmd)
+void	no_pipe_builtin(t_data *data, t_cmd *cmd)
 {
-	pid_t pid;
-	int wstatus;
+	pid_t	pid;
+	int		wstatus;
 
 	pid = fork();
 	if (pid == -1)
@@ -82,21 +82,21 @@ void no_pipe_builtin(t_data *data, t_cmd *cmd)
 		WEXITSTATUS(wstatus);
 }
 
-int check_exec_builtin(t_data *data, t_cmd *current_cmd)
+int	check_exec_builtin(t_data *data, t_cmd *current_cmd)
 {
 	if (current_cmd->next == NULL && current_cmd->is_builtin == true)
 	{
 		if (ft_strncmp(current_cmd->tab_cmd[0], "cd", INT_MAX) != 0
-		&& ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) != 0
-		&& ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) != 0
-		&& ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) != 0)
+			&& ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) != 0
+			&& ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) != 0
+			&& ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) != 0)
 		{
 			no_pipe_builtin(data, current_cmd);
 		}
 		else if (ft_strncmp(current_cmd->tab_cmd[0], "cd", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) == 0
-		|| ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) == 0)
+			|| ft_strncmp(current_cmd->tab_cmd[0], "export", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "unset", INT_MAX) == 0
+			|| ft_strncmp(current_cmd->tab_cmd[0], "exit", INT_MAX) == 0)
 		{
 			exec_builtin(data, current_cmd);
 		}
