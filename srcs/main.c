@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 16:37:39 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:35:55 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ int main(int argc, char *argv[], char **env)
 		input = get_input(&data);
 		if (input[0])
 			process_input(&data, input);
-		// free(input);
-		free(data.env_cmd);
+		free(input);
+		//free(data.env_cmd);
 		if (write_history(HISTORY_FILE) != 0)
 			perror("write_history");
 	}

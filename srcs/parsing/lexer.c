@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/27 13:33:56 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:38:24 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static char *handle_non_quoted_word(t_data *data, char **word, char *input, int 
 	int start;
 	char *non_quoted_word;
 	char *temp;
+	char *temp2;
 	int	len;
 
 	len = ft_strlen(input);
@@ -95,7 +96,11 @@ static char *handle_non_quoted_word(t_data *data, char **word, char *input, int 
 			&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\'' && input[*i] != '\"')
 	{
 		if (input[*i] == '$' && input[*i + 1] != 0)
-			append_env(&data->env_cmd, create_env(data, get_env(&input[*i]), NULL, 1));
+		{
+			temp2 = get_env(&input[*i]);
+			append_env(&data->env_cmd, create_env(data, temp2, NULL, 1));
+			free(temp2);
+		}
 		(*i)++;
 	}
 	non_quoted_word = ft_strndup(&input[start], *i - start);
@@ -171,7 +176,7 @@ t_token *lexer(t_data *data, char *input)
 		else if (input[i] == '\'' || input[i] == '\"')
 		{
 			if (!handle_quoted_word(data, &word, input, &i))
-				return (NULL);
+				return (free(word), NULL);
 		}
 		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
 		{
@@ -187,13 +192,13 @@ t_token *lexer(t_data *data, char *input)
 		else
 		{
 			if (!handle_non_quoted_word(data, &word, input, &i))
-				return (NULL);
+				return (free(word), NULL);
 		}
 	}
 	if (word)
 	{
 		append_token(&data->token, create_token(data, CMD, word));
-		//free(word);
+		free(word);
 	}
 	return (data->token);
 }

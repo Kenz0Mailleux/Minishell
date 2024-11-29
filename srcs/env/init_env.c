@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/27 15:34:50 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 11:39:01 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_env	*parse_env(t_data *data, char **tab_env)
 			free_env_list(head);
 			free_all(data, EXIT_FAILURE);
 		}
-		// free(key);
+		free(key);
 		// free(value);
 		append_env(&head, new_env);
 		i++;
