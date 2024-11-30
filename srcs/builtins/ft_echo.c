@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:44:30 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/27 13:31:36 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:21:17 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	check_newline(char *line)
 	return (0);
 }
 
-int ft_echo(char **args)
+int	ft_echo(char **args)
 {
-	int i;
-	int newline;
+	int	i;
+	int	newline;
 
 	newline = 1;
 	i = 1;
@@ -47,7 +47,7 @@ int ft_echo(char **args)
 	{
 		ft_printf("%s", args[i]);
 		if (args[i + 1])
-			ft_printf(" "); //espace car chaque command est separe par un espace
+			ft_printf(" ");
 		i++;
 	}
 	if (newline)

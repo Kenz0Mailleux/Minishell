@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:34 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/27 13:31:36 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:14:54 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-void ft_env(t_data *data)
+void	ft_env(t_data *data)
 {
 	t_env	*current_env;
 

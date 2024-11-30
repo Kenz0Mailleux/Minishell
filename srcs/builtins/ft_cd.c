@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/27 14:07:18 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:19:19 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_cd(t_data *data, char **args)
+int	ft_cd(t_data *data, char **args)
 {
-	char *oldpwd;
-	char *pwd;
-	char cwd[1024];
+	char	*oldpwd;
+	char	*pwd;
+	char	cwd[1024];
 
 	oldpwd = find_key(&data->env_all, "OLDPWD", 1);
 	pwd = find_key(&data->env_all, "PWD", 1);
-	if (!args[1] || ft_strncmp(args[1], "~", 2) == 0 || ft_strncmp(args[1], "--", 3) == 0)
-	{
+	if (!args[1] || ft_strncmp(args[1], "~", 2) == 0 \
+			|| ft_strncmp(args[1], "--", 3) == 0)
 		if (chdir(find_key(&data->env_all, "HOME", 1)) != 0)
 			return (perror("cd"), 1);
-	}
 	else if (ft_strncmp(args[1], "-", 2) == 0)
 	{
 		if (oldpwd == NULL)

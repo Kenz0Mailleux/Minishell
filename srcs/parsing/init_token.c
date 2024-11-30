@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:47 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/27 13:33:53 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:14:11 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_token *create_token(t_data *data, int type, char *str)
+t_token	*create_token(t_data *data, int type, char *str)
 {
 	t_token	*new_token;
 
@@ -23,13 +23,12 @@ t_token *create_token(t_data *data, int type, char *str)
 	new_token->str = ft_strdup(str);
 	if (new_token->str == NULL)
 		free_all(data, EXIT_FAILURE);
-	//free(str);
 	new_token->prev = NULL;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-void append_token(t_token **head, t_token *new_token)
+void	append_token(t_token **head, t_token *new_token)
 {
 	t_token	*current;
 
@@ -44,4 +43,3 @@ void append_token(t_token **head, t_token *new_token)
 		new_token->prev = current;
 	}
 }
-

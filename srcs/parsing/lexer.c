@@ -6,151 +6,60 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/29 11:38:24 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/11/30 19:43:34 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	special_token(t_data *data, t_token **head, const char *input, int *i)
+void	handle_space(char **word, t_data *data, int *i)
 {
-	if (input[*i] == '|')
-		append_token(head, create_token(data, PIPE, "|"));
-	else if (input[*i] == '>')
+	if (*word)
 	{
-		if (input[*i + 1] == '>')
-		{
-			append_token(head, create_token(data, APPEND, ">>"));
-			(*i)++;
-		}
-		else
-			append_token(head, create_token(data, REDIRECT_OUT, ">"));
+		append_token(&(data->token), create_token(data, CMD, *word));
+		free(*word);
+		*word = NULL;
 	}
-	else if (input[*i] == '<')
-	{
-		if (input[*i + 1] == '<')
-		{
-			append_token(head, create_token(data, HEREDOC, "<<"));
-			(*i)++;
-		}
-		else
-			append_token(head, create_token(data, REDIRECT_IN, "<"));
-	}
+	(*i)++;
 }
 
-char	*quote_token(t_data *data, char *input, int *i, char quote_type)
+void	handle_special_char(t_data *data, char **word, char *input, int *i)
 {
-	int		start;
-	char	*word;
-
-	start = ++(*i);
-	while (input[*i] && input[*i] != quote_type)
-		(*i)++;
-	if (input[*i] != quote_type)
-		return (printf("quote not close \n"), NULL);
-	if (input[*i] == quote_type)
+	if (*word)
 	{
-		word = ft_strndupquote(&input[start], *i - start);
-		if (!word)
-			free_all(data, EXIT_FAILURE);
-		++(*i);
-		return (word);
+		append_token(&(data->token), create_token(data, CMD, *word));
+		free(*word);
+		*word = NULL;
 	}
-	return (NULL);
+	special_token(data, &(data->token), input, i);
+	(*i)++;
 }
 
-void	modify_str_token(t_data *data, t_token **head, char *new_str)
+int	is_special_char(char c)
 {
-	t_token	*current;
-
-	current = *head;
-	while (current->next != NULL)
-		current = current->next;
-	if (!ft_strjoin(current->str, new_str))
-		free_all(data, EXIT_FAILURE);
+	return (c == '|' || c == '>' || c == '<');
 }
 
-char *get_env(char *str)
+int	process_lexer(t_data *data, char **word, char *input, int *i)
 {
-	int i;
-	char	*s;
-
-	i = 1;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		i++;
-	s = ft_substr(str, 1, i - 1);
-	return (s); //si je veux le dollar ou pas faux changer le 1 a 0
-}
-
-static char *handle_non_quoted_word(t_data *data, char **word, char *input, int *i)
-{
-	int start;
-	char *non_quoted_word;
-	char *temp;
-	char *temp2;
-	int	len;
-
-	len = ft_strlen(input);
-	start = *i;
-	while (*i < len && !ft_isspace(input[*i]) && input[*i] != '|'
-			&& input[*i] != '>' && input[*i] != '<' && input[*i] != '\'' && input[*i] != '\"')
+	if (ft_isspace(input[*i]))
+		handle_space(word, data, i);
+	else if (input[*i] == '\'' || input[*i] == '\"')
 	{
-		if (input[*i] == '$' && input[*i + 1] != 0)
-		{
-			temp2 = get_env(&input[*i]);
-			append_env(&data->env_cmd, create_env(data, temp2, NULL, 1));
-			free(temp2);
-		}
-		(*i)++;
+		if (!handle_quoted_word(data, word, input, i))
+			return (0);
 	}
-	non_quoted_word = ft_strndup(&input[start], *i - start);
-	if (!non_quoted_word)
-		return (free(*word), NULL);
-	if (!*word)
-		*word = non_quoted_word;
+	else if (is_special_char(input[*i]))
+		handle_special_char(data, word, input, i);
 	else
 	{
-		temp = ft_strjoin(*word, non_quoted_word);
-		if (!temp)
-			free_all(data, EXIT_FAILURE);
-		free(*word);
-		free(non_quoted_word);
-		*word = temp;
-		if (!*word)
-			return (NULL);
+		if (!handle_non_quoted_word(data, word, input, i))
+			return (0);
 	}
-	return (*word);
+	return (1);
 }
 
-static char *handle_quoted_word( t_data *data, char **word, char *input, int *i)
-{
-	char quote_type;
-	char *quoted_word;
-	char *temp;
-
-	quote_type = input[*i];
-	quoted_word = quote_token(data, input, i, quote_type);
-	if (!quoted_word)
-	{
-		return (free(*word), NULL);
-	}
-	if (!*word)
-		*word = quoted_word;
-	else
-	{
-		temp = ft_strjoin(*word, quoted_word);
-		if (!temp)
-			free_all(data, EXIT_FAILURE);
-		free(*word);
-		free(quoted_word);
-		*word = temp;
-		if (!*word)
-			return (NULL);
-	}
-	return (*word);
-}
-
-t_token *lexer(t_data *data, char *input)
+t_token	*lexer(t_data *data, char *input)
 {
 	int		i;
 	int		len;
@@ -159,41 +68,12 @@ t_token *lexer(t_data *data, char *input)
 	data->token = NULL;
 	data->env_cmd = NULL;
 	i = 0;
-	len = ft_strlen(input);
 	word = NULL;
+	len = ft_strlen(input);
 	while (i < len)
 	{
-		if (ft_isspace(input[i]))
-		{
-			if (word)
-			{
-				append_token(&data->token, create_token(data, CMD, word));
-				free(word);
-				word = NULL;
-			}
-			i++;
-		}
-		else if (input[i] == '\'' || input[i] == '\"')
-		{
-			if (!handle_quoted_word(data, &word, input, &i))
-				return (free(word), NULL);
-		}
-		else if (input[i] == '|' || input[i] == '>' || input[i] == '<')
-		{
-			if (word)
-			{
-				append_token(&data->token, create_token(data, CMD, word));
-				free(word);
-				word = NULL;
-			}
-			special_token(data, &data->token, input, &i);
-			i++;
-		}
-		else
-		{
-			if (!handle_non_quoted_word(data, &word, input, &i))
-				return (free(word), NULL);
-		}
+		if (!process_lexer(data, &word, input, &i))
+			return (free(word), NULL);
 	}
 	if (word)
 	{

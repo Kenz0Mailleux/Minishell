@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 22:06:59 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/28 14:36:00 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/30 17:19:42 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,5 @@ void	redirection(t_cmd *cmd)
 	}
 	if (i == 1)
 		open_heredoc_file(file);
+	free_str(file);
 }

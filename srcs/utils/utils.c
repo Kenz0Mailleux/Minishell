@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:54 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/27 14:51:03 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:51:28 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ char	*ft_strndupquote(const char *s, size_t n)
 	if (str)
 		str[n] = 0;
 	return (str);
+}
+
+char	**ft_join_tab(t_data *data, char **tab,
+		char *str, int tab_len)
+{
+	char	**tab_cpy;
+	int		i;
+
+	i = 0;
+	tab_cpy = malloc(sizeof(char *) * (tab_len + 1 + 1));
+	if (tab_cpy == NULL)
+		free_all(data, EXIT_FAILURE);
+	while (i < tab_len)
+	{
+		tab_cpy[i] = tab[i];
+		i++;
+	}
+	tab_cpy[i] = str;
+	tab_cpy[++i] = NULL;
+	free(tab);
+	return (tab_cpy);
 }

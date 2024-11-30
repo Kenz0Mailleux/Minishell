@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 13:23:23 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:35:34 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_cmd_head_tail
 typedef struct s_data
 {
 	int			end;
+	char		**env_str;
 	t_env		*env_all;
 	t_env		*env_cmd;
 	t_token		*token;
@@ -128,84 +129,99 @@ typedef struct s_exec
 }					t_exec;
 
 //printf
-int		ft_printf(const char *format, ...);
-int		from_char(int c);
-int		from_str(char *str);
-int		from_ptr(unsigned long long nbr);
-int		from_int(int nbr);
-int		from_uint(unsigned int nbr);
-int		from_x_x(unsigned int nbr, char format);
-char	*to_hexa(unsigned long long nbr, char *base);
-int		hex_len(unsigned long long nbr);
+int			ft_printf(const char *format, ...);
+int			from_char(int c);
+int			from_str(char *str);
+int			from_ptr(unsigned long long nbr);
+int			from_int(int nbr);
+int			from_uint(unsigned int nbr);
+int			from_x_x(unsigned int nbr, char format);
+char		*to_hexa(unsigned long long nbr, char *base);
+int			hex_len(unsigned long long nbr);
 
 // utils
-int		ft_putstr(char *str);
-int		ft_putchar(char str);
-void	reverse_string(char *str);
+int			ft_putstr(char *str);
+int			ft_putchar(char str);
+void		reverse_string(char *str);
 
 //builtins
-int		ft_echo(char **args);
-int		ft_cd(t_data *data, char **args);
-int		ft_pwd(void);
-void	update_env(t_data *data, char *key, char *value, int append);
-void	ft_env(t_data *data);
-void	ft_unset_single(t_data *data, const char *str);
-void	ft_unset(t_data *data, char **tab_cmd);
-void	ft_export(t_data *data, char **args);
-void	ft_exit(t_data *data, char **args);
+int			ft_echo(char **args);
+int			ft_cd(t_data *data, char **args);
+int			ft_pwd(void);
+void		update_env(t_data *data, char *key, char *value, int append);
+void		ft_env(t_data *data);
+void		ft_unset_single(t_data *data, const char *str);
+void		ft_unset(t_data *data, char **tab_cmd);
+int			is_valid_key(const char *key);
+void		update_env(t_data *data, char *key, char *value, int append);
+void		ft_export(t_data *data, char **args);
+void		print_export(t_env *env_all);
+void		ft_exit(t_data *data, char **args);
 
 //envs
 /*				expander			*/
-void	set_value(t_env *env_all, t_env *env_cmd);
-void	replace_env(t_data *data);
+void		set_value(t_env *env_all, t_env *env_cmd);
+void		replace_env(t_data *data);
 
 /*				env					*/
-t_env	*create_env(t_data *data, char *key, char *value, int export);
-void	append_env(t_env **head, t_env *new_env);
-t_env	*parse_env(t_data *data, char **tab_env);
+t_env		*create_env(t_data *data, char *key, char *value, int export);
+void		append_env(t_env **head, t_env *new_env);
+t_env		*parse_env(t_data *data, char **tab_env);
 
 //exec
 //check
-void	free_str(char *str);
-void	free_arr(char **arr);
-char	*ft_strjoin_char(char *str, char c);
+void		free_str(char *str);
+void		free_arr(char **arr);
+char		*ft_strjoin_char(char *str, char c);
 
-void	check_heredoc(t_data *data, t_cmd *cmd);
-void	clear_temp_heredoc(void);
+void		check_heredoc(t_data *data, t_cmd *cmd);
+void		clear_temp_heredoc(void);
 
-char	*find_key(t_env **env_all, char *key, int get_value);
-char	*check_expands(t_data *data, char *str);
-char	**env_to_str_env(t_data *data);
+char		*find_key(t_env **env_all, char *key, int get_value);
+char		*check_expands(t_data *data, char *str);
+char		**env_to_str_env(t_data *data);
 
-void	exec(t_data *data, t_cmd *cmd);
-void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec);
+void		exec(t_data *data, t_cmd *cmd);
+void		exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec);
 
-int		check_exec_builtin(t_data *data, t_cmd *current_cmd);
-void	check_is_builtin(t_cmd	*cmd);
-int		exec_builtin(t_data *data, t_cmd *cmd);
+int			check_exec_builtin(t_data *data, t_cmd *current_cmd);
+void		check_is_builtin(t_cmd	*cmd);
+int			exec_builtin(t_data *data, t_cmd *cmd);
 
-void	redirection(t_cmd *cmd);
+void		redirection(t_cmd *cmd);
 
-void	get_absolute_path(t_data *data, t_cmd *cmd);
-void	error_exec_management(char *cmd);
-void	wait_childs(t_exec *exec);
+void		get_absolute_path(t_data *data, t_cmd *cmd);
+void		error_exec_management(char *cmd);
+void		wait_childs(t_exec *exec);
 
 //signaling
-void	check_for_signals(int process);
+void		check_for_signals(int process);
 
 //parsing
-t_token	*lexer(t_data *data, char *input);
-t_token	*create_token(t_data *data, int type, char *str);
-void	append_token(t_token **head, t_token *new_token);
-t_cmd	*parser(t_data *data);
-void	append_env_token(t_token **head, t_env *new_env);
+t_token		*lexer(t_data *data, char *input);
+char		*handle_quoted_word( t_data *data, char **word,
+				char *input, int *i);
+char		*handle_non_quoted_word(t_data *data,
+				char **word, char *input, int *i);
+void		special_token(t_data *data, t_token **head,
+				const char *input, int *i);
+char		*quote_token(t_data *data, char *input, int *i, char quote_type);
+t_token		*create_token(t_data *data, int type, char *str);
+void		append_token(t_token **head, t_token *new_token);
+t_cmd		*create_cmd(t_data *data, int num_cmd);
+void		append_cmd(t_cmd **head, t_cmd *new_cmd);
+t_redirect	*create_redirect(t_data *data, int type, char *str);
+void		append_redirect(t_redirect **head, t_redirect *new_redirect);
+t_cmd		*parser(t_data *data);
+void		append_env_token(t_token **head, t_env *new_env);
 
 //utils 
-void	free_all(t_data *data, int succes);
-void	free_env_list(t_env *head);
-void	free_redirect(t_data *data);
-void	free_token(t_data *data);
-char	*find_key(t_env **env_all, char *key, int get_value);
-char	*ft_strndupquote(const char *s, size_t n);
+void		free_all(t_data *data, int succes);
+void		free_env_list(t_env *head);
+void		free_redirect(t_data *data);
+void		free_token(t_data *data);
+char		**ft_join_tab(t_data *data, char **tab, char *str, int tab_len);
+char		*find_key(t_env **env_all, char *key, int get_value);
+char		*ft_strndupquote(const char *s, size_t n);
 
 #endif

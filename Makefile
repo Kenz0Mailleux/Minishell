@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
+#    By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/11/28 16:05:08 by nicolive         ###   ########.fr        #
+#    Updated: 2024/11/30 19:47:17 by kenzo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,13 @@ SRCS_DIR = srcs/
 OBJS_DIR = obj/
 
 SRCS =	srcs/main.c \
-	srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c \
-	srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c \
+	srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c srcs/builtins/ft_export1.c \
+	srcs/builtins/print_export.c srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c \
 	srcs/env/expander.c srcs/env/init_env.c \
 	srcs/exec/builtin.c srcs/exec/error_exec.c srcs/exec/exec.c srcs/exec/expand.c srcs/exec/heredoc.c srcs/exec/path.c \
 	srcs/exec/redirection.c srcs/exec/utils_exec.c \
 	srcs/gnl/get_next_line_utils.c srcs/gnl/get_next_line.c \
-	srcs/parsing/init_token.c srcs/parsing/lexer.c srcs/parsing/parse.c  \
+	srcs/parsing/init_token.c srcs/parsing/init_cmd.c srcs/parsing/lexer.c srcs/parsing/lexer1.c srcs/parsing/lexer2.c srcs/parsing/parse.c  \
 	srcs/signals/signals.c \
 	srcs/utils/free.c srcs/utils/utils.c \
 	srcs/utils/ft_printf/char_cvrt.c srcs/utils/ft_printf/ft_printf.c srcs/utils/ft_printf/hex_cvrt.c srcs/utils/ft_printf/nbr_cvrt.c srcs/utils/ft_printf/ptr_cvrt.c srcs/utils/ft_printf/utils.c 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/28 13:50:04 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/30 16:50:26 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	**env_to_str_env(t_data *data)
 	i = -1;
 	node_env = data->env_all;
 	env_str = malloc(sizeof(char *) * (get_size(data->env_all) + 1));
+	if (!env_str)
+		free_all(data, EXIT_FAILURE);
 	while (node_env)
 	{
 		env_str[++i] = ft_strdup(node_env->key);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/28 16:40:13 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/11/30 17:50:09 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 // exec part
 void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
-{
-	char	**env_str;
-
+{	
 	check_for_signals(1);
 	if (exec->fd_in != STDIN_FILENO)
 	{
@@ -32,8 +30,8 @@ void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
 	redirection(cmd);
 	if (exec_builtin(data, cmd) == -1)
 	{
-		env_str = env_to_str_env(data);
-		execve(cmd->absolute_path, cmd->tab_cmd, env_str);
+		data->env_str = env_to_str_env(data);
+		execve(cmd->absolute_path, cmd->tab_cmd, data->env_str);
 		error_exec_management(cmd->tab_cmd[0]);
 	}
 	else
@@ -107,6 +105,7 @@ void	free_cmds(t_data *data, t_cmd *cmd)
 		return ;
 	free_redirect(data);
 	free_token(data);
+	//free_arr(data->env_str);
 	while (current_cmd)
 	{
 		temp = current_cmd;
