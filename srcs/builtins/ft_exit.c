@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:21:43 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 15:59:25 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 16:00:41 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,5 @@ void	ft_exit(t_data *data, char **args)
 	}
 	else
 		exit_code = 0;
-
 	free_all(data, exit_code);
 }
