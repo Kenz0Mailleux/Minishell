@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 00:57:48 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 01:51:17 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec)
 	exec->nbr_of_childs = 0;
 	while (current_cmd)
 	{
-		ft_printf("test\n");
 		loop_exec(data, current_cmd, exec);
 		current_cmd = current_cmd->next;
 	}
