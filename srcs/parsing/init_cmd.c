@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse1.c                                           :+:      :+:    :+:   */
+/*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:37:03 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/29 12:38:18 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:05:17 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	*create_cmd(t_data *data, int num_cmd)
 	new_cmd->tab_cmd[0] = NULL;
 	new_cmd->tab_len = 0;
 	new_cmd->redirect = NULL;
+	new_cmd->absolute_path = NULL;
 	new_cmd->num_cmd = num_cmd;
 	new_cmd->prev = NULL;
 	new_cmd->next = NULL;

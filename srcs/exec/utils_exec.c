@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:15:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/30 17:40:01 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 01:22:17 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,28 @@ char	*ft_strjoin_char(char *str, char c)
 	new_str[j] = c;
 	new_str[j + 1] = '\0';
 	return (new_str);
+}
+
+void	free_cmds(t_data *data, t_cmd *cmd)
+{
+	t_cmd	*current_cmd;
+	t_cmd	*temp;
+
+	if (!data && !cmd)
+		return ;
+	current_cmd = cmd;
+	free_redirect(data);
+	free_token(data);
+	free_arr(data->env_str);
+	while (current_cmd)
+	{
+		temp = current_cmd;
+		current_cmd = current_cmd->next;
+		free_arr(temp->tab_cmd);
+		free_str(temp->absolute_path);
+		free(temp);
+		temp = NULL;
+	}
 }
 
 //set g_exit_status to wexitstatus

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/30 19:35:34 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 22:26:33 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ void		redirection(t_cmd *cmd);
 void		get_absolute_path(t_data *data, t_cmd *cmd);
 void		error_exec_management(char *cmd);
 void		wait_childs(t_exec *exec);
+void		free_cmds(t_data *data, t_cmd *cmd);
 
 //signaling
 void		check_for_signals(int process);

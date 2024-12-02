@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/30 17:50:09 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 00:57:48 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // exec part
 void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
-{	
+{
 	check_for_signals(1);
 	if (exec->fd_in != STDIN_FILENO)
 	{
@@ -32,6 +32,7 @@ void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
 	{
 		data->env_str = env_to_str_env(data);
 		execve(cmd->absolute_path, cmd->tab_cmd, data->env_str);
+		free_arr(data->env_str);
 		error_exec_management(cmd->tab_cmd[0]);
 	}
 	else
@@ -81,40 +82,21 @@ void	exec_pipe(t_data *data, t_cmd *cmd, t_exec *exec)
 	t_cmd	*current_cmd;
 
 	current_cmd = cmd;
-	if (!current_cmd || !current_cmd->tab_cmd[0] || current_cmd->tab_cmd[0][0] == '\0')
-		return;
+	if (!current_cmd
+		|| !current_cmd->tab_cmd[0]
+		|| current_cmd->tab_cmd[0][0] == '\0')
+		return ;
 	check_is_builtin(current_cmd);
 	if (check_exec_builtin(data, current_cmd))
-		return;
+		return ;
 	exec->nbr_of_childs = 0;
 	while (current_cmd)
 	{
+		ft_printf("test\n");
 		loop_exec(data, current_cmd, exec);
 		current_cmd = current_cmd->next;
 	}
 	wait_childs(exec);
-}
-
-void	free_cmds(t_data *data, t_cmd *cmd)
-{
-	t_cmd	*current_cmd;
-	t_cmd	*temp;
-
-	current_cmd = cmd;
-	if (!data && !cmd)
-		return ;
-	free_redirect(data);
-	free_token(data);
-	//free_arr(data->env_str);
-	while (current_cmd)
-	{
-		temp = current_cmd;
-		current_cmd = current_cmd->next;
-		free_arr(temp->tab_cmd);
-		free_str(temp->absolute_path);
-		free(temp);
-		temp = NULL;
-	}
 }
 
 void	exec(t_data *data, t_cmd *cmd)
@@ -123,7 +105,7 @@ void	exec(t_data *data, t_cmd *cmd)
 
 	exec.fd_in = STDIN_FILENO;
 	check_heredoc(data, cmd);
-	exec_pipe(data, cmd, &exec);
-	free_cmds(data, cmd);
+	exec_pipe(data, data->cmd, &exec);
+	free_cmds(data, data->cmd);
 	clear_temp_heredoc();
 }

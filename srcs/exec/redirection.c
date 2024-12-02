@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 22:06:59 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/30 17:19:42 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 22:24:46 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	open_input(t_redirect *node)
 void	open_heredoc_file(char *file)
 {
 	int	fd;
+
 	fd = open(file, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	close(fd);

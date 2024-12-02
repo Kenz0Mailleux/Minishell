@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/30 18:19:19 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:13:24 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ int	ft_cd(t_data *data, char **args)
 	oldpwd = find_key(&data->env_all, "OLDPWD", 1);
 	pwd = find_key(&data->env_all, "PWD", 1);
 	if (!args[1] || ft_strncmp(args[1], "~", 2) == 0 \
-			|| ft_strncmp(args[1], "--", 3) == 0)
+		|| ft_strncmp(args[1], "--", 3) == 0)
+	{
 		if (chdir(find_key(&data->env_all, "HOME", 1)) != 0)
 			return (perror("cd"), 1);
-	else if (ft_strncmp(args[1], "-", 2) == 0)
-	{
-		if (oldpwd == NULL)
-			return (perror("cd: OLDPWD not set"), 0);
-		if (chdir(oldpwd) != 0)
-			return (perror("cd"), 1);
 	}
+	else if (ft_strncmp(args[1], "-", 2) == 0 && oldpwd == NULL)
+		return (perror("cd: OLDPWD not set"), 0);
+	else if (ft_strncmp(args[1], "-", 2) == 0 && chdir(oldpwd) != 0)
+		return (perror("cd"), 1);
 	else if (chdir(args[1]) != 0)
 		return (perror("cd"), 1);
 	if (pwd)

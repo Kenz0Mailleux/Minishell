@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/30 19:57:06 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 01:37:28 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int	main(int argc, char *argv[], char **env)
 	(void)argc;
 	(void)argv;
 	data.env_all = parse_env(&data, env);
+	data.env_str =
 	// if (PRINT_ENV == 1)
 	// 	print_env(data.env_all);
 	data.end = 0;

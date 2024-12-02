@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:28:52 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/30 17:15:19 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 01:34:16 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,16 @@ void	get_absolute_path(t_data *data, t_cmd *cmd)
 	{
 		path_str = path(data, current_cmd);
 		if (access(current_cmd->tab_cmd[0], F_OK) == -1)
+		{
+			if (path_str != NULL)
 				current_cmd->absolute_path = path_str;
+			else
+				free_str(path_str);
+		}
 		else
 		{
 			current_cmd->absolute_path = ft_strdup(current_cmd->tab_cmd[0]);
+			free_str(path_str);
 		}
 		current_cmd = current_cmd->next;
 	}
