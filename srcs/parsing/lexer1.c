@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:41:53 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 18:48:42 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:17:12 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ char	*get_env(char *str)
 	char	*s;
 
 	i = 1;
-	if (str[i] && (ft_isalnum(str[i]) || str[i] == '_' ||  str[i] == '?') && str[i] != '\"')
-	{
-		i++;
-	}
+	if (str[i] == '?')
+		return (ft_strdup("?"));
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_') && str[i] != '\"')
 	{
 		i++;
 	}
-	s = ft_substr(str, 1, i - 1);\
+	s = ft_substr(str, 1, i - 1);
 	return (s);
 }
 
@@ -44,10 +42,11 @@ char	*extract_non_quoted_word(t_data *data, char *input, int *i)
 		&& input[*i] != '\'' && input[*i] != '\"')
 	{
 		if (input[*i] == '$' && (ft_isalnum(input[*i + 1])
-			|| input[*i + 1] == '_' || input[*i + 1] == '?') && input[*i + 1] != 0
-			&& input[*i + 1] != '\"' && input[*i + 1] != '\'')
+				|| input[*i + 1] == '_' || input[*i + 1] == '?')
+			&& input[*i + 1] != 0 && input[*i + 1] != '\"'
+			&& input[*i + 1] != '\'')
 		{
-			temp2 = get_env(&input[*i]);\
+			temp2 = get_env(&input[*i]);
 			append_env(&data->env_cmd, create_env(data, temp2, NULL, 1));
 			free(temp2);
 		}
@@ -78,7 +77,6 @@ char	*handle_non_quoted_word(t_data *data, char **word, char *input, int *i)
 		if (!*word)
 			return (NULL);
 	}
-	
 	return (*word);
 }
 
@@ -93,7 +91,7 @@ char	*process_quoted_word(t_data *data, char *quoted_word, char quote_type)
 		if (quoted_word[j] == '$' && quoted_word[j + 1] != 0)
 		{
 			temp2 = get_env(&quoted_word[j]);
-			append_env(&data->env_cmd, create_env(data, temp2, NULL, 1));
+			append_env(&(data->env_cmd), create_env(data, temp2, NULL, 1));
 			free(temp2);
 		}
 		j++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 19:19:09 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:48:11 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void		append_env_token(t_token **head, t_env *new_env);
 
 //utils 
 void		free_all(t_data *data, int succes);
-void		free_env_list(t_env *head);
+void		free_env_list(t_env *head, int free_cmd);
 void		free_redirect(t_data *data);
 void		free_token(t_data *data);
 char		**ft_join_tab(t_data *data, char **tab, char *str, int tab_len);

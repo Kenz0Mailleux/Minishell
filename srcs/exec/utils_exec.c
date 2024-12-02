@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:15:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/02 01:22:17 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:30:18 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	free_cmds(t_data *data, t_cmd *cmd)
 	free_redirect(data);
 	free_token(data);
 	free_arr(data->env_str);
+	free_env_list(data->env_cmd, 1);
 	while (current_cmd)
 	{
 		temp = current_cmd;

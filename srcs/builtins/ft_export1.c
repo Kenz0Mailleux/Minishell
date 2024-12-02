@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:34:28 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 18:32:38 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:01:47 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,3 @@ void	update_env(t_data *data, char *key, char *value, int append)
 	}
 	add_new_env_variable(data, key, value);
 }
-

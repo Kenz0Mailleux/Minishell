@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 14:46:50 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 17:24:21 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:11:20 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ t_token	*lexer(t_data *data, char *input)
 	while (i < len)
 	{
 		if (!process_lexer(data, &word, input, &i))
-			return (free(word), NULL);
-		
+			return (NULL);
 	}
 	if (word)
 	{

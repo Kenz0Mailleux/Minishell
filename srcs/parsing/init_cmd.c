@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:37:03 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 23:05:17 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:48:15 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ t_redirect	*create_redirect(t_data *data, int type, char *str)
 		free_all(data, EXIT_FAILURE);
 	new_redirect->prev = NULL;
 	new_redirect->next = NULL;
-	free(str);
 	return (new_redirect);
 }
 

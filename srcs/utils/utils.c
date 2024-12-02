@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:54 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 19:29:35 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:45:02 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	**ft_join_tab(t_data *data, char **tab,
 {
 	char	**tab_cpy;
 	int		i;
+	char	*temp;
 
 	i = 0;
 	tab_cpy = malloc(sizeof(char *) * (tab_len + 1 + 1));
@@ -70,7 +71,10 @@ char	**ft_join_tab(t_data *data, char **tab,
 		tab_cpy[i] = tab[i];
 		i++;
 	}
-	tab_cpy[i] = str;
+	temp = ft_strdup(str);
+	if (!temp)
+		free_all(data, EXIT_FAILURE);
+	tab_cpy[i] = temp;
 	tab_cpy[++i] = NULL;
 	free(tab);
 	return (tab_cpy);

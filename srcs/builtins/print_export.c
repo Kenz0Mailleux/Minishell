@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:52:25 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 18:37:05 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:01:10 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	print_export(t_env *env_all, t_data *data)
 	while (i < count)
 	{
 		if (array[i]->key[0] == '?')
-			{}
+		{
+		}
 		else if (!(array[i]->value[0]))
 			ft_printf("declare -x %s\n", array[i]->key);
 		else
