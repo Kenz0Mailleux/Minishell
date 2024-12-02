@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:54 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/29 12:51:28 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 19:29:35 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,29 @@ char	**ft_join_tab(t_data *data, char **tab,
 	tab_cpy[++i] = NULL;
 	free(tab);
 	return (tab_cpy);
+}
+
+void	modifi_shlvl(t_data *data)
+{
+	t_env	*current;
+	int		temp_nbr;
+
+	current = data->env_all;
+	while (current)
+	{
+		if (ft_strcmp(current->key, "SHLVL") == 0)
+		{
+			temp_nbr = ft_atoi(current->value);
+			temp_nbr = temp_nbr + 1;
+			if (temp_nbr >= 1000)
+			{
+				free_all(data, EXIT_FAILURE);
+				ft_printf("Shell lvl too big");
+			}
+			free(current->value);
+			current->value = ft_itoa(temp_nbr);
+		}
+		current = current->next;
+	}
+	return ;
 }

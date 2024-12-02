@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:18:34 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/29 12:14:54 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 18:38:40 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ void	ft_env(t_data *data)
 	current_env = data->env_all;
 	while (current_env != NULL)
 	{
-		ft_printf("%s=%s\n", current_env->key, current_env->value);
+		if (current_env->key[0] == '?')
+			{}
+		else
+		{
+			ft_printf("%s=%s\n", current_env->key, current_env->value);
+		}
 		current_env = current_env->next;
 	}
 }

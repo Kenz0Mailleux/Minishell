@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 22:26:33 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:19:09 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ int			hex_len(unsigned long long nbr);
 int			ft_putstr(char *str);
 int			ft_putchar(char str);
 void		reverse_string(char *str);
+void		modifi_shlvl(t_data *data);
 
 //builtins
 int			ft_echo(char **args);
@@ -155,7 +156,7 @@ void		ft_unset(t_data *data, char **tab_cmd);
 int			is_valid_key(const char *key);
 void		update_env(t_data *data, char *key, char *value, int append);
 void		ft_export(t_data *data, char **args);
-void		print_export(t_env *env_all);
+void		print_export(t_env *env_all, t_data *game);
 void		ft_exit(t_data *data, char **args);
 
 //envs

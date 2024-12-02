@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 21:44:19 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/02 01:47:49 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:09:53 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	no_pipe_builtin(t_data *data, t_cmd *cmd)
 	{
 		redirection(cmd);
 		exec_builtin(data, cmd);
+		//ft_printf("value %s", find_key(&(data->env_all), "?", 1));
+		//ft_atoi(find_key(&(data->env_all), "?", 1))
 		exit(0);
 	}
 	if (wait(&wstatus) == -1)

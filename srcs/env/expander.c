@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/30 19:37:58 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 18:22:00 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	replace_str_env(t_data *data, char **str,
 			pos + key_len, ft_strlen(pos + key_len) + 1);
 		free(*str);
 		*str = new_str;
+		new_str[new_len] = '\0'; 
 		pos = ft_strnstr(*str, key, ft_strlen(*str));
 	}
 }
@@ -44,7 +45,7 @@ void	expand_vars(t_data *data, char **str, t_env *env)
 {
 	t_env	*current_env;
 
-	current_env = env;
+	current_env = env;	
 	while (current_env)
 	{
 		replace_str_env(data, str, current_env->key, current_env->value);

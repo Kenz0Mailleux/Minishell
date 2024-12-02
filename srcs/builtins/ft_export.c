@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:17:40 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 01:48:56 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:59:22 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_export(t_data *data, char **tab_cmd)
 	i = 1;
 	if (!tab_cmd[1])
 	{
-		print_export(data->env_all);
+		print_export(data->env_all, data);
 		return ;
 	}
 	while (tab_cmd[i])

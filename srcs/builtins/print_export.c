@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:52:25 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/30 19:45:30 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 18:37:05 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_env	**fill_array_from_list(t_env *env_all, int count)
 	t_env	*current;
 	int		i;
 
-	if (!array)
-		return (NULL);
 	current = env_all;
 	array = (t_env **)malloc(sizeof(t_env *) * (count + 1));
+	if (array == NULL)
+		return (NULL);
 	i = 0;
 	while (current)
 	{
@@ -70,7 +70,7 @@ void	sort_array_by_key(t_env **array, int count)
 	}
 }
 
-void	print_export(t_env *env_all)
+void	print_export(t_env *env_all, t_data *data)
 {
 	int		count;
 	t_env	**array;
@@ -81,12 +81,14 @@ void	print_export(t_env *env_all)
 		return ;
 	array = fill_array_from_list(env_all, count);
 	if (!array)
-		return ;
+		free_all(data, EXIT_FAILURE);
 	sort_array_by_key(array, count);
 	i = 0;
 	while (i < count)
 	{
-		if (!(array[i]->value[0]))
+		if (array[i]->key[0] == '?')
+			{}
+		else if (!(array[i]->value[0]))
 			ft_printf("declare -x %s\n", array[i]->key);
 		else
 			ft_printf("declare -x %s=\"%s\"\n", array[i]->key, array[i]->value);

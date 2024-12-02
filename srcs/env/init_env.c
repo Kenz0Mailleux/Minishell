@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/11/30 19:55:06 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/02 18:33:39 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ t_env	*parse_env(t_data *data, char **tab_env)
 		append_env(&head, new_env);
 		i++;
 	}
+	new_env = create_env(data, "?", "0", 0);
+	append_env(&head, new_env);
 	return (head);
 }

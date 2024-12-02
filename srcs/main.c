@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 01:47:25 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:25:18 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int main(int argc, char *argv[], char **env)
 	(void)argv;
 	data.env_all = parse_env(&data, env);
 	data.env_str = NULL;
+	modifi_shlvl(&data);
 	if (PRINT_ENV == 1)
 		print_env(data.env_all);
 	data.end = 0;
