@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/02 00:03:29 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:31:49 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,15 @@ int	get_size(t_env *env)
 	return (size);
 }
 
-char	**env_to_str_env(t_data *data)
+
+void	**env_to_str_env2(t_data *data, char **env_str)
 {
 	t_env	*node_env;
-	char	**env_str;
-	int		size;
-	int		i;
 	char	*temp;
+	int		i;
 
 	i = -1;
 	node_env = data->env_all;
-	env_str = malloc(sizeof(char *) * (get_size(data->env_all) + 1));
-	if (!env_str)
-		free_all(data, EXIT_FAILURE);
 	while (node_env)
 	{
 		env_str[++i] = ft_strdup(node_env->key);
@@ -57,6 +53,15 @@ char	**env_to_str_env(t_data *data)
 		node_env = node_env->next;
 	}
 	env_str[i] = NULL;
+}
+char	**env_to_str_env(t_data *data)
+{
+	char	**env_str;
+
+	env_str = malloc(sizeof(char *) * (get_size(data->env_all) + 1));
+	if (!env_str)
+		free_all(data, EXIT_FAILURE);
+	env_to_str_env2(data, env_str);
 	return (env_str);
 }
 

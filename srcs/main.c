@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 23:55:15 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/03 11:49:37 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char	*get_input(t_data *data)
 	if (input == NULL)
 	{
 		ft_printf("exit\n");
-		free_all(data, EXIT_FAILURE);
+		free_env_list(data->env_all, 0);
+		exit(0);
 	}
 	add_history(input);
 	return (input);
