@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 15:22:40 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:45:42 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@
 # define EXIT_FAILURE 1
 
 /*			TEST		*/
-# define PRINT_CMD 0
+# define PRINT_CMD 1
 # define PRINT_TOKEN 0
 # define PRINT_ENV 0
 # define PRINT_ENV_CMD 0
+# define	 PRINT_REDIRECT 0
 # define HISTORY_FILE ".minishell_history"
 
 typedef struct s_token		t_token;
