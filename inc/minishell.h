@@ -6,7 +6,7 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 17:59:30 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:40:33 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define PRINT_TOKEN 0
 # define PRINT_ENV 0
 # define PRINT_ENV_CMD 0
+# define	 PRINT_REDIRECT 0
 # define HISTORY_FILE ".minishell_history"
 
 typedef struct s_token		t_token;

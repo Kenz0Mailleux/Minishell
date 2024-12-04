@@ -6,13 +6,13 @@
 /*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 18:23:55 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:41:20 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	g_exit_value;
+int g_exit_value;
 
 char	*get_input(t_data *data)
 {
