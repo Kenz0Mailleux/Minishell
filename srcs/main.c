@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 15:22:15 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:46:14 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,6 @@
 
 int	g_exit_value;
 
-void	builtin_parse(t_cmd *cmd, t_data *data)
-{
-	if (cmd->tab_cmd[0])
-	{
-		if (ft_strncmp(cmd->tab_cmd[0], "echo", 5) == 0)
-			ft_echo(cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "cd", 3) == 0)
-			ft_cd(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "pwd", 4) == 0)
-			ft_pwd();
-		else if (ft_strncmp(cmd->tab_cmd[0], "export", 7) == 0)
-			ft_export(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "unset", 6) == 0)
-			ft_unset(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0)
-			ft_env(data);
-		else if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
-			ft_exit(data, cmd->tab_cmd);
-	}
-}
 
 char	*get_input(t_data *data)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 23:53:11 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 15:38:39 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	replace_str_env(t_data *data, char **str,
 		new_str = malloc(new_len + 1);
 		if (!new_str)
 			free_all(data, EXIT_FAILURE);
-		ft_memcpy(new_str, *str + 1, pos - *str - 1);
+		ft_memcpy(new_str, *str, pos - *str - 1);
 		ft_memcpy(new_str + (pos - *str - 1), value, value_len);
 		ft_memcpy(new_str + (pos - *str - 1) + value_len, pos
 			+ key_len, ft_strlen(pos + key_len) + 1);
