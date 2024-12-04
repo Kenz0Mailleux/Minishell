@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/03 12:31:49 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:45:45 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	get_size(t_env *env)
 	}
 	return (size);
 }
-
 
 void	**env_to_str_env2(t_data *data, char **env_str)
 {
@@ -54,6 +53,7 @@ void	**env_to_str_env2(t_data *data, char **env_str)
 	}
 	env_str[i] = NULL;
 }
+
 char	**env_to_str_env(t_data *data)
 {
 	char	**env_str;

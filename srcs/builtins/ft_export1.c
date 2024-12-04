@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 12:34:28 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/02 23:01:47 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 15:17:15 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	add_new_env_variable(t_data *data, char *key, char *value)
 {
 	t_env	*new_env;
 
-// set g_exit_status to wexitstatus()
 	new_env = (t_env *)malloc(sizeof(t_env));
 	if (!new_env)
 		free_all(data, EXIT_FAILURE);

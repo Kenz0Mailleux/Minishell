@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:05 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 22:37:04 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 15:16:18 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,21 @@ void	free_all(t_data *data, int exit_code)
 	free_token(data);
 	free_redirect(data);
 	exit(exit_code);
+}
+
+void	replace_value_key(t_env **env_all, char *key, char *new_value)
+{
+	t_env	*current;
+
+	current = *env_all;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			current->value = new_value;
+			return ;
+		}
+		current = current->next;
+	}
+	return ;
 }

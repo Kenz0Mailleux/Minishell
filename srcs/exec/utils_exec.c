@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:15:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/03 12:35:37 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:09:58 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	free_cmds(t_data *data, t_cmd *cmd)
 	}
 }
 
-//set g_exit_status to wexitstatus
 void	wait_childs(t_exec *exec)
 {
 	int	i;
@@ -91,6 +90,6 @@ void	wait_childs(t_exec *exec)
 	{
 		waitpid(exec->pids[i], &wstatus, 0);
 		if (WIFEXITED(wstatus))
-			WEXITSTATUS(wstatus);
+			g_exit_value = WEXITSTATUS(wstatus);
 	}
 }

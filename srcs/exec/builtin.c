@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 21:44:19 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/02 19:09:53 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:16:41 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	check_is_builtin(t_cmd *cmd)
 		current_cmd = current_cmd->next;
 	}
 }
-// set g_exit_status to a value to know if error occure here
 
 int	exec_builtin(t_data *data, t_cmd *cmd)
 {
+	g_exit_value = 0;
 	if (ft_strncmp(cmd->tab_cmd[0], "echo", INT_MAX) == 0)
 		return (ft_echo(cmd->tab_cmd), 0);
 	else if (ft_strncmp(cmd->tab_cmd[0], "cd", INT_MAX) == 0)
@@ -54,7 +54,6 @@ int	exec_builtin(t_data *data, t_cmd *cmd)
 		return (ft_exit(data, cmd->tab_cmd), 0);
 	return (-1);
 }
-// set g_exit_status to wexitstatus()
 
 void	no_pipe_builtin(t_data *data, t_cmd *cmd)
 {
@@ -71,8 +70,6 @@ void	no_pipe_builtin(t_data *data, t_cmd *cmd)
 	{
 		redirection(cmd);
 		exec_builtin(data, cmd);
-		//ft_printf("value %s", find_key(&(data->env_all), "?", 1));
-		//ft_atoi(find_key(&(data->env_all), "?", 1))
 		exit(0);
 	}
 	if (wait(&wstatus) == -1)
@@ -81,7 +78,7 @@ void	no_pipe_builtin(t_data *data, t_cmd *cmd)
 		exit(1);
 	}
 	if (WIFEXITED(wstatus))
-		WEXITSTATUS(wstatus);
+		g_exit_value = WEXITSTATUS(wstatus);
 }
 
 int	check_exec_builtin(t_data *data, t_cmd *current_cmd)

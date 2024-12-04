@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:45:32 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/27 13:34:04 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:03:50 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	prompt(int sig)
 {
-	//1
+	g_exit_value = 130;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -24,12 +24,14 @@ void	prompt(int sig)
 
 void	reset_ctrl_c(int sig)
 {
-	(void)sig; // 130
+	g_exit_value = 130;
+	(void)sig;
 }
 
 void	reset_ctrl_slash(int sig)
 {
-	write(2, "Quit: 3\n", 8); // 131
+	g_exit_value = 131;
+	write(2, "Quit: 3\n", 8);
 	(void)sig;
 }
 

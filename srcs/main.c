@@ -6,62 +6,13 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/03 11:49:37 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:22:15 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// static void print_tokens(t_token *token)
-// {
-// 	t_token *current = token;
-// 	while (current != NULL)
-// 	{
-// 		ft_printf("Token Type: %d, Value: %s\n",
-//			current->type, current->str);
-// 		current = current->next;
-// 	}
-// }
-
-// static void print_cmd(t_cmd *cmd)
-// {
-// 	int i = 0;
-
-// 	ft_printf("Command %d is: ", cmd->num_cmd);
-// 	if (cmd->tab_cmd != NULL)
-// 	{
-// 		while (cmd->tab_cmd[i] != NULL)
-// 		{
-// 			ft_printf("%s ", cmd->tab_cmd[i]);
-// 			i++;
-// 		}
-// 	}
-// 	ft_printf("\n");
-// }
-
-// static void print_redirects(t_redirect *redirect, int num_cmd)
-// {
-// 	t_redirect *current = redirect;
-// 	while (current != NULL)
-// 	{
-// 		ft_printf("redirect type %d, string %s, num cmd %d\n",
-//			current->type, current->str, num_cmd);
-// 		current = current->next;
-// 	}
-// }
-
-// static void print_env(t_env *env)
-// {
-// 	t_env *current_env;
-
-// 	current_env = env;
-// 	while (PRINT_ENV_CMD == 1 && current_env != NULL)
-// 	{
-// 		ft_printf("KEY : %s || VALUE : %s\n",
-//		current_env->key, current_env->value);
-// 		current_env = current_env->next;
-// 	}
-// }
+int	g_exit_value;
 
 void	builtin_parse(t_cmd *cmd, t_data *data)
 {
@@ -95,7 +46,8 @@ char	*get_input(t_data *data)
 		free_env_list(data->env_all, 0);
 		exit(0);
 	}
-	add_history(input);
+	if (input[0] != '\0')
+		add_history(input);
 	return (input);
 }
 
@@ -107,11 +59,6 @@ static void	process_cmds(t_data *data)
 	current_cmd = data->cmd;
 	while (current_cmd)
 	{
-		// if (PRINT_CMD == 1)
-		// {
-		// 	print_cmd(current_cmd);
-		// 	//print_redirects(current_cmd->redirect, current_cmd->num_cmd);
-		// }
 		next_cmd = current_cmd->next;
 		current_cmd = next_cmd;
 	}
@@ -120,13 +67,10 @@ static void	process_cmds(t_data *data)
 
 static void	process_input(t_data *data, char *input)
 {
+	replace_value_key(&data->env_all, "?", ft_itoa(g_exit_value));
 	if (lexer(data, input) != NULL)
 	{
-		// if (PRINT_TOKEN == 1)
-		// 	print_tokens(data->token);
 		set_value(data->env_all, data->env_cmd);
-		// if (PRINT_ENV_CMD == 1)
-		// 	print_env(data->env_cmd);
 		replace_env(data);
 		data->cmd = parser(data);
 		if (data->cmd->tab_cmd != NULL || data->cmd->redirect != NULL)
@@ -141,11 +85,10 @@ int	main(int argc, char *argv[], char **env)
 
 	(void)argc;
 	(void)argv;
+	g_exit_value = 0;
 	data.env_all = parse_env(&data, env);
 	data.env_str = NULL;
 	modifi_shlvl(&data);
-	// if (PRINT_ENV == 1)
-	// 	print_env(data.env_all);
 	data.end = 0;
 	if (read_history(HISTORY_FILE) != 0)
 		perror("read_history");

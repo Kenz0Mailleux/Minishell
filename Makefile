@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+         #
+#    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/12/02 23:54:50 by kenzo            ###   ########.fr        #
+#    Updated: 2024/12/04 14:55:27 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ $(NAME) : $(OBJ)
 	@echo "\033[0;34m 	 ██║ ╚═╝ ██║ ██║ ██║ ╚████║ ██║ ███████║ ██║  ██║ ███████╗ ███████╗ ███████╗ "
 	@echo "\033[0;34m 	 ╚═╝     ╚═╝ ╚═╝ ╚═╝  ╚═══╝ ╚═╝ ╚══════╝ ╚═╝  ╚═╝ ╚══════╝ ╚══════╝ ╚══════╝ "
 	@echo "\033[0;34m                 																 "
-	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(LINK) -g -fsanitize=address -o $(NAME)
+	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(LINK) -g  -o $(NAME)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)

@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/03 12:35:41 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:22:40 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 typedef struct s_token		t_token;
 typedef struct s_redirect	t_redirect;
 typedef struct s_env		t_env;
+
+extern int					g_exit_value;
 
 enum
 {
@@ -179,6 +181,7 @@ void		check_heredoc(t_data *data, t_cmd *cmd);
 void		clear_temp_heredoc(void);
 
 char		*find_key(t_env **env_all, char *key, int get_value);
+void		replace_value_key(t_env **env_all, char *key, char *new_value);
 char		*check_expands(t_data *data, char *str);
 char		**env_to_str_env(t_data *data);
 
