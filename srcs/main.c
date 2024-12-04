@@ -3,37 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 15:22:15 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:23:55 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 int	g_exit_value;
-
-void	builtin_parse(t_cmd *cmd, t_data *data)
-{
-	if (cmd->tab_cmd[0])
-	{
-		if (ft_strncmp(cmd->tab_cmd[0], "echo", 5) == 0)
-			ft_echo(cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "cd", 3) == 0)
-			ft_cd(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "pwd", 4) == 0)
-			ft_pwd();
-		else if (ft_strncmp(cmd->tab_cmd[0], "export", 7) == 0)
-			ft_export(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "unset", 6) == 0)
-			ft_unset(data, cmd->tab_cmd);
-		else if (ft_strncmp(cmd->tab_cmd[0], "env", 4) == 0)
-			ft_env(data);
-		else if (ft_strncmp(cmd->tab_cmd[0], "exit", 5) == 0)
-			ft_exit(data, cmd->tab_cmd);
-	}
-}
 
 char	*get_input(t_data *data)
 {
@@ -51,20 +30,6 @@ char	*get_input(t_data *data)
 	return (input);
 }
 
-static void	process_cmds(t_data *data)
-{
-	t_cmd	*current_cmd;
-	t_cmd	*next_cmd;
-
-	current_cmd = data->cmd;
-	while (current_cmd)
-	{
-		next_cmd = current_cmd->next;
-		current_cmd = next_cmd;
-	}
-	exec(data, data->cmd);
-}
-
 static void	process_input(t_data *data, char *input)
 {
 	replace_value_key(&data->env_all, "?", ft_itoa(g_exit_value));
@@ -74,7 +39,7 @@ static void	process_input(t_data *data, char *input)
 		replace_env(data);
 		data->cmd = parser(data);
 		if (data->cmd->tab_cmd != NULL || data->cmd->redirect != NULL)
-			process_cmds(data);
+			exec(data, data->cmd);
 	}
 }
 
