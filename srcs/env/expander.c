@@ -3,42 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:37:33 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/04 15:38:39 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:40:24 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	replace_str_env(t_data *data, char **str,
-		const char *key, const char *value)
+static char	*replace_substring(t_data *data, t_info *info)
 {
-	char	*pos;
-	size_t	key_len;
-	size_t	value_len;
-	size_t	new_len;
 	char	*new_str;
+	size_t	new_len;
 
-	key_len = ft_strlen(key);
-	value_len = ft_strlen(value);
-	pos = ft_strnstr(*str, key, ft_strlen(*str));
-	while (pos != NULL)
+	new_len = ft_strlen(info->str) - ft_strlen(info->temp)
+		+ ft_strlen(info->value);
+	new_str = malloc(new_len + 1);
+	if (!new_str)
+		free_all(data, EXIT_FAILURE);
+	ft_memcpy(new_str, info->str, info->pos - info->str);
+	ft_memcpy(new_str + (info->pos - info->str),
+		info->value, ft_strlen(info->value));
+	ft_memcpy(new_str + (info->pos - info->str) + ft_strlen(info->value),
+		info->pos + ft_strlen(info->temp),
+		ft_strlen(info->pos + ft_strlen(info->temp)) + 1);
+	new_str[new_len] = '\0';
+	return (new_str);
+}
+
+void	replace_str_env(t_data *data, char **str,
+	const char *key, const char *value)
+{
+	char			*temp;
+	char			*pos;
+	t_info			info;
+
+	temp = ft_strjoin("$", key);
+	if (!temp)
+		free_all(data, EXIT_FAILURE);
+	pos = ft_strnstr(*str, temp, ft_strlen(*str));
+	if (pos)
 	{
-		new_len = ft_strlen(*str) - key_len + value_len - 1;
-		new_str = malloc(new_len + 1);
-		if (!new_str)
-			free_all(data, EXIT_FAILURE);
-		ft_memcpy(new_str, *str, pos - *str - 1);
-		ft_memcpy(new_str + (pos - *str - 1), value, value_len);
-		ft_memcpy(new_str + (pos - *str - 1) + value_len, pos
-			+ key_len, ft_strlen(pos + key_len) + 1);
-		free(*str);
-		*str = new_str;
-		new_str[new_len] = '\0';
-		pos = ft_strnstr(*str, key, ft_strlen(*str));
+		info.str = *str;
+		info.pos = pos;
+		info.temp = temp;
+		info.value = value;
+		*str = replace_substring(data, &info);
+		free(info.str);
 	}
+	free(temp);
 }
 
 void	expand_vars(t_data *data, char **str, t_env *env)

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/05 08:14:56 by nicolive         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/04 18:40:33 by kmailleu         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/CorrLeakNico
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +126,14 @@ typedef struct s_data
 	t_token		*token;
 	t_cmd		*cmd;
 }				t_data;
+
+typedef struct s_info
+{
+	char		*str;
+	char		*pos;
+	const char	*temp;
+	const char	*value;
+}				t_info;
 
 typedef struct s_exec
 {

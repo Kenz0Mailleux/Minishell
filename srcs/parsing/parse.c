@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:19:04 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/29 12:41:15 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 18:24:36 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ static void	handle_cmd_token(t_data *data, t_cmd *current_cmd,
 }
 
 static int	handle_redirect_token(t_data *data, t_cmd *current_cmd,
-		t_token **current_token, t_redirect **red_head)
+		t_token **current_token)
 {
 	if ((*current_token)->next && (*current_token)->next->type == CMD)
 	{
-		append_redirect(red_head,
+		append_redirect(&current_cmd->redirect,
 			create_redirect(data, (*current_token)->type,
 				(*current_token)->next->str));
-		current_cmd->redirect = *red_head;
 		*current_token = (*current_token)->next;
 	}
 	else
@@ -66,7 +65,7 @@ static void	process_tokens(t_data *data, t_cmd **current_cmd,
 		else if ((*current_token)->type > 1 && (*current_token)->type < 7)
 		{
 			if (!handle_redirect_token(data, *current_cmd,
-					current_token, &red_head))
+					current_token))
 				return ;
 		}
 		*current_token = (*current_token)->next;

@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/05 01:42:38 by nicolive         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/04 18:40:41 by kmailleu         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/CorrLeakNico
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// exec part
 void	child_process(t_data *data, t_cmd *cmd, t_exec *exec)
 {
 	check_for_signals(1);

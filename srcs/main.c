@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:44 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/05 08:10:23 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 08:31:52 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	process_input(t_data *data, char *input)
 		replace_env(data);
 		data->cmd = parser(data);
 		if (data->cmd->tab_cmd != NULL || data->cmd->redirect != NULL)
-			process_cmds(data);
+			exec(data, data->cmd);
 	}
 }
 

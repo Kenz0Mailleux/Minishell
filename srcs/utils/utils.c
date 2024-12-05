@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:47:54 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 21:45:02 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 15:46:59 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	modifi_shlvl(t_data *data)
 			temp_nbr = temp_nbr + 1;
 			if (temp_nbr >= 1000)
 			{
-				free_all(data, EXIT_FAILURE);
 				ft_printf("Shell lvl too big");
+				free_all(data, EXIT_FAILURE);
 			}
 			free(current->value);
 			current->value = ft_itoa(temp_nbr);
