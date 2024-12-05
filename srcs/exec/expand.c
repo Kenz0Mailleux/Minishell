@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 15:36:26 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/04 13:45:45 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 07:51:34 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,15 @@ char	*check_env_var_key(t_data *data, int *i, char *str)
 	int		end;
 	char	*value;
 
-	*i++;
+	(*i)++;
 	start = *i;
 	while ((ft_isalnum(str[*i]) || str[*i] == 95) && str[*i])
-		*i++;
+		(*i)++;
 	end = *i;
 	key = ft_substr(str, start, end - start);
 	value = find_key(&data->env_all, key, 1);
+	if (value == NULL)
+		return (NULL);
 	free_str(key);
 	return (value);
 }
@@ -90,23 +92,24 @@ char	*check_expands(t_data *data, char *str)
 	char	*new_line;
 	char	*temp_nline;
 
-	i = -1;
+	i = 0;
 	new_line = ft_strdup("");
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '$' && str[i + 1])
 		{
 			value = check_env_var_key(data, &i, str);
-			temp_nline = new_line;
-			new_line = ft_strjoin(new_line, value);
-			free_str(temp_nline);
+			if (value)
+			{
+				temp_nline = new_line;
+				new_line = ft_strjoin(new_line, value);
+				free_str(temp_nline);
+			}
 		}
-		else
-		{
-			temp_nline = new_line;
-			new_line = ft_strjoin_char(new_line, str[i]);
-			free_str(temp_nline);
-		}
+		temp_nline = new_line;
+		new_line = ft_strjoin_char(new_line, str[i]);
+		free_str(temp_nline);
+		i++;
 	}
 	return (new_line);
 }

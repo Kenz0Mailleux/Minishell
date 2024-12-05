@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 17:45:42 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 08:14:56 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@
 # define EXIT_FAILURE 1
 
 /*			TEST		*/
-# define PRINT_CMD 1
+# define PRINT_CMD 0
 # define PRINT_TOKEN 0
 # define PRINT_ENV 0
 # define PRINT_ENV_CMD 0
-# define	 PRINT_REDIRECT 0
 # define HISTORY_FILE ".minishell_history"
+# define WARNING "minishell: warning: here-document delimited by end-of-file"
+# define PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/noliveira/.local/bin:/home/noliveira/.local/bin:/home/noliveira/.local/bin:/root/.local/bin:/home/noliveira/.local/bin:/root/.local/bin"
 
 typedef struct s_token		t_token;
 typedef struct s_redirect	t_redirect;
@@ -229,5 +230,10 @@ void		free_token(t_data *data);
 char		**ft_join_tab(t_data *data, char **tab, char *str, int tab_len);
 char		*find_key(t_env **env_all, char *key, int get_value);
 char		*ft_strndupquote(const char *s, size_t n);
+
+
+//env_i
+char		*get_pwd(void);
+t_env		*env_i(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:58:24 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/02 18:33:39 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/05 08:13:15 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,30 @@ char	*value_find(char *str)
 	i++;
 	return (ft_substr(str, i, ft_strlen(str)));
 }
+t_env	*parse_env2(t_data *data, char**tab_env, t_env *head, t_env *new)
+{
+	int		i;
+	char	*key;
+	char	*value;
+
+	i = 0;
+	while (tab_env[i])
+	{
+		key = key_find(tab_env[i]);
+		value = value_find(tab_env[i]);
+		if (!key || !value)
+			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+		new = create_env(data, key, value, 0);
+		if (!new)
+			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+		free(key);
+		free(value);
+		append_env(&head, new);
+		i++;
+	}
+	return (head);
+}
+
 
 t_env	*parse_env(t_data *data, char **tab_env)
 {
@@ -81,22 +105,26 @@ t_env	*parse_env(t_data *data, char **tab_env)
 	char	*key;
 	char	*value;
 
-	i = 0;
+	// i = 0;
 	head = NULL;
-	while (tab_env[i])
-	{
-		key = key_find(tab_env[i]);
-		value = value_find(tab_env[i]);
-		if (!key || !value)
-			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
-		new_env = create_env(data, key, value, 0);
-		if (!new_env)
-			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
-		free(key);
-		free(value);
-		append_env(&head, new_env);
-		i++;
-	}
+	new_env = NULL;
+	if (!tab_env || !*tab_env)
+		return (env_i(data));
+	head = parse_env2(data, tab_env, head, new_env);
+	// while (tab_env[i])
+	// {
+	// 	key = key_find(tab_env[i]);
+	// 	value = value_find(tab_env[i]);
+	// 	if (!key || !value)
+	// 		return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+	// 	new_env = create_env(data, key, value, 0);
+	// 	if (!new_env)
+	// 		return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+	// 	free(key);
+	// 	free(value);
+	// 	append_env(&head, new_env);
+	// 	i++;
+	// }
 	new_env = create_env(data, "?", "0", 0);
 	append_env(&head, new_env);
 	return (head);

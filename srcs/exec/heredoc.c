@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 14:37:40 by nicolive          #+#    #+#             */
-/*   Updated: 2024/11/28 14:36:09 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 07:54:36 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@ void	loop_heredoc(t_data *data, t_redirect *node, int fd, char *line)
 {
 	char	*new_line;
 
-	while (1)
+	while (1 && g_exit_value != 130)
 	{
-		ft_putstr_fd("> ", 1);
-		line = get_next_line(0);
+		line = readline("> ");
 		if (line == NULL)
 		{
-			ft_putstr_fd(line, fd);
+			ft_printf("%s (wanted '%s\')\n", WARNING, node->str);
 			break ;
 		}
-		if (ft_strncmp(line, node->str, ft_strlen(node->str) - 1) == 0
-			&& *line != '\n')
+		if (ft_strncmp(line, node->str, INT_MAX) == 0
+			&& *line)
 		{
 			free_str(line);
 			break ;
 		}
 		new_line = check_expands(data, line);
 		free_str(line);
-		if (new_line == NULL)
-			new_line = ft_strdup("\n");
+		line = new_line;
+		new_line = ft_strjoin_char(new_line, '\n');
+		free_str(line);
 		ft_putstr_fd(new_line, fd);
 		free_str(new_line);
 	}

@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:05 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/12/04 15:16:18 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 03:17:48 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	free_all(t_data *data, int exit_code)
 void	replace_value_key(t_env **env_all, char *key, char *new_value)
 {
 	t_env	*current;
+	char	*temp;
 
 	current = *env_all;
 	while (current)

@@ -6,7 +6,7 @@
 #    By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/03 17:24:07 by marykman          #+#    #+#              #
-#    Updated: 2024/12/04 14:55:27 by nicolive         ###   ########.fr        #
+#    Updated: 2024/12/05 08:09:50 by nicolive         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJS_DIR = obj/
 SRCS =	srcs/main.c \
 	srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c srcs/builtins/ft_export1.c \
 	srcs/builtins/print_export.c srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c \
-	srcs/env/expander.c srcs/env/init_env.c \
+	srcs/env/expander.c srcs/env/init_env.c srcs/env/init_env_i.c \
 	srcs/exec/builtin.c srcs/exec/error_exec.c srcs/exec/exec.c srcs/exec/expand.c srcs/exec/heredoc.c srcs/exec/path.c \
 	srcs/exec/redirection.c srcs/exec/utils_exec.c \
 	srcs/gnl/get_next_line_utils.c srcs/gnl/get_next_line.c \
@@ -63,7 +63,7 @@ $(NAME) : $(OBJ)
 	@echo "\033[0;34m 	 ██║ ╚═╝ ██║ ██║ ██║ ╚████║ ██║ ███████║ ██║  ██║ ███████╗ ███████╗ ███████╗ "
 	@echo "\033[0;34m 	 ╚═╝     ╚═╝ ╚═╝ ╚═╝  ╚═══╝ ╚═╝ ╚══════╝ ╚═╝  ╚═╝ ╚══════╝ ╚══════╝ ╚══════╝ "
 	@echo "\033[0;34m                 																 "
-	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(LINK) -g  -o $(NAME)
+	@$(CC) $(OBJ) $(CFLAGS) $(LIBFT) $(LINK) -g -o $(NAME)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)
