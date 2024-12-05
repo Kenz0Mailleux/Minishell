@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/05 08:37:59 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:45:30 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,8 @@ t_env		*create_env(t_data *data, char *key, char *value, int export);
 void		append_env(t_env **head, t_env *new_env);
 t_env		*parse_env(t_data *data, char **tab_env);
 t_env		*parse_env2(t_data *data, char**tab_env, t_env *head, t_env *new);
-
+char		*value_find(char *str);
+char		*key_find(char *str);
 
 //exec
 //check
