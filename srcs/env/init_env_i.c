@@ -6,7 +6,7 @@
 /*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 08:00:40 by nicolive          #+#    #+#             */
-/*   Updated: 2024/12/05 08:16:26 by nicolive         ###   ########.fr       */
+/*   Updated: 2024/12/05 08:39:21 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,30 @@ t_env	*env_i(t_data *data)
 	pwd = get_pwd();
 	if (!pwd)
 		return (free_all(data, EXIT_FAILURE), head);
-	head = env_i_add(data,head,pwd);
+	head = env_i_add(data, head, pwd);
+	return (head);
+}
+
+t_env	*parse_env2(t_data *data, char**tab_env, t_env *head, t_env *new)
+{
+	int		i;
+	char	*key;
+	char	*value;
+
+	i = 0;
+	while (tab_env[i])
+	{
+		key = key_find(tab_env[i]);
+		value = value_find(tab_env[i]);
+		if (!key || !value)
+			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+		new = create_env(data, key, value, 0);
+		if (!new)
+			return (free(key), free(value), free_all(data, EXIT_FAILURE), head);
+		free(key);
+		free(value);
+		append_env(&head, new);
+		i++;
+	}
 	return (head);
 }

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 16:59:25 by kmailleu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/05 01:42:38 by nicolive         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/04 18:40:41 by kmailleu         ###   ########.fr       */
->>>>>>> refs/remotes/origin/CorrLeakNico
+/*   Updated: 2024/12/05 08:37:04 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

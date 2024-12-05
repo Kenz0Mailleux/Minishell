@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolive <nicolive@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:40:55 by kenzo             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/05 08:14:56 by nicolive         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/04 18:40:33 by kmailleu         ###   ########.fr       */
->>>>>>> refs/remotes/origin/CorrLeakNico
+/*   Updated: 2024/12/05 08:37:59 by nicolive         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +180,8 @@ void		replace_env(t_data *data);
 t_env		*create_env(t_data *data, char *key, char *value, int export);
 void		append_env(t_env **head, t_env *new_env);
 t_env		*parse_env(t_data *data, char **tab_env);
+t_env		*parse_env2(t_data *data, char**tab_env, t_env *head, t_env *new);
+
 
 //exec
 //check
